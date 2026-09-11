@@ -1,0 +1,36 @@
+import os
+
+import pytest
+from alembic import command
+from alembic.config import Config
+from httpx import ASGITransport, AsyncClient
+from sqlalchemy import text
+
+os.environ.setdefault(
+    "DATABASE_URL",
+    os.environ.get("TEST_DATABASE_URL", "postgresql+asyncpg://avito:change_me_local_only@localhost:5432/avito_automation"),
+)
+
+from app.db.base import Base
+from app.db.session import AsyncSessionLocal
+from app.main import app
+
+
+@pytest.fixture(scope="session")
+def apply_migrations() -> None:
+    config = Config("alembic.ini")
+    command.upgrade(config, "head")
+
+
+@pytest.fixture
+async def clean_database(apply_migrations) -> None:
+    async with AsyncSessionLocal() as session:
+        table_names = ", ".join(f'"{table.name}"' for table in reversed(Base.metadata.sorted_tables))
+        await session.execute(text(f"TRUNCATE {table_names} RESTART IDENTITY CASCADE"))
+        await session.commit()
+
+
+@pytest.fixture
+async def client(clean_database) -> AsyncClient:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as test_client:
+        yield test_client
