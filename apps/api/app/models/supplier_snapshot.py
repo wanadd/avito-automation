@@ -12,7 +12,13 @@ from app.models.enums import MatchStatus, SupplierSnapshotItemStatus, SupplierSn
 class SupplierSnapshot(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "supplier_snapshots"
     __table_args__ = (
-        UniqueConstraint("supplier_id", "source_id", "raw_source_record_id", name="uq_supplier_snapshots_raw_identity"),
+        UniqueConstraint(
+            "supplier_id",
+            "source_id",
+            "raw_source_record_id",
+            "raw_source_record_revision_id",
+            name="uq_supplier_snapshots_raw_revision_identity",
+        ),
         Index("ix_supplier_snapshots_supplier_id", "supplier_id"),
         Index("ix_supplier_snapshots_source_id", "source_id"),
         Index("ix_supplier_snapshots_captured_at", "captured_at"),
@@ -23,6 +29,9 @@ class SupplierSnapshot(UUIDPrimaryKeyMixin, Base):
     source_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"))
     raw_source_record_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("raw_source_records.id", ondelete="RESTRICT")
+    )
+    raw_source_record_revision_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("raw_source_record_revisions.id", ondelete="RESTRICT"), nullable=True
     )
     external_snapshot_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
     snapshot_type: Mapped[SupplierSnapshotType] = mapped_column(Enum(SupplierSnapshotType, name="supplier_snapshot_type"))

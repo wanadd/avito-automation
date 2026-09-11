@@ -196,3 +196,86 @@ Malformed or empty `FULL` snapshots are rejected before stockout logic runs. Rej
 Idempotency and concurrency:
 
 Snapshot creation is idempotent by supplier/source/raw record. Processing a completed or rejected snapshot is read-only. Active processing is serialized by snapshot id so concurrent requests do not duplicate offers or line items.
+
+## Telegram Supplier Collector v1
+
+Sprint 0.5 adds a Telegram MTProto collector using Telethon. Telegram becomes a raw evidence source only:
+
+```text
+Telegram message
+-> RawSourceRecord
+-> RawSourceRecordRevision
+-> SupplierSnapshot
+-> parser
+-> matcher
+-> SupplierOffer
+-> availability state machine
+```
+
+The collector does not parse SKUs, match products, change offers directly, make pricing decisions, call Avito or 1C, use OCR, use AI, run a scheduler, or listen for real-time `NewMessage` events.
+
+Configuration:
+
+- `TELEGRAM_API_ID`
+- `TELEGRAM_API_HASH`
+- `TELEGRAM_SESSION_PATH`, default `/data/telegram/session`
+- `TELEGRAM_COLLECTOR_ENABLED`, default `false`
+- `TELEGRAM_COLLECTOR_POLL_SECONDS`, default `300`
+- `TELEGRAM_BACKFILL_LIMIT`, default `50`
+
+Local manual login:
+
+1. Create Telegram API credentials on the official Telegram developer portal.
+2. Put only local placeholder values in `.env`, never real values in Git.
+3. Run `python scripts/telegram_login.py`.
+4. Complete phone, OTP, and optional 2FA interactively.
+5. Confirm the session file exists only under `runtime/telegram/` or another ignored runtime path.
+6. Configure a `TELEGRAM` source with `external_chat_id` when known, or `username` for first resolution.
+7. Call `POST /api/v1/sources/{source_id}/telegram-test`.
+8. Run a small backfill with `POST /api/v1/sources/{source_id}/collect`.
+
+Source setup:
+
+Telegram source configuration lives on `Source`; there is no separate TelegramSource table. A source stores `external_chat_id`, optional cached `username` and `title`, `telegram_enabled`, explicit `snapshot_type`, and collection cursor/status fields. `external_chat_id` is the canonical identity because usernames can change. If a username resolves successfully, the numeric chat id is cached back to the source.
+
+Collection APIs:
+
+- `POST /api/v1/sources/{source_id}/collect` with `BACKFILL` or `INCREMENTAL`.
+- `POST /api/v1/sources/{source_id}/telegram-test` resolves the configured chat and returns only non-sensitive metadata.
+- `GET /api/v1/telegram-collection-runs` lists run history.
+- `GET /api/v1/telegram-collection-runs/{run_id}` reads one run.
+
+Backfill and incremental:
+
+Backfill fetches at most the requested limit, or `TELEGRAM_BACKFILL_LIMIT`. Incremental fetches messages after `Source.last_collected_message_id`. Messages are processed oldest to newest even if Telegram returns newest first. The cursor advances only after the message has been safely persisted or safely classified as ignored. Downstream snapshot failures do not cause the same Telegram message to be saved as a new raw record.
+
+Evidence and edits:
+
+`RawSourceRecord` is the logical Telegram message keyed by `source_id + external_record_id`, where `external_record_id` is the Telegram message id. `RawSourceRecordRevision` stores immutable raw content revisions with deterministic SHA-256 over raw text only. A changed Telegram edit creates a new revision and a new `SupplierSnapshot` linked to that exact revision. Original raw text is not overwritten silently.
+
+Message eligibility:
+
+Only non-empty text or caption content is sent downstream. Service messages, empty messages, media-only messages without caption, join/leave/pin events, and reactions are ignored. Media files are not downloaded; metadata records whether media existed and its type.
+
+Failure safety:
+
+Unauthorized sessions, inaccessible channels, network failures, and rate limits produce failed or partial collection runs and sanitized source status. They do not create empty FULL snapshots and do not modify inventory. Deleted Telegram posts are not treated as supplier stock removal in v1.
+
+Security:
+
+Telegram API id/hash, phone number, OTP, 2FA password, session strings, and session files must stay outside Git and logs. `runtime/telegram/` is ignored, Docker mounts it as `/data/telegram`, and `.dockerignore` excludes Telegram session artifacts from the image build context.
+
+CLI:
+
+```bash
+python -m app.integrations.telegram.cli collect --source-id <source_uuid> --mode INCREMENTAL --limit 10
+```
+
+The CLI uses existing environment configuration and does not perform interactive login.
+
+Known limitations:
+
+- No scheduler or permanent worker container.
+- No Telegram Bot API collector.
+- No media download, PDF parsing, image OCR, Avito, 1C, pricing engine, frontend admin, real-time event listener, or auto supplier discovery.
+- Real Telegram smoke testing is optional and skipped when credentials are absent.

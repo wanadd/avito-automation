@@ -5,8 +5,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db_session
+from app.integrations.telegram.client import build_telegram_adapter
+from app.integrations.telegram.collector import collect_source as collect_telegram_source
+from app.integrations.telegram.collector import check_telegram_source
+from app.integrations.telegram.types import TelegramClientAdapter
 from app.models.conflict import DataConflict
-from app.models.enums import ReviewStatus, SupplierSnapshotStatus, SupplierSnapshotType
+from app.models.enums import ReviewStatus, SupplierSnapshotStatus, SupplierSnapshotType, TelegramCollectionRunStatus
 from app.models.match_review import MatchReview
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
@@ -15,6 +19,7 @@ from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
+from app.models.telegram_collection import TelegramCollectionRun
 from app.schemas.conflict import DataConflictRead
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
@@ -29,6 +34,12 @@ from app.schemas.supplier_snapshot import (
     SupplierSnapshotItemRead,
     SupplierSnapshotRead,
 )
+from app.schemas.telegram_collection import (
+    TelegramCollectRequest,
+    TelegramCollectionResult,
+    TelegramCollectionRunRead,
+    TelegramSourceTestResult,
+)
 from app.services.offers import upsert_supplier_offer
 from app.services.matcher import match_parsed_item, match_raw_record
 from app.services.parser.pipeline import parse_raw_record, summarize
@@ -38,6 +49,10 @@ from app.services.supplier_snapshots import create_snapshot as create_supplier_s
 from app.services.supplier_snapshots import process_snapshot
 
 router = APIRouter(prefix="/api/v1")
+
+
+def get_telegram_adapter() -> TelegramClientAdapter:
+    return build_telegram_adapter()
 
 
 @router.post("/suppliers", response_model=SupplierRead, status_code=status.HTTP_201_CREATED)
@@ -132,6 +147,58 @@ async def match_single_parsed_item(item_id: uuid.UUID, session: AsyncSession = D
 @router.post("/raw-records/{record_id}/match", response_model=MatchRawRecordSummary)
 async def match_raw_source_record(record_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
     return await match_raw_record(session, record_id)
+
+
+@router.post("/sources/{source_id}/collect", response_model=TelegramCollectionResult)
+async def collect_source(
+    source_id: uuid.UUID,
+    payload: TelegramCollectRequest,
+    session: AsyncSession = Depends(get_db_session),
+    adapter: TelegramClientAdapter = Depends(get_telegram_adapter),
+) -> dict:
+    try:
+        return await collect_telegram_source(
+            session, source_id, mode=payload.mode, limit=payload.limit, adapter=adapter
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.post("/sources/{source_id}/telegram-test", response_model=TelegramSourceTestResult)
+async def telegram_source_test(
+    source_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    adapter: TelegramClientAdapter = Depends(get_telegram_adapter),
+) -> dict:
+    try:
+        return await check_telegram_source(session, source_id, adapter)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/telegram-collection-runs", response_model=list[TelegramCollectionRunRead])
+async def list_telegram_collection_runs(
+    source_id: uuid.UUID | None = None,
+    status_filter: TelegramCollectionRunStatus | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[TelegramCollectionRun]:
+    statement = select(TelegramCollectionRun).order_by(TelegramCollectionRun.started_at.desc()).limit(min(limit, 500))
+    if source_id is not None:
+        statement = statement.where(TelegramCollectionRun.source_id == source_id)
+    if status_filter is not None:
+        statement = statement.where(TelegramCollectionRun.status == status_filter)
+    return list(await session.scalars(statement))
+
+
+@router.get("/telegram-collection-runs/{run_id}", response_model=TelegramCollectionRunRead)
+async def get_telegram_collection_run(
+    run_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> TelegramCollectionRun:
+    run = await session.get(TelegramCollectionRun, run_id)
+    if run is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TelegramCollectionRun not found")
+    return run
 
 
 @router.post("/supplier-snapshots", response_model=SupplierSnapshotRead, status_code=status.HTTP_201_CREATED)

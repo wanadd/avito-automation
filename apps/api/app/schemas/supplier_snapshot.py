@@ -11,6 +11,7 @@ class SupplierSnapshotCreate(BaseModel):
     supplier_id: uuid.UUID
     source_id: uuid.UUID
     raw_source_record_id: uuid.UUID
+    raw_source_record_revision_id: uuid.UUID | None = None
     external_snapshot_id: str | None = None
     snapshot_type: SupplierSnapshotType
     captured_at: datetime | None = None
@@ -21,6 +22,7 @@ class SupplierSnapshotRead(ORMModel):
     supplier_id: uuid.UUID
     source_id: uuid.UUID
     raw_source_record_id: uuid.UUID
+    raw_source_record_revision_id: uuid.UUID | None
     external_snapshot_id: str | None
     snapshot_type: SupplierSnapshotType
     captured_at: datetime

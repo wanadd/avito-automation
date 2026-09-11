@@ -34,8 +34,16 @@ services:
       REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
       APP_ENV: ${APP_ENV:-local}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
+      TELEGRAM_SESSION_PATH: ${TELEGRAM_SESSION_PATH:-/data/telegram/session}
+      TELEGRAM_COLLECTOR_ENABLED: ${TELEGRAM_COLLECTOR_ENABLED:-false}
+      TELEGRAM_COLLECTOR_POLL_SECONDS: ${TELEGRAM_COLLECTOR_POLL_SECONDS:-300}
+      TELEGRAM_BACKFILL_LIMIT: ${TELEGRAM_BACKFILL_LIMIT:-50}
     ports:
       - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./runtime/telegram:/data/telegram
     depends_on:
       postgres:
         condition: service_healthy
@@ -44,4 +52,3 @@ services:
 
 volumes:
   postgres_data:
-

@@ -34,3 +34,21 @@ class RawSourceRecord(UUIDPrimaryKeyMixin, Base):
     )
 
     source = relationship("Source", back_populates="raw_records")
+
+
+class RawSourceRecordRevision(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "raw_source_record_revisions"
+    __table_args__ = (
+        Index("uq_raw_source_record_revisions_record_revision", "raw_source_record_id", "revision_no", unique=True),
+        Index("uq_raw_source_record_revisions_record_hash", "raw_source_record_id", "content_hash", unique=True),
+    )
+
+    raw_source_record_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("raw_source_records.id", ondelete="CASCADE")
+    )
+    revision_no: Mapped[int] = mapped_column()
+    content_hash: Mapped[str] = mapped_column(String(128))
+    raw_content: Mapped[str] = mapped_column(Text)
+    external_updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    raw_payload: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

@@ -16,6 +16,7 @@ from app.models.enums import (
     SupplierSnapshotType,
 )
 from app.models.parsed_supplier_item import ParsedSupplierItem
+from app.models.raw_source_record import RawSourceRecordRevision
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.schemas.supplier_snapshot import SupplierSnapshotCreate
@@ -33,6 +34,7 @@ async def create_snapshot(session: AsyncSession, payload: SupplierSnapshotCreate
             SupplierSnapshot.supplier_id == payload.supplier_id,
             SupplierSnapshot.source_id == payload.source_id,
             SupplierSnapshot.raw_source_record_id == payload.raw_source_record_id,
+            SupplierSnapshot.raw_source_record_revision_id == payload.raw_source_record_revision_id,
         )
     )
     if existing is not None:
@@ -41,6 +43,7 @@ async def create_snapshot(session: AsyncSession, payload: SupplierSnapshotCreate
         supplier_id=payload.supplier_id,
         source_id=payload.source_id,
         raw_source_record_id=payload.raw_source_record_id,
+        raw_source_record_revision_id=payload.raw_source_record_revision_id,
         external_snapshot_id=payload.external_snapshot_id,
         snapshot_type=payload.snapshot_type,
         captured_at=payload.captured_at or utc_now(),
@@ -56,6 +59,7 @@ async def create_snapshot(session: AsyncSession, payload: SupplierSnapshotCreate
                 SupplierSnapshot.supplier_id == payload.supplier_id,
                 SupplierSnapshot.source_id == payload.source_id,
                 SupplierSnapshot.raw_source_record_id == payload.raw_source_record_id,
+                SupplierSnapshot.raw_source_record_revision_id == payload.raw_source_record_revision_id,
             )
         )
         if snapshot is None:
@@ -85,7 +89,15 @@ async def _process_snapshot_locked(session: AsyncSession, snapshot_id: uuid.UUID
     await session.commit()
 
     try:
-        parse_result, parsed_rows = await parse_raw_record(session, snapshot.raw_source_record_id)
+        revision_text = None
+        if snapshot.raw_source_record_revision_id is not None:
+            revision = await session.get(RawSourceRecordRevision, snapshot.raw_source_record_revision_id)
+            if revision is None:
+                raise ValueError("RawSourceRecordRevision not found")
+            revision_text = revision.raw_content
+        parse_result, parsed_rows = await parse_raw_record(
+            session, snapshot.raw_source_record_id, raw_text_override=revision_text
+        )
         await session.execute(delete(SupplierSnapshotItem).where(SupplierSnapshotItem.snapshot_id == snapshot.id))
 
         exact_match = auto_created = review = conflict = rejected = offers_created = offers_updated = 0

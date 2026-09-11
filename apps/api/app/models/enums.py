@@ -85,3 +85,23 @@ class SupplierSnapshotItemStatus(StrEnum):
     REVIEW = "REVIEW"
     CONFLICT = "CONFLICT"
     REJECTED = "REJECTED"
+
+
+class TelegramCollectionMode(StrEnum):
+    BACKFILL = "BACKFILL"
+    INCREMENTAL = "INCREMENTAL"
+
+
+class TelegramCollectionRunStatus(StrEnum):
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    PARTIAL = "PARTIAL"
+    FAILED = "FAILED"
+
+
+class TelegramMessageIngestionStatus(StrEnum):
+    INGESTED = "INGESTED"
+    DUPLICATE = "DUPLICATE"
+    EDITED = "EDITED"
+    IGNORED = "IGNORED"
+    UNSUPPORTED_MEDIA_ONLY = "UNSUPPORTED_MEDIA_ONLY"

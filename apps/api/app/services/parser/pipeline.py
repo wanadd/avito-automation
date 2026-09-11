@@ -175,7 +175,9 @@ def detect_price_conflicts(items: list[ParsedLine]) -> None:
             item.parse_status = ParseStatus.CONFLICT
 
 
-async def parse_raw_record(session: AsyncSession, raw_record_id) -> tuple[ParseResult, list[ParsedSupplierItem]]:
+async def parse_raw_record(
+    session: AsyncSession, raw_record_id, *, raw_text_override: str | None = None
+) -> tuple[ParseResult, list[ParsedSupplierItem]]:
     raw_record = await session.get(RawSourceRecord, raw_record_id)
     if raw_record is None:
         raise ValueError("RawSourceRecord not found")
@@ -183,7 +185,7 @@ async def parse_raw_record(session: AsyncSession, raw_record_id) -> tuple[ParseR
     if source is None:
         raise ValueError("Source not found")
 
-    result = parse_price_text(raw_record.raw_text)
+    result = parse_price_text(raw_text_override if raw_text_override is not None else raw_record.raw_text)
 
     await session.execute(delete(ParsedSupplierItem).where(ParsedSupplierItem.raw_source_record_id == raw_record.id))
     await session.execute(delete(DataConflict).where(DataConflict.raw_source_record_id == raw_record.id))

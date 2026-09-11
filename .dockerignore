@@ -5,3 +5,6 @@ __pycache__
 *.pyc
 *.pyo
 *.egg-info
+runtime/telegram
+*.session
+*.session-journal

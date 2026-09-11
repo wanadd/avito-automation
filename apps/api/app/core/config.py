@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -10,8 +11,20 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     supplier_missing_snapshots_to_out_of_stock: int = 2
     snapshot_min_valid_item_ratio: float = 0.50
+    telegram_api_id: int | None = None
+    telegram_api_hash: str | None = None
+    telegram_session_path: str = "/data/telegram/session"
+    telegram_collector_enabled: bool = False
+    telegram_collector_poll_seconds: int = 300
+    telegram_backfill_limit: int = 50
+    telegram_flood_wait_fail_seconds: int = 30
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
+    @field_validator("telegram_api_id", "telegram_api_hash", mode="before")
+    @classmethod
+    def empty_string_is_none(cls, value):
+        return None if value == "" else value
 
 
 @lru_cache

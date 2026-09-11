@@ -4,11 +4,12 @@ from app.models.conflict import DataConflict
 from app.models.match_review import MatchReview
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.product import Product, ProductAlias, ProductVariant
-from app.models.raw_source_record import RawSourceRecord
+from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
 from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
+from app.models.telegram_collection import TelegramCollectionRun
 
 __all__ = [
     "AuditLog",
@@ -20,10 +21,12 @@ __all__ = [
     "ProductAlias",
     "ProductVariant",
     "RawSourceRecord",
+    "RawSourceRecordRevision",
     "Source",
     "Supplier",
     "SupplierOffer",
     "SupplierOfferSnapshot",
     "SupplierSnapshot",
     "SupplierSnapshotItem",
+    "TelegramCollectionRun",
 ]
