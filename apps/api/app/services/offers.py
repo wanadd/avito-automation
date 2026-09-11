@@ -2,6 +2,7 @@ import uuid
 from datetime import UTC, datetime
 
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.audit_log import AuditLog
@@ -34,9 +35,23 @@ async def upsert_supplier_offer(session: AsyncSession, payload: SupplierOfferCre
                 source_record_id=offer.source_record_id,
             )
         )
-        await session.commit()
-        await session.refresh(offer)
-        return offer
+        try:
+            await session.commit()
+            await session.refresh(offer)
+            return offer
+        except IntegrityError:
+            await session.rollback()
+            if payload.supplier_sku is None:
+                raise
+            existing = await session.scalar(
+                select(SupplierOffer).where(
+                    SupplierOffer.supplier_id == payload.supplier_id,
+                    SupplierOffer.supplier_sku == payload.supplier_sku,
+                )
+            )
+            if existing is None:
+                raise
+            return existing
 
     old = {"price_minor": offer.price_minor, "availability": offer.availability.value}
     changed = offer.price_minor != payload.price_minor or offer.availability != payload.availability
@@ -103,4 +118,3 @@ async def record_price_conflict(
     await session.commit()
     await session.refresh(conflict)
     return conflict
-

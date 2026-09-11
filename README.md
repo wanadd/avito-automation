@@ -120,3 +120,48 @@ Idempotency:
 `POST /api/v1/raw-records/{raw_record_id}/parse` uses transactional replacement of the parsed projection for the immutable `RawSourceRecord`. Repeating parse for the same raw record replaces prior `ParsedSupplierItem` rows and parser-created conflicts instead of appending duplicates.
 
 Parser v1 does not perform final `ProductVariant` matching. It prepares normalized evidence for a later matcher.
+
+## Product Matcher v1
+
+Sprint 0.3 adds a safe deterministic matcher from `ParsedSupplierItem` to catalog entities and supplier offers.
+
+Priority order:
+
+1. Block parser conflicts and invalid/missing prices.
+2. Match exact manufacturer model code when brand and variant-defining attributes do not conflict.
+3. Match exact ProductAlias, including source-specific aliases.
+4. Match exact variant-defining attributes.
+5. Generate fuzzy candidates for review only.
+6. Safe auto-create Product/ProductVariant when confidence and evidence are strong enough.
+
+Variant-defining attributes:
+
+- Required when available: product identity and storage.
+- Significant when present: RAM, manufacturer model code, region, color, condition.
+- Region, color, and condition are significant SKU attributes in v1.
+
+Auto-create policy:
+
+`AUTO_CREATE_SAFE` requires parsed status `PARSED` or acceptable `PARTIAL`, known brand, known model, known storage, valid price, no `PRICE_CONFLICT`, no model ambiguity, no similar candidate, and confidence at or above `MATCH_AUTO_CREATE_THRESHOLD`.
+
+Review policy:
+
+Strong identifiers with conflicting attributes do not update catalog data or supplier offers. They create a `MatchReview` with deterministic reasons such as `STORAGE_CONFLICT`, `RAM_CONFLICT`, `COLOR_CONFLICT`, `REGION_CONFLICT`, or `CONDITION_CONFLICT`.
+
+Fuzzy matching:
+
+Fuzzy matching is only used for candidate generation and review routing. Fuzzy matching never performs automatic SKU merge in v1.
+
+SupplierOffer ingestion:
+
+Only `EXACT_MATCH` and `AUTO_CREATED` results call the existing SupplierOffer upsert service. The matcher does not write offers directly, so Sprint 0.1 snapshot and audit behavior remains centralized.
+
+Idempotency and concurrency:
+
+Repeated matching of the same parsed item reuses Product, ProductVariant, SupplierOffer, and MatchReview records. Product uniqueness and ProductVariant canonical keys protect concurrent safe auto-create attempts.
+
+Known limitations:
+
+- No LLM, external AI, Telegram API, Avito API, website scraping, 1C, pricing engine, competitor parser, UI, sales, or accounting integration.
+- Matcher v1 is conservative; uncertain or fuzzy cases go to review.
+- When parsed condition is missing but auto-create is otherwise safe, v1 creates a `NEW` variant as a temporary matcher policy until supplier default condition configuration exists.

@@ -21,7 +21,7 @@ def build_canonical_key(
     storage_gb: int | None,
     color_normalized: str | None,
     region_code: str | None,
-    condition: ProductCondition | str,
+    condition: ProductCondition | str | None,
 ) -> str:
     parts = [
         brand,
@@ -34,4 +34,3 @@ def build_canonical_key(
         condition.value if isinstance(condition, ProductCondition) else condition,
     ]
     return "|".join(normalize_key_part(part) for part in parts)
-

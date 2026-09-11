@@ -11,6 +11,7 @@ from app.models.enums import ProductCondition
 
 class Product(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "products"
+    __table_args__ = (UniqueConstraint("brand", "canonical_name", name="uq_products_brand_canonical_name"),)
 
     brand: Mapped[str] = mapped_column(String(120), index=True)
     canonical_name: Mapped[str] = mapped_column(String(255), index=True)
@@ -32,7 +33,9 @@ class ProductVariant(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     color_raw: Mapped[str | None] = mapped_column(String(120), nullable=True)
     color_normalized: Mapped[str | None] = mapped_column(String(120), nullable=True)
     region_code: Mapped[str | None] = mapped_column(String(32), nullable=True)
-    condition: Mapped[ProductCondition] = mapped_column(Enum(ProductCondition, name="product_condition"))
+    condition: Mapped[ProductCondition | None] = mapped_column(
+        Enum(ProductCondition, name="product_condition"), nullable=True
+    )
     canonical_key: Mapped[str] = mapped_column(String(512), unique=True, index=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, server_default="true")
 

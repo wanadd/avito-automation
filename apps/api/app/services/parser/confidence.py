@@ -8,19 +8,19 @@ from app.services.parser.types import ParsedLine
 def score_confidence(item: ParsedLine) -> Decimal:
     score = Decimal("0.00")
     if item.brand_normalized:
-        score += Decimal("0.18")
+        score += Decimal("0.20")
     if item.model_normalized:
-        score += Decimal("0.25")
+        score += Decimal("0.28")
     if item.price_minor is not None:
-        score += Decimal("0.22")
+        score += Decimal("0.25")
     if item.storage_gb is not None:
-        score += Decimal("0.12")
+        score += Decimal("0.14")
     if item.manufacturer_model_code:
-        score += Decimal("0.08")
+        score += Decimal("0.06")
     if item.color_normalized:
         score += Decimal("0.07")
     if item.region_code:
-        score += Decimal("0.08")
+        score += Decimal("0.06")
 
     penalty_flags = {
         "UNKNOWN_SECTION",
@@ -51,4 +51,3 @@ def status_from_confidence(item: ParsedLine) -> ParseStatus:
     if item.parse_confidence >= PARTIAL_THRESHOLD:
         return ParseStatus.PARTIAL
     return ParseStatus.REVIEW
-

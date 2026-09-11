@@ -31,7 +31,7 @@ class ProductVariantCreate(BaseModel):
     color_raw: str | None = None
     color_normalized: str | None = None
     region_code: str | None = None
-    condition: ProductCondition = ProductCondition.NEW
+    condition: ProductCondition | None = None
     is_active: bool = True
 
 
@@ -44,7 +44,7 @@ class ProductVariantRead(Timestamped):
     color_raw: str | None
     color_normalized: str | None
     region_code: str | None
-    condition: ProductCondition
+    condition: ProductCondition | None
     canonical_key: str
     is_active: bool
 
@@ -65,4 +65,3 @@ class ProductAliasRead(BaseModel):
     normalized_alias: str
     source_id: uuid.UUID | None
     created_at: datetime
-

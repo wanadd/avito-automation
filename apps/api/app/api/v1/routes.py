@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db_session
 from app.models.conflict import DataConflict
+from app.models.enums import ReviewStatus
+from app.models.match_review import MatchReview
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.raw_source_record import RawSourceRecord
@@ -13,6 +15,7 @@ from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
 from app.schemas.conflict import DataConflictRead
+from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
 from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummary
 from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecordRead
@@ -20,6 +23,7 @@ from app.schemas.source import SourceCreate, SourceRead
 from app.schemas.supplier import SupplierCreate, SupplierRead
 from app.schemas.supplier_offer import SupplierOfferCreate, SupplierOfferRead
 from app.services.offers import upsert_supplier_offer
+from app.services.matcher import match_parsed_item, match_raw_record
 from app.services.parser.pipeline import parse_raw_record, summarize
 from app.services.products import create_variant
 from app.services.raw_records import create_raw_record
@@ -106,6 +110,44 @@ async def get_parsed_item(item_id: uuid.UUID, session: AsyncSession = Depends(ge
     if item is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parsed item not found")
     return item
+
+
+@router.post("/parsed-items/{item_id}/match", response_model=MatchResult)
+async def match_single_parsed_item(item_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> MatchResult:
+    try:
+        return await match_parsed_item(session, item_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/raw-records/{record_id}/match", response_model=MatchRawRecordSummary)
+async def match_raw_source_record(record_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await match_raw_record(session, record_id)
+
+
+@router.get("/match-reviews", response_model=list[MatchReviewRead])
+async def list_match_reviews(
+    status_filter: ReviewStatus | None = None,
+    source_id: uuid.UUID | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[MatchReview]:
+    statement = select(MatchReview).order_by(MatchReview.created_at).limit(min(limit, 500))
+    if status_filter is not None:
+        statement = statement.where(MatchReview.status == status_filter)
+    if source_id is not None:
+        statement = statement.join(ParsedSupplierItem, ParsedSupplierItem.id == MatchReview.parsed_item_id).where(
+            ParsedSupplierItem.source_id == source_id
+        )
+    return list(await session.scalars(statement))
+
+
+@router.get("/match-reviews/{review_id}", response_model=MatchReviewRead)
+async def get_match_review(review_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> MatchReview:
+    review = await session.get(MatchReview, review_id)
+    if review is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Match review not found")
+    return review
 
 
 @router.post("/products", response_model=ProductRead, status_code=status.HTTP_201_CREATED)

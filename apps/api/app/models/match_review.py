@@ -2,7 +2,8 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Numeric, String, func
+from sqlalchemy import DateTime, Enum, ForeignKey, Numeric, String, UniqueConstraint, func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -12,7 +13,11 @@ from app.models.enums import ReviewStatus
 
 class MatchReview(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "match_reviews"
+    __table_args__ = (UniqueConstraint("parsed_item_id", "status", name="uq_match_reviews_parsed_item_status"),)
 
+    parsed_item_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("parsed_supplier_items.id", ondelete="CASCADE"), nullable=True
+    )
     source_record_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("raw_source_records.id"), nullable=True
     )
@@ -27,5 +32,7 @@ class MatchReview(UUIDPrimaryKeyMixin, Base):
         Enum(ReviewStatus, name="review_status"), default=ReviewStatus.PENDING, server_default=ReviewStatus.PENDING
     )
     reason: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    strategy: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    candidate_details: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
