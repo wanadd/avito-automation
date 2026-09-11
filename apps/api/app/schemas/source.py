@@ -18,6 +18,9 @@ class SourceCreate(BaseModel):
     title: str | None = None
     telegram_enabled: bool = False
     snapshot_type: SupplierSnapshotType = SupplierSnapshotType.FULL
+    collection_enabled: bool = False
+    collection_interval_seconds: int | None = None
+    next_collection_at: datetime | None = None
 
 
 class SourceRead(Timestamped):
@@ -36,3 +39,9 @@ class SourceRead(Timestamped):
     last_collection_at: datetime | None
     last_collection_status: TelegramCollectionRunStatus | None
     last_collection_error: str | None
+    collection_enabled: bool
+    collection_interval_seconds: int | None
+    next_collection_at: datetime | None
+    last_scheduled_at: datetime | None
+    consecutive_failures: int
+    last_success_at: datetime | None

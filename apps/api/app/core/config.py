@@ -18,6 +18,14 @@ class Settings(BaseSettings):
     telegram_collector_poll_seconds: int = 300
     telegram_backfill_limit: int = 50
     telegram_flood_wait_fail_seconds: int = 30
+    telegram_default_collection_interval_seconds: int = 600
+    collection_scheduler_jitter_seconds: int = 30
+    collection_job_max_attempts: int = 3
+    job_stale_running_seconds: int = 900
+    scheduler_tick_seconds: int = 10
+    source_error_failure_threshold: int = 3
+    source_stale_multiplier: int = 3
+    redis_lock_ttl_seconds: int = 300
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

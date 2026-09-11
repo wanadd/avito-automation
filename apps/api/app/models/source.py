@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import BigInteger, Boolean, DateTime, Enum, ForeignKey, String
+from sqlalchemy import BigInteger, Boolean, DateTime, Enum, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -32,6 +32,12 @@ class Source(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         Enum(TelegramCollectionRunStatus, name="telegram_collection_run_status"), nullable=True
     )
     last_collection_error: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    collection_enabled: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    collection_interval_seconds: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    next_collection_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_scheduled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    consecutive_failures: Mapped[int] = mapped_column(default=0, server_default="0")
+    last_success_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     supplier = relationship("Supplier", back_populates="sources")
     raw_records = relationship("RawSourceRecord", back_populates="source")

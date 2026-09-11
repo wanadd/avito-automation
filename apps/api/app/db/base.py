@@ -6,6 +6,7 @@ from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.product import Product, ProductAlias, ProductVariant
 from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
 from app.models.source import Source
+from app.models.source_collection_job import SourceCollectionJob
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
@@ -23,6 +24,7 @@ __all__ = [
     "RawSourceRecord",
     "RawSourceRecordRevision",
     "Source",
+    "SourceCollectionJob",
     "Supplier",
     "SupplierOffer",
     "SupplierOfferSnapshot",

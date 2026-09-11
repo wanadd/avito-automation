@@ -6,16 +6,25 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db_session
 from app.integrations.telegram.client import build_telegram_adapter
-from app.integrations.telegram.collector import collect_source as collect_telegram_source
 from app.integrations.telegram.collector import check_telegram_source
 from app.integrations.telegram.types import TelegramClientAdapter
+from app.jobs.queue import QueueAdapter, RQQueueAdapter
+from app.jobs.service import create_manual_job, operations_status, retry_failed_job, source_status
 from app.models.conflict import DataConflict
-from app.models.enums import ReviewStatus, SupplierSnapshotStatus, SupplierSnapshotType, TelegramCollectionRunStatus
+from app.models.enums import (
+    ReviewStatus,
+    SourceCollectionJobStatus,
+    SourceCollectionJobType,
+    SupplierSnapshotStatus,
+    SupplierSnapshotType,
+    TelegramCollectionRunStatus,
+)
 from app.models.match_review import MatchReview
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.raw_source_record import RawSourceRecord
 from app.models.source import Source
+from app.models.source_collection_job import SourceCollectionJob
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
@@ -26,6 +35,7 @@ from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate
 from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummary
 from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecordRead
 from app.schemas.source import SourceCreate, SourceRead
+from app.schemas.source_collection_job import OperationsStatusRead, SourceCollectionJobRead, SourceStatusRead
 from app.schemas.supplier import SupplierCreate, SupplierRead
 from app.schemas.supplier_offer import SupplierOfferCreate, SupplierOfferRead
 from app.schemas.supplier_snapshot import (
@@ -36,7 +46,6 @@ from app.schemas.supplier_snapshot import (
 )
 from app.schemas.telegram_collection import (
     TelegramCollectRequest,
-    TelegramCollectionResult,
     TelegramCollectionRunRead,
     TelegramSourceTestResult,
 )
@@ -53,6 +62,10 @@ router = APIRouter(prefix="/api/v1")
 
 def get_telegram_adapter() -> TelegramClientAdapter:
     return build_telegram_adapter()
+
+
+def get_queue_adapter() -> QueueAdapter:
+    return RQQueueAdapter()
 
 
 @router.post("/suppliers", response_model=SupplierRead, status_code=status.HTTP_201_CREATED)
@@ -89,6 +102,14 @@ async def create_source(payload: SourceCreate, session: AsyncSession = Depends(g
 @router.get("/sources", response_model=list[SourceRead])
 async def list_sources(session: AsyncSession = Depends(get_db_session)) -> list[Source]:
     return list(await session.scalars(select(Source).order_by(Source.created_at)))
+
+
+@router.get("/sources/{source_id}/status", response_model=SourceStatusRead)
+async def get_source_status(source_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
+    try:
+        return await source_status(session, source_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
 
 @router.post("/raw-records", response_model=RawSourceRecordRead, status_code=status.HTTP_201_CREATED)
@@ -149,19 +170,62 @@ async def match_raw_source_record(record_id: uuid.UUID, session: AsyncSession = 
     return await match_raw_record(session, record_id)
 
 
-@router.post("/sources/{source_id}/collect", response_model=TelegramCollectionResult)
+@router.post("/sources/{source_id}/collect", response_model=SourceCollectionJobRead)
 async def collect_source(
     source_id: uuid.UUID,
     payload: TelegramCollectRequest,
     session: AsyncSession = Depends(get_db_session),
-    adapter: TelegramClientAdapter = Depends(get_telegram_adapter),
-) -> dict:
+    queue: QueueAdapter = Depends(get_queue_adapter),
+) -> SourceCollectionJob:
     try:
-        return await collect_telegram_source(
-            session, source_id, mode=payload.mode, limit=payload.limit, adapter=adapter
-        )
+        return await create_manual_job(session, queue, source_id=source_id, mode=payload.mode, limit=payload.limit)
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/source-collection-jobs", response_model=list[SourceCollectionJobRead])
+async def list_source_collection_jobs(
+    source_id: uuid.UUID | None = None,
+    status_filter: SourceCollectionJobStatus | None = None,
+    job_type: SourceCollectionJobType | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[SourceCollectionJob]:
+    statement = select(SourceCollectionJob).order_by(SourceCollectionJob.created_at.desc()).limit(min(limit, 500))
+    if source_id is not None:
+        statement = statement.where(SourceCollectionJob.source_id == source_id)
+    if status_filter is not None:
+        statement = statement.where(SourceCollectionJob.status == status_filter)
+    if job_type is not None:
+        statement = statement.where(SourceCollectionJob.job_type == job_type)
+    return list(await session.scalars(statement))
+
+
+@router.get("/source-collection-jobs/{job_id}", response_model=SourceCollectionJobRead)
+async def get_source_collection_job(
+    job_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> SourceCollectionJob:
+    job = await session.get(SourceCollectionJob, job_id)
+    if job is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="SourceCollectionJob not found")
+    return job
+
+
+@router.post("/source-collection-jobs/{job_id}/retry", response_model=SourceCollectionJobRead)
+async def retry_source_collection_job(
+    job_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    queue: QueueAdapter = Depends(get_queue_adapter),
+) -> SourceCollectionJob:
+    try:
+        return await retry_failed_job(session, queue, job_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/operations/status", response_model=OperationsStatusRead)
+async def get_operations_status(session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await operations_status(session)
 
 
 @router.post("/sources/{source_id}/telegram-test", response_model=TelegramSourceTestResult)

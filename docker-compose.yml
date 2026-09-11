@@ -1,3 +1,25 @@
+x-api-env: &api-env
+  DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://avito:change_me_local_only@postgres:5432/avito_automation}
+  REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+  APP_ENV: ${APP_ENV:-local}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
+  TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
+  TELEGRAM_SESSION_PATH: ${TELEGRAM_SESSION_PATH:-/data/telegram/session}
+  TELEGRAM_COLLECTOR_ENABLED: ${TELEGRAM_COLLECTOR_ENABLED:-false}
+  TELEGRAM_COLLECTOR_POLL_SECONDS: ${TELEGRAM_COLLECTOR_POLL_SECONDS:-300}
+  TELEGRAM_BACKFILL_LIMIT: ${TELEGRAM_BACKFILL_LIMIT:-50}
+
+x-api-build: &api-build
+  context: .
+  dockerfile: infra/docker/Dockerfile
+
+x-api-depends: &api-depends
+  postgres:
+    condition: service_healthy
+  redis:
+    condition: service_healthy
+
 services:
   postgres:
     image: postgres:16
@@ -26,29 +48,29 @@ services:
       retries: 20
 
   api:
-    build:
-      context: .
-      dockerfile: infra/docker/Dockerfile
-    environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://avito:change_me_local_only@postgres:5432/avito_automation}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
-      APP_ENV: ${APP_ENV:-local}
-      LOG_LEVEL: ${LOG_LEVEL:-INFO}
-      TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
-      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
-      TELEGRAM_SESSION_PATH: ${TELEGRAM_SESSION_PATH:-/data/telegram/session}
-      TELEGRAM_COLLECTOR_ENABLED: ${TELEGRAM_COLLECTOR_ENABLED:-false}
-      TELEGRAM_COLLECTOR_POLL_SECONDS: ${TELEGRAM_COLLECTOR_POLL_SECONDS:-300}
-      TELEGRAM_BACKFILL_LIMIT: ${TELEGRAM_BACKFILL_LIMIT:-50}
+    build: *api-build
+    environment: *api-env
     ports:
       - "${API_PORT:-8000}:8000"
     volumes:
       - ./runtime/telegram:/data/telegram
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    depends_on: *api-depends
+
+  worker:
+    build: *api-build
+    command: ["python", "-m", "app.jobs.worker"]
+    environment: *api-env
+    volumes:
+      - ./runtime/telegram:/data/telegram
+    depends_on: *api-depends
+
+  scheduler:
+    build: *api-build
+    command: ["python", "-m", "app.jobs.scheduler"]
+    environment: *api-env
+    volumes:
+      - ./runtime/telegram:/data/telegram
+    depends_on: *api-depends
 
 volumes:
   postgres_data:

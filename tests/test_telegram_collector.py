@@ -5,7 +5,7 @@ from datetime import UTC, datetime, timedelta
 import pytest
 from sqlalchemy import func, select
 
-from app.api.v1.routes import get_telegram_adapter
+from app.api.v1.routes import get_queue_adapter, get_telegram_adapter
 from app.db.session import AsyncSessionLocal
 from app.integrations.telegram.collector import check_telegram_source, collect_source, telegram_content_hash
 from app.integrations.telegram.types import (
@@ -16,6 +16,7 @@ from app.integrations.telegram.types import (
     TelegramNetworkError,
     TelegramRateLimitError,
 )
+from app.jobs.queue import InMemoryQueueAdapter
 from app.main import app
 from app.models.audit_log import AuditLog
 from app.models.enums import Availability, SourceType, SupplierSnapshotType, TelegramCollectionMode, TelegramCollectionRunStatus
@@ -90,7 +91,13 @@ def price_text(keys):
     return "Samsung 🇰🇷\n" + "\n".join(LINES[key] for key in keys)
 
 
-async def seed_source(snapshot_type=SupplierSnapshotType.FULL, *, external_chat_id=-1001234567890, username=None):
+async def seed_source(
+    snapshot_type=SupplierSnapshotType.FULL,
+    *,
+    external_chat_id=-1001234567890,
+    username=None,
+    collection_enabled=False,
+):
     async with AsyncSessionLocal() as session:
         supplier = __import__("app.models.supplier", fromlist=["Supplier"]).Supplier(
             code=f"tg-{uuid.uuid4().hex[:8]}", name="Telegram Supplier"
@@ -106,6 +113,7 @@ async def seed_source(snapshot_type=SupplierSnapshotType.FULL, *, external_chat_
             username=username,
             telegram_enabled=True,
             snapshot_type=snapshot_type,
+            collection_enabled=collection_enabled,
         )
         session.add(source)
         await session.commit()
@@ -415,15 +423,19 @@ async def test_source_last_collection_fields_correct():
 
 
 async def test_api_collect_endpoint(client):
-    _, source_id = await seed_source()
-    fake = FakeTelegramAdapter(messages=[message(100, price_text(["A"]))])
-    app.dependency_overrides[get_telegram_adapter] = lambda: fake
+    _, source_id = await seed_source(collection_enabled=True)
+    fake_queue = InMemoryQueueAdapter()
+    app.dependency_overrides[get_queue_adapter] = lambda: fake_queue
     try:
         response = await client.post(f"/api/v1/sources/{source_id}/collect", json={"mode": "BACKFILL", "limit": 10})
     finally:
         app.dependency_overrides.clear()
     assert response.status_code == 200
-    assert response.json()["new_records"] == 1
+    payload = response.json()
+    assert payload["source_id"] == str(source_id)
+    assert payload["status"] == "QUEUED"
+    assert payload["job_type"] == "MANUAL_BACKFILL"
+    assert fake_queue.job_ids == [payload["id"]]
 
 
 async def test_api_list_and_get_collection_runs(client):
@@ -452,15 +464,12 @@ async def test_telegram_test_endpoint_sanitized(client):
 
 
 async def test_no_credentials_exposed_in_failed_api_response(client):
-    _, source_id = await seed_source()
-    app.dependency_overrides[get_telegram_adapter] = lambda: FakeTelegramAdapter(
-        exc=TelegramAuthError("bad api_hash session phone password")
-    )
+    _, source_id = await seed_source(collection_enabled=False)
     try:
         response = await client.post(f"/api/v1/sources/{source_id}/collect", json={"mode": "BACKFILL", "limit": 1})
     finally:
         app.dependency_overrides.clear()
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert "api_hash" not in response.text
     assert "session" not in response.text
     assert "phone" not in response.text

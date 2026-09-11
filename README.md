@@ -275,7 +275,82 @@ The CLI uses existing environment configuration and does not perform interactive
 
 Known limitations:
 
-- No scheduler or permanent worker container.
 - No Telegram Bot API collector.
 - No media download, PDF parsing, image OCR, Avito, 1C, pricing engine, frontend admin, real-time event listener, or auto supplier discovery.
 - Real Telegram smoke testing is optional and skipped when credentials are absent.
+
+## Scheduler & Worker v1
+
+Sprint 0.6 adds collection orchestration around the Sprint 0.5 Telegram collector:
+
+```text
+Scheduler
+-> PostgreSQL SourceCollectionJob
+-> Redis RQ queue
+-> Worker
+-> Telegram collector
+-> Raw evidence
+-> Supplier snapshot pipeline
+```
+
+The API, scheduler, and worker are separate Docker Compose services. The API never runs polling in its startup lifecycle. The queue payload contains only `job_id`; source configuration and credentials are read from PostgreSQL/runtime environment by the worker.
+
+Queue technology:
+
+- RQ backed by Redis.
+- Queue name: `source-collection`.
+- Redis namespaces: `avito:jobs:*` and `avito:locks:*`.
+
+Source scheduling fields:
+
+- `telegram_enabled` means the source can use the Telegram integration.
+- `collection_enabled` means the scheduler may automatically enqueue collection jobs.
+- `collection_interval_seconds` overrides `TELEGRAM_DEFAULT_COLLECTION_INTERVAL_SECONDS`, default `600`.
+- `next_collection_at` tracks the schedule slot, not just `now + interval`.
+- `last_scheduled_at`, `consecutive_failures`, and `last_success_at` support operational status.
+
+Scheduler policy:
+
+- Due Telegram sources create idempotent `SCHEDULED_INCREMENTAL` jobs.
+- Repeated ticks for the same source and schedule slot do not create duplicate jobs.
+- Missed schedules create one catch-up job, then advance to the next future slot.
+- Deterministic per-source jitter spreads queue load without changing the schedule identity.
+
+Worker policy:
+
+- The worker validates job state, acquires a Redis source lock with TTL, checks PostgreSQL for another `RUNNING` job on the same source, marks the job `RUNNING`, calls the existing Telegram collector, links `TelegramCollectionRun`, and finishes as `SUCCEEDED`, `RETRY_WAIT`, `FAILED`, or `SKIPPED`.
+- Different sources may run in parallel; one source may not run concurrently.
+- Queue redelivery is treated as practical at-least-once execution. Terminal jobs are not executed again, and downstream raw evidence/snapshot processing remains idempotent.
+
+Retry and recovery:
+
+- `COLLECTION_JOB_MAX_ATTEMPTS` defaults to `3`.
+- Transient network/rate-limit failures move to `RETRY_WAIT` with backoff of about 30s, 120s, then 300s.
+- Auth/access/configuration failures fail the current job without tight retry loops.
+- Stale `RUNNING` jobs older than `JOB_STALE_RUNNING_SECONDS`, default `900`, are recovered to retry or failed at max attempts.
+
+Operational APIs:
+
+- `POST /api/v1/sources/{source_id}/collect` now creates a queued manual collection job.
+- `GET /api/v1/source-collection-jobs`
+- `GET /api/v1/source-collection-jobs/{id}`
+- `POST /api/v1/source-collection-jobs/{id}/retry`
+- `GET /api/v1/sources/{id}/status`
+- `GET /api/v1/operations/status`
+
+Source health:
+
+- `DISABLED`: collection disabled.
+- `NEVER_RUN`: no collection outcome yet.
+- `HEALTHY`: latest collection succeeded and failure counter is zero.
+- `DEGRADED`: one or two consecutive failures.
+- `ERROR`: failure count reaches `SOURCE_ERROR_FAILURE_THRESHOLD`, default `3`.
+- `stale` is computed from `last_success_at > interval * SOURCE_STALE_MULTIPLIER`.
+
+Stale/error source status never changes `SupplierOffer` availability by itself. Inventory availability changes only through valid `FULL` supplier snapshots.
+
+Known limitations:
+
+- No website collector, Avito, 1C, OCR, LLM, notification system, frontend admin, Kubernetes, or real-time Telegram listener.
+- Manual job priority is FIFO in v1.
+- Permanent auth/access failures do not silently disable a source.
