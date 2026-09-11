@@ -8,6 +8,7 @@ from app.models.raw_source_record import RawSourceRecord
 from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
+from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 
 __all__ = [
     "AuditLog",
@@ -23,4 +24,6 @@ __all__ = [
     "Supplier",
     "SupplierOffer",
     "SupplierOfferSnapshot",
+    "SupplierSnapshot",
+    "SupplierSnapshotItem",
 ]

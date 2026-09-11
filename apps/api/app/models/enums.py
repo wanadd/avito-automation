@@ -65,3 +65,23 @@ class MatchStrategy(StrEnum):
     AMBIGUOUS = "AMBIGUOUS"
     INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
     PARSER_CONFLICT = "PARSER_CONFLICT"
+
+
+class SupplierSnapshotType(StrEnum):
+    FULL = "FULL"
+    PARTIAL = "PARTIAL"
+
+
+class SupplierSnapshotStatus(StrEnum):
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    REJECTED = "REJECTED"
+
+
+class SupplierSnapshotItemStatus(StrEnum):
+    SEEN = "SEEN"
+    REVIEW = "REVIEW"
+    CONFLICT = "CONFLICT"
+    REJECTED = "REJECTED"

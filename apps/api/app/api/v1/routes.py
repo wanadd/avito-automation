@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db_session
 from app.models.conflict import DataConflict
-from app.models.enums import ReviewStatus
+from app.models.enums import ReviewStatus, SupplierSnapshotStatus, SupplierSnapshotType
 from app.models.match_review import MatchReview
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
@@ -14,6 +14,7 @@ from app.models.raw_source_record import RawSourceRecord
 from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
+from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.schemas.conflict import DataConflictRead
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
@@ -22,11 +23,19 @@ from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecord
 from app.schemas.source import SourceCreate, SourceRead
 from app.schemas.supplier import SupplierCreate, SupplierRead
 from app.schemas.supplier_offer import SupplierOfferCreate, SupplierOfferRead
+from app.schemas.supplier_snapshot import (
+    ProcessSnapshotSummary,
+    SupplierSnapshotCreate,
+    SupplierSnapshotItemRead,
+    SupplierSnapshotRead,
+)
 from app.services.offers import upsert_supplier_offer
 from app.services.matcher import match_parsed_item, match_raw_record
 from app.services.parser.pipeline import parse_raw_record, summarize
 from app.services.products import create_variant
 from app.services.raw_records import create_raw_record
+from app.services.supplier_snapshots import create_snapshot as create_supplier_snapshot
+from app.services.supplier_snapshots import process_snapshot
 
 router = APIRouter(prefix="/api/v1")
 
@@ -123,6 +132,65 @@ async def match_single_parsed_item(item_id: uuid.UUID, session: AsyncSession = D
 @router.post("/raw-records/{record_id}/match", response_model=MatchRawRecordSummary)
 async def match_raw_source_record(record_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
     return await match_raw_record(session, record_id)
+
+
+@router.post("/supplier-snapshots", response_model=SupplierSnapshotRead, status_code=status.HTTP_201_CREATED)
+async def create_snapshot(
+    payload: SupplierSnapshotCreate, session: AsyncSession = Depends(get_db_session)
+) -> SupplierSnapshot:
+    return await create_supplier_snapshot(session, payload)
+
+
+@router.get("/supplier-snapshots", response_model=list[SupplierSnapshotRead])
+async def list_supplier_snapshots(
+    supplier_id: uuid.UUID | None = None,
+    source_id: uuid.UUID | None = None,
+    status_filter: SupplierSnapshotStatus | None = None,
+    snapshot_type: SupplierSnapshotType | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[SupplierSnapshot]:
+    statement = select(SupplierSnapshot).order_by(SupplierSnapshot.captured_at.desc()).limit(min(limit, 500))
+    if supplier_id is not None:
+        statement = statement.where(SupplierSnapshot.supplier_id == supplier_id)
+    if source_id is not None:
+        statement = statement.where(SupplierSnapshot.source_id == source_id)
+    if status_filter is not None:
+        statement = statement.where(SupplierSnapshot.status == status_filter)
+    if snapshot_type is not None:
+        statement = statement.where(SupplierSnapshot.snapshot_type == snapshot_type)
+    return list(await session.scalars(statement))
+
+
+@router.get("/supplier-snapshots/{snapshot_id}", response_model=SupplierSnapshotRead)
+async def get_supplier_snapshot(
+    snapshot_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> SupplierSnapshot:
+    snapshot = await session.get(SupplierSnapshot, snapshot_id)
+    if snapshot is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="SupplierSnapshot not found")
+    return snapshot
+
+
+@router.post("/supplier-snapshots/{snapshot_id}/process", response_model=ProcessSnapshotSummary)
+async def process_supplier_snapshot(snapshot_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
+    try:
+        return await process_snapshot(session, snapshot_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/supplier-snapshots/{snapshot_id}/items", response_model=list[SupplierSnapshotItemRead])
+async def list_supplier_snapshot_items(
+    snapshot_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> list[SupplierSnapshotItem]:
+    return list(
+        await session.scalars(
+            select(SupplierSnapshotItem)
+            .where(SupplierSnapshotItem.snapshot_id == snapshot_id)
+            .order_by(SupplierSnapshotItem.created_at)
+        )
+    )
 
 
 @router.get("/match-reviews", response_model=list[MatchReviewRead])

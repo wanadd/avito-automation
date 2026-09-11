@@ -38,6 +38,15 @@ class SupplierOffer(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     source_updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     first_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     last_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    consecutive_missing_count: Mapped[int] = mapped_column(default=0, server_default="0")
+    last_seen_snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("supplier_snapshots.id"), nullable=True
+    )
+    last_missing_snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("supplier_snapshots.id"), nullable=True
+    )
+    last_availability_change_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_processed_snapshot_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     supplier = relationship("Supplier", back_populates="offers")
     product_variant = relationship("ProductVariant", back_populates="offers")

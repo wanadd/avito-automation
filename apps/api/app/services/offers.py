@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.audit_log import AuditLog
 from app.models.conflict import DataConflict
-from app.models.enums import ConflictStatus
+from app.models.enums import Availability, ConflictStatus
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
 from app.schemas.supplier_offer import SupplierOfferCreate
 
@@ -54,10 +54,12 @@ async def upsert_supplier_offer(session: AsyncSession, payload: SupplierOfferCre
             return existing
 
     old = {"price_minor": offer.price_minor, "availability": offer.availability.value}
-    changed = offer.price_minor != payload.price_minor or offer.availability != payload.availability
+    availability_changed = payload.availability != Availability.UNKNOWN and offer.availability != payload.availability
+    changed = offer.price_minor != payload.price_minor or availability_changed
     if changed:
         offer.price_minor = payload.price_minor
-        offer.availability = payload.availability
+        if availability_changed:
+            offer.availability = payload.availability
         offer.supplier_title = payload.supplier_title
         offer.currency = payload.currency
         offer.source_id = payload.source_id
@@ -68,7 +70,7 @@ async def upsert_supplier_offer(session: AsyncSession, payload: SupplierOfferCre
             SupplierOfferSnapshot(
                 supplier_offer_id=offer.id,
                 price_minor=payload.price_minor,
-                availability=payload.availability,
+                availability=offer.availability,
                 source_record_id=payload.source_record_id,
             )
         )
@@ -78,7 +80,7 @@ async def upsert_supplier_offer(session: AsyncSession, payload: SupplierOfferCre
                 entity_id=offer.id,
                 action="UPDATED",
                 old_value=old,
-                new_value={"price_minor": payload.price_minor, "availability": payload.availability.value},
+                new_value={"price_minor": payload.price_minor, "availability": offer.availability.value},
                 actor_type="system",
             )
         )

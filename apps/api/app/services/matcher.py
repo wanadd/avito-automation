@@ -369,21 +369,19 @@ def auto_create_allowed(item: ParsedSupplierItem) -> bool:
 
 
 async def get_or_create_product(session: AsyncSession, item: ParsedSupplierItem) -> tuple[Product, bool]:
-    existing = await session.scalar(
-        select(Product).where(Product.brand == item.brand_normalized, Product.canonical_name == item.model_normalized)
-    )
+    brand = item.brand_normalized
+    canonical_name = item.model_normalized
+    existing = await session.scalar(select(Product).where(Product.brand == brand, Product.canonical_name == canonical_name))
     if existing:
         return existing, False
-    product = Product(brand=item.brand_normalized, canonical_name=item.model_normalized, category="smartphone")
+    product = Product(brand=brand, canonical_name=canonical_name, category="smartphone")
     session.add(product)
     try:
         await session.flush()
         return product, True
     except IntegrityError:
         await session.rollback()
-        existing = await session.scalar(
-            select(Product).where(Product.brand == item.brand_normalized, Product.canonical_name == item.model_normalized)
-        )
+        existing = await session.scalar(select(Product).where(Product.brand == brand, Product.canonical_name == canonical_name))
         if existing is None:
             raise
         return existing, False
@@ -391,18 +389,25 @@ async def get_or_create_product(session: AsyncSession, item: ParsedSupplierItem)
 
 async def get_or_create_variant(session: AsyncSession, product: Product, item: ParsedSupplierItem) -> tuple[ProductVariant, bool]:
     canonical_key = variant_canonical_key(product, item)
+    manufacturer_model_code = item.manufacturer_model_code
+    ram_gb = item.ram_gb
+    storage_gb = item.storage_gb
+    color_raw = item.color_raw
+    color_normalized = item.color_normalized
+    region_code = item.region_code
+    condition = effective_condition(item)
     existing = await session.scalar(select(ProductVariant).where(ProductVariant.canonical_key == canonical_key))
     if existing:
         return existing, False
     variant = ProductVariant(
         product_id=product.id,
-        manufacturer_model_code=item.manufacturer_model_code,
-        ram_gb=item.ram_gb,
-        storage_gb=item.storage_gb,
-        color_raw=item.color_raw,
-        color_normalized=item.color_normalized,
-        region_code=item.region_code,
-        condition=effective_condition(item),
+        manufacturer_model_code=manufacturer_model_code,
+        ram_gb=ram_gb,
+        storage_gb=storage_gb,
+        color_raw=color_raw,
+        color_normalized=color_normalized,
+        region_code=region_code,
+        condition=condition,
         canonical_key=canonical_key,
     )
     session.add(variant)
@@ -428,10 +433,11 @@ async def finalize_match(
     created_product: bool = False,
     created_variant: bool = False,
 ) -> MatchResult:
+    supplier_sku = str(candidate.variant.id)
     existing_offer = await session.scalar(
         select(SupplierOffer).where(
             SupplierOffer.supplier_id == item.supplier_id,
-            SupplierOffer.supplier_sku == str(item.id),
+            SupplierOffer.supplier_sku == supplier_sku,
         )
     )
     offer = await upsert_supplier_offer(
@@ -440,7 +446,7 @@ async def finalize_match(
             supplier_id=item.supplier_id,
             product_variant_id=candidate.variant.id,
             source_id=item.source_id,
-            supplier_sku=str(item.id),
+            supplier_sku=supplier_sku,
             supplier_title=item.raw_line,
             price_minor=item.price_minor,
             currency=item.currency,

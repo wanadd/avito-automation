@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
     app_env: str = "local"
     log_level: str = "INFO"
+    supplier_missing_snapshots_to_out_of_stock: int = 2
+    snapshot_min_valid_item_ratio: float = 0.50
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
@@ -15,4 +17,3 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
-

@@ -139,6 +139,7 @@ Variant-defining attributes:
 - Required when available: product identity and storage.
 - Significant when present: RAM, manufacturer model code, region, color, condition.
 - Region, color, and condition are significant SKU attributes in v1.
+- Missing condition is unknown, not `NEW`. Unknown condition can match another unknown-condition variant by the other strong attributes, but it does not exact-match known `NEW`, `USED`, or `REFURBISHED` variants.
 
 Auto-create policy:
 
@@ -164,4 +165,34 @@ Known limitations:
 
 - No LLM, external AI, Telegram API, Avito API, website scraping, 1C, pricing engine, competitor parser, UI, sales, or accounting integration.
 - Matcher v1 is conservative; uncertain or fuzzy cases go to review.
-- When parsed condition is missing but auto-create is otherwise safe, v1 creates a `NEW` variant as a temporary matcher policy until supplier default condition configuration exists.
+- Supplier default condition configuration is not implemented yet. Only a future explicit supplier/source default may convert missing condition into a concrete condition.
+
+## Supplier Snapshot & Availability v1
+
+Sprint 0.4 adds supplier snapshot ingestion on top of parser and matcher output. A `SupplierSnapshot` represents one supplier/source raw price-list run and has type `FULL` or `PARTIAL`.
+
+API:
+
+- `POST /api/v1/supplier-snapshots` creates or reuses a snapshot for the same supplier/source/raw record.
+- `POST /api/v1/supplier-snapshots/{snapshot_id}/process` parses, matches, records per-line snapshot items, and applies availability rules.
+- `GET /api/v1/supplier-snapshots` lists snapshots with optional supplier/source/status/type filters.
+- `GET /api/v1/supplier-snapshots/{snapshot_id}` reads one snapshot.
+- `GET /api/v1/supplier-snapshots/{snapshot_id}/items` reads the per-line processing result.
+
+Availability policy:
+
+- Seen offers in a processed snapshot move to `IN_STOCK` and reset `consecutive_missing_count`.
+- In a valid `FULL` snapshot, supplier offers absent from the snapshot increment `consecutive_missing_count`.
+- The first missing full snapshot moves an in-stock or unknown offer to `SUSPECT_MISSING`.
+- At `SUPPLIER_MISSING_SNAPSHOTS_TO_OUT_OF_STOCK` consecutive missing full snapshots, the offer moves to `OUT_OF_STOCK`.
+- A later seen offer restores to `IN_STOCK` and records a restore audit event.
+- `PARTIAL` snapshots update only seen offers and never mark absent offers missing.
+- Older snapshots do not overwrite newer availability decisions.
+
+Quality gate:
+
+Malformed or empty `FULL` snapshots are rejected before stockout logic runs. Rejected snapshots keep per-line evidence, but they do not mark existing offers missing or out of stock.
+
+Idempotency and concurrency:
+
+Snapshot creation is idempotent by supplier/source/raw record. Processing a completed or rejected snapshot is read-only. Active processing is serialized by snapshot id so concurrent requests do not duplicate offers or line items.
