@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     source_error_failure_threshold: int = 3
     source_stale_multiplier: int = 3
     redis_lock_ttl_seconds: int = 300
+    one_c_default_currency: str = "RUB"
+    one_c_min_valid_row_ratio: float = 0.90
+    one_c_max_missing_ratio: float = 0.50
+    one_c_min_full_export_rows: int = 1
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

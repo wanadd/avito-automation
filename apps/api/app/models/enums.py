@@ -6,6 +6,7 @@ class SourceType(StrEnum):
     WEBSITE = "WEBSITE"
     MANUAL = "MANUAL"
     IMPORT = "IMPORT"
+    ONE_C = "ONE_C"
 
 
 class ProcessingStatus(StrEnum):
@@ -123,3 +124,35 @@ class SourceCollectionJobType(StrEnum):
     MANUAL_INCREMENTAL = "MANUAL_INCREMENTAL"
     MANUAL_BACKFILL = "MANUAL_BACKFILL"
     RETRY = "RETRY"
+
+
+class OneCItemMatchStatus(StrEnum):
+    MATCHED = "MATCHED"
+    UNMATCHED = "UNMATCHED"
+    AMBIGUOUS = "AMBIGUOUS"
+    IGNORED = "IGNORED"
+
+
+class OneCItemMatchStrategy(StrEnum):
+    MANUAL = "MANUAL"
+    INTERNAL_CODE = "INTERNAL_CODE"
+    BARCODE_EXACT = "BARCODE_EXACT"
+    SKU_EXACT = "SKU_EXACT"
+    MODEL_CODE_EXACT = "MODEL_CODE_EXACT"
+    NAME_EXACT = "NAME_EXACT"
+    FUZZY_NAME = "FUZZY_NAME"
+
+
+class OneCImportRunStatus(StrEnum):
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    COMPLETED = "COMPLETED"
+    COMPLETED_WITH_WARNINGS = "COMPLETED_WITH_WARNINGS"
+    FAILED = "FAILED"
+    REJECTED = "REJECTED"
+    DUPLICATE = "DUPLICATE"
+
+
+class OneCImportMode(StrEnum):
+    FULL = "FULL"
+    PARTIAL = "PARTIAL"

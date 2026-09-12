@@ -354,3 +354,93 @@ Known limitations:
 - No website collector, Avito, 1C, OCR, LLM, notification system, frontend admin, Kubernetes, or real-time Telegram listener.
 - Manual job priority is FIFO in v1.
 - Permanent auth/access failures do not silently disable a source.
+
+## 1C Read-only Stock & Cost Import v1
+
+Sprint 0.7 adds a strict read-only 1C export importer for own inventory state. The importer accepts only external JSON or CSV files; it does not connect to a 1C database, file base, COM automation, OData write API, documents, sales, customers, orders, reserves, payments, taxes, or cash-register data.
+
+Supported fields:
+
+- `internal_code` as the stable 1C identity.
+- optional `sku` and `barcode`.
+- `name` as raw evidence plus normalized name.
+- `stock_total` as integer units.
+- optional `stock_by_store`.
+- `cost` stored as `cost_minor`.
+- `currency`, currently `RUB`.
+- `updated_at`, with root `exported_at` or import timestamp as fallback.
+
+JSON contract:
+
+```json
+{
+  "exported_at": "2026-09-11T14:30:00+03:00",
+  "source": "1c",
+  "items": [
+    {
+      "internal_code": "000123",
+      "sku": "SM-S938B-256-SB",
+      "barcode": "880609...",
+      "name": "Samsung Galaxy S25 Ultra 12/256 Silverblue",
+      "stock_total": 2,
+      "cost": "65300.00",
+      "currency": "RUB"
+    }
+  ]
+}
+```
+
+CSV contract:
+
+```text
+internal_code,sku,barcode,name,stock_total,cost,currency,updated_at
+```
+
+CSV supports UTF-8, UTF-8 BOM, Windows-1251, comma delimiters, and semicolon delimiters. Cost parsing uses `Decimal` and accepts values such as `65300`, `65300.00`, `65300,00`, and `65 300,00`. Invalid stock, fractional stock, missing `internal_code`, negative cost, unsupported currency, and unknown schema fields are rejected for the row or file; values are never clamped silently.
+
+Import APIs:
+
+- `POST /api/v1/1c/import` with multipart `file`, `mode=FULL|PARTIAL`, and `dry_run=true|false`.
+- `GET /api/v1/1c/import-runs`.
+- `GET /api/v1/1c/import-runs/{id}`.
+- `GET /api/v1/1c/items`.
+- `GET /api/v1/1c/items/{id}`.
+- `POST /api/v1/1c/items/{id}/map`.
+- `DELETE /api/v1/1c/items/{id}/map`.
+- `GET /api/v1/inventory`.
+- `GET /api/v1/variants/{variant_id}/inventory`.
+
+CLI:
+
+```bash
+python -m app.integrations.one_c.cli import-file ./export.json --mode FULL --dry-run
+```
+
+Matcher behavior:
+
+- Existing explicit `internal_code -> ProductVariant` mapping wins and is not fuzzy-rematched.
+- Exact barcode/SKU matching uses existing variant aliases.
+- Exact manufacturer model code and high-confidence deterministic name matching may auto-match.
+- Ambiguous candidates are blocked for review.
+- Unknown 1C rows create `OneCItem` records as `UNMATCHED`; the importer does not auto-create `Product` or `ProductVariant`.
+
+Inventory behavior:
+
+- Own stock/cost lives in `VariantInventoryState` and is separate from supplier availability in `SupplierOffer`.
+- `VariantStockSnapshot` and `VariantCostSnapshot` are written only for first value or actual changes.
+- Unchanged rows update source item visibility without history spam.
+- Out-of-order imports do not regress current inventory state.
+- If stock becomes zero, last known cost is retained.
+
+FULL/PARTIAL safety:
+
+- `PARTIAL` missing rows mean nothing and never zero stock.
+- `FULL` missing rows may set own stock to zero only after quality gates.
+- Empty or low-quality FULL imports are rejected.
+- Mass-zero protection rejects a FULL import when missing mapped active items exceed `ONE_C_MAX_MISSING_RATIO`.
+- Dry-run imports report prospective stock, cost, and missing-zero counts without mutating current inventory or history.
+
+Known limitations:
+
+- No direct 1C connection, file watcher, COM, write sync, sales/documents/customers/orders/reserves, Avito, pricing engine, LLM, OCR, or frontend admin.
+- SKU and barcode exact matching use `ProductAlias` until the catalog model grows first-class fields.

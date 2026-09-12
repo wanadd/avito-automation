@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -8,6 +8,7 @@ from app.db.session import get_db_session
 from app.integrations.telegram.client import build_telegram_adapter
 from app.integrations.telegram.collector import check_telegram_source
 from app.integrations.telegram.types import TelegramClientAdapter
+from app.integrations.one_c.importer import import_one_c_file, map_one_c_item, unmap_one_c_item
 from app.jobs.queue import QueueAdapter, RQQueueAdapter
 from app.jobs.service import create_manual_job, operations_status, retry_failed_job, source_status
 from app.models.conflict import DataConflict
@@ -15,11 +16,15 @@ from app.models.enums import (
     ReviewStatus,
     SourceCollectionJobStatus,
     SourceCollectionJobType,
+    OneCImportMode,
+    OneCImportRunStatus,
+    OneCItemMatchStatus,
     SupplierSnapshotStatus,
     SupplierSnapshotType,
     TelegramCollectionRunStatus,
 )
 from app.models.match_review import MatchReview
+from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.raw_source_record import RawSourceRecord
@@ -31,6 +36,7 @@ from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.models.telegram_collection import TelegramCollectionRun
 from app.schemas.conflict import DataConflictRead
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
+from app.schemas.one_c import InventoryListItem, InventoryStateRead, OneCImportRunRead, OneCItemRead, OneCMapRequest, VariantInventoryRead
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
 from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummary
 from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecordRead
@@ -226,6 +232,135 @@ async def retry_source_collection_job(
 @router.get("/operations/status", response_model=OperationsStatusRead)
 async def get_operations_status(session: AsyncSession = Depends(get_db_session)) -> dict:
     return await operations_status(session)
+
+
+@router.post("/1c/import", response_model=OneCImportRunRead)
+async def import_one_c_export(
+    file: UploadFile = File(...),
+    mode: OneCImportMode = OneCImportMode.PARTIAL,
+    dry_run: bool = False,
+    session: AsyncSession = Depends(get_db_session),
+) -> OneCImportRun:
+    content = await file.read()
+    try:
+        return await import_one_c_file(session, content, filename=file.filename, mode=mode, dry_run=dry_run)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/1c/import-runs", response_model=list[OneCImportRunRead])
+async def list_one_c_import_runs(
+    status_filter: OneCImportRunStatus | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[OneCImportRun]:
+    statement = select(OneCImportRun).order_by(OneCImportRun.created_at.desc()).limit(min(limit, 500))
+    if status_filter is not None:
+        statement = statement.where(OneCImportRun.status == status_filter)
+    return list(await session.scalars(statement))
+
+
+@router.get("/1c/import-runs/{run_id}", response_model=OneCImportRunRead)
+async def get_one_c_import_run(run_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> OneCImportRun:
+    run = await session.get(OneCImportRun, run_id)
+    if run is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="OneCImportRun not found")
+    return run
+
+
+@router.get("/1c/items", response_model=list[OneCItemRead])
+async def list_one_c_items(
+    match_status: OneCItemMatchStatus | None = None,
+    internal_code: str | None = None,
+    search: str | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[OneCItem]:
+    statement = select(OneCItem).order_by(OneCItem.internal_code).limit(min(limit, 500))
+    if match_status is not None:
+        statement = statement.where(OneCItem.match_status == match_status)
+    if internal_code is not None:
+        statement = statement.where(OneCItem.internal_code == internal_code)
+    if search is not None:
+        statement = statement.where(OneCItem.normalized_name.contains(search.lower()))
+    return list(await session.scalars(statement))
+
+
+@router.get("/1c/items/{item_id}", response_model=OneCItemRead)
+async def get_one_c_item(item_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> OneCItem:
+    item = await session.get(OneCItem, item_id)
+    if item is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="OneCItem not found")
+    return item
+
+
+@router.post("/1c/items/{item_id}/map", response_model=OneCItemRead)
+async def map_one_c_item_endpoint(
+    item_id: uuid.UUID, payload: OneCMapRequest, session: AsyncSession = Depends(get_db_session)
+) -> OneCItem:
+    try:
+        return await map_one_c_item(session, item_id, payload.variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.delete("/1c/items/{item_id}/map", response_model=OneCItemRead)
+async def unmap_one_c_item_endpoint(item_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> OneCItem:
+    try:
+        return await unmap_one_c_item(session, item_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/inventory", response_model=list[InventoryListItem])
+async def list_inventory(
+    variant_id: uuid.UUID | None = None,
+    in_stock_only: bool = False,
+    search: str | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[dict]:
+    statement = select(VariantInventoryState, ProductVariant).join(ProductVariant)
+    if variant_id is not None:
+        statement = statement.where(VariantInventoryState.variant_id == variant_id)
+    if in_stock_only:
+        statement = statement.where(VariantInventoryState.own_stock_total > 0)
+    if search is not None:
+        statement = statement.join(Product).where(Product.canonical_name.ilike(f"%{search}%"))
+    rows = (await session.execute(statement.limit(min(limit, 500)))).all()
+    return [{"state": state, "variant": variant} for state, variant in rows]
+
+
+@router.get("/variants/{variant_id}/inventory", response_model=VariantInventoryRead)
+async def get_variant_inventory(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
+    state = await session.get(VariantInventoryState, variant_id)
+    stock = list(
+        await session.scalars(
+            select(VariantStockSnapshot)
+            .where(VariantStockSnapshot.variant_id == variant_id)
+            .order_by(VariantStockSnapshot.created_at.desc())
+            .limit(20)
+        )
+    )
+    cost = list(
+        await session.scalars(
+            select(VariantCostSnapshot)
+            .where(VariantCostSnapshot.variant_id == variant_id)
+            .order_by(VariantCostSnapshot.created_at.desc())
+            .limit(20)
+        )
+    )
+    return {
+        "state": state,
+        "recent_stock": [
+            {"id": snap.id, "stock_total": snap.stock_total, "source_updated_at": snap.source_updated_at}
+            for snap in stock
+        ],
+        "recent_cost": [
+            {"id": snap.id, "cost_minor": snap.cost_minor, "currency": snap.currency, "source_updated_at": snap.source_updated_at}
+            for snap in cost
+        ],
+    }
 
 
 @router.post("/sources/{source_id}/telegram-test", response_model=TelegramSourceTestResult)

@@ -2,6 +2,7 @@ from app.models.audit_log import AuditLog
 from app.models.base import Base
 from app.models.conflict import DataConflict
 from app.models.match_review import MatchReview
+from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.product import Product, ProductAlias, ProductVariant
 from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
