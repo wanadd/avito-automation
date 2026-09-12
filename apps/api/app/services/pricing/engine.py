@@ -248,6 +248,8 @@ async def persist_decision(session: AsyncSession, variant_id: uuid.UUID, decisio
 
 async def set_manual_price(session: AsyncSession, variant_id: uuid.UUID, manual_price_minor: int, note: str | None = None) -> VariantPricingOverride:
     override = await session.get(VariantPricingOverride, variant_id)
+    existing_state = await session.get(VariantPricingState, variant_id)
+    recalculation_time = existing_state.calculated_at if existing_state else None
     if override is None:
         override = VariantPricingOverride(product_variant_id=variant_id)
     old = {"manual_price_minor": override.manual_price_minor, "manual_mode_enabled": override.manual_mode_enabled}
@@ -257,8 +259,9 @@ async def set_manual_price(session: AsyncSession, variant_id: uuid.UUID, manual_
     session.add(override)
     session.add(AuditLog(entity_type="ProductVariant", entity_id=variant_id, action="PRICING_MANUAL_OVERRIDE_SET", old_value=old, new_value={"manual_price_minor": manual_price_minor}, actor_type="USER"))
     await session.commit()
+    session.expire_all()
     await session.refresh(override)
-    await recalculate_variant_pricing(session, variant_id)
+    await recalculate_variant_pricing(session, variant_id, now=recalculation_time)
     return override
 
 
@@ -266,11 +269,14 @@ async def clear_manual_price(session: AsyncSession, variant_id: uuid.UUID) -> No
     override = await session.get(VariantPricingOverride, variant_id)
     if override is None:
         return
+    existing_state = await session.get(VariantPricingState, variant_id)
+    recalculation_time = existing_state.calculated_at if existing_state else None
     old = {"manual_price_minor": override.manual_price_minor, "manual_mode_enabled": override.manual_mode_enabled}
     await session.delete(override)
     session.add(AuditLog(entity_type="ProductVariant", entity_id=variant_id, action="PRICING_MANUAL_OVERRIDE_REMOVED", old_value=old, new_value=None, actor_type="USER"))
     await session.commit()
-    await recalculate_variant_pricing(session, variant_id)
+    session.expire_all()
+    await recalculate_variant_pricing(session, variant_id, now=recalculation_time)
 
 
 def policy_to_input(policy: PricingPolicy) -> PricingPolicyInput:

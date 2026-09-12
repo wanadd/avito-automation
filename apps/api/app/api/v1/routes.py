@@ -12,7 +12,9 @@ from app.integrations.one_c.importer import import_one_c_file, map_one_c_item, u
 from app.jobs.queue import QueueAdapter, RQQueueAdapter
 from app.jobs.service import create_manual_job, operations_status, retry_failed_job, source_status
 from app.models.conflict import DataConflict
+from app.models.content import ProductContentDraft
 from app.models.enums import (
+    GenericReadinessStatus,
     ReviewStatus,
     SourceCollectionJobStatus,
     SourceCollectionJobType,
@@ -36,6 +38,19 @@ from app.models.supplier_offer import SupplierOffer
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.models.telegram_collection import TelegramCollectionRun
 from app.schemas.conflict import DataConflictRead
+from app.schemas.content import (
+    BulkContentResult,
+    GenericListingDraftRead,
+    ImageAssetCreate,
+    ImageSetCreate,
+    ManualFactOverrideRequest,
+    ProductContentDraftRead,
+    ProductContentFactsRead,
+    ProductFactOverrideRead,
+    ProductImageAssetRead,
+    ProductImageSetRead,
+    RejectContentRequest,
+)
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.one_c import InventoryListItem, InventoryStateRead, OneCImportRunRead, OneCItemRead, OneCMapRequest, VariantInventoryRead
 from app.schemas.pricing import (
@@ -79,6 +94,26 @@ from app.services.pricing.engine import (
     recalculate_variant_pricing,
     set_manual_price,
     update_pricing_policy,
+)
+from app.services.content import (
+    approve_content_draft,
+    approve_image_set,
+    approve_listing,
+    build_generic_listing,
+    create_image_asset as create_content_image_asset,
+    create_image_set as create_content_image_set,
+    generate_content_draft,
+    latest_facts,
+    list_variant_drafts,
+    list_variant_image_sets,
+    list_variant_listings,
+    rebuild_content_facts,
+    recalculate_listing_readiness_bulk,
+    reject_content_draft,
+    set_manual_fact_override,
+    validate_content_draft,
+    validate_image_set,
+    validate_listing,
 )
 
 router = APIRouter(prefix="/api/v1")
@@ -614,6 +649,166 @@ async def get_variant(variant_id: uuid.UUID, session: AsyncSession = Depends(get
     if variant is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Variant not found")
     return variant
+
+
+@router.get("/content/variants/{variant_id}/facts", response_model=ProductContentFactsRead)
+async def get_content_facts(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    facts = await latest_facts(session, variant_id)
+    if facts is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="ProductContentFacts not found")
+    return facts
+
+
+@router.post("/content/variants/{variant_id}/facts/rebuild", response_model=ProductContentFactsRead)
+async def rebuild_content_facts_endpoint(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await rebuild_content_facts(session, variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/content/variants/{variant_id}/facts/manual-override", response_model=ProductFactOverrideRead)
+async def set_manual_fact_override_endpoint(
+    variant_id: uuid.UUID, payload: ManualFactOverrideRequest, session: AsyncSession = Depends(get_db_session)
+):
+    try:
+        return await set_manual_fact_override(session, variant_id, payload.field, payload.value, payload.operator, payload.reason)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/content/variants/{variant_id}/drafts", response_model=list[ProductContentDraftRead])
+async def list_content_drafts(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    return await list_variant_drafts(session, variant_id)
+
+
+@router.post("/content/variants/{variant_id}/generate", response_model=ProductContentDraftRead)
+async def generate_content_endpoint(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await generate_content_draft(session, variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/content/drafts/{draft_id}", response_model=ProductContentDraftRead)
+async def get_content_draft(draft_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    draft = await session.get(ProductContentDraft, draft_id)
+    if draft is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="ProductContentDraft not found")
+    return draft
+
+
+@router.post("/content/drafts/{draft_id}/validate", response_model=ProductContentDraftRead)
+async def validate_content_endpoint(draft_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await validate_content_draft(session, draft_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/content/drafts/{draft_id}/approve", response_model=ProductContentDraftRead)
+async def approve_content_endpoint(draft_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await approve_content_draft(session, draft_id)
+    except ValueError as exc:
+        code = status.HTTP_409_CONFLICT if str(exc) in {"STALE_FACTS", "CONTENT_INVALID"} else status.HTTP_404_NOT_FOUND
+        raise HTTPException(status_code=code, detail=str(exc)) from exc
+
+
+@router.post("/content/drafts/{draft_id}/reject", response_model=ProductContentDraftRead)
+async def reject_content_endpoint(
+    draft_id: uuid.UUID, payload: RejectContentRequest, session: AsyncSession = Depends(get_db_session)
+):
+    try:
+        return await reject_content_draft(session, draft_id, payload.reason)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/content/variants/{variant_id}/images", response_model=list[ProductImageSetRead])
+async def list_image_sets(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    return await list_variant_image_sets(session, variant_id)
+
+
+@router.post("/content/variants/{variant_id}/image-assets", response_model=ProductImageAssetRead, status_code=status.HTTP_201_CREATED)
+async def create_image_asset_endpoint(
+    variant_id: uuid.UUID, payload: ImageAssetCreate, session: AsyncSession = Depends(get_db_session)
+):
+    try:
+        return await create_content_image_asset(session, variant_id, **payload.model_dump())
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.post("/content/variants/{variant_id}/image-sets", response_model=ProductImageSetRead, status_code=status.HTTP_201_CREATED)
+async def create_image_set_endpoint(
+    variant_id: uuid.UUID, payload: ImageSetCreate, session: AsyncSession = Depends(get_db_session)
+):
+    try:
+        return await create_content_image_set(session, variant_id, payload.image_asset_ids, payload.cover_image_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.post("/content/image-sets/{image_set_id}/validate", response_model=ProductImageSetRead)
+async def validate_image_set_endpoint(image_set_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await validate_image_set(session, image_set_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/content/image-sets/{image_set_id}/approve", response_model=ProductImageSetRead)
+async def approve_image_set_endpoint(image_set_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await approve_image_set(session, image_set_id)
+    except ValueError as exc:
+        code = status.HTTP_409_CONFLICT if str(exc) == "IMAGE_SET_INVALID" else status.HTTP_404_NOT_FOUND
+        raise HTTPException(status_code=code, detail=str(exc)) from exc
+
+
+@router.get("/listings/variants/{variant_id}", response_model=list[GenericListingDraftRead])
+async def get_variant_listings(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    return await list_variant_listings(session, variant_id)
+
+
+@router.post("/listings/variants/{variant_id}/build", response_model=GenericListingDraftRead)
+async def build_listing_endpoint(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await build_generic_listing(session, variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/listings", response_model=list[GenericListingDraftRead])
+async def list_listings(
+    readiness: GenericReadinessStatus | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+):
+    return await list_variant_listings(session, status_filter=readiness, limit=limit)
+
+
+@router.post("/listings/{listing_id}/validate", response_model=GenericListingDraftRead)
+async def validate_listing_endpoint(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await validate_listing(session, listing_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/listings/{listing_id}/approve", response_model=GenericListingDraftRead)
+async def approve_listing_endpoint(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await approve_listing(session, listing_id)
+    except ValueError as exc:
+        code = status.HTTP_409_CONFLICT if str(exc) in {"PRICING_NOT_READY", "STALE_FACTS"} else status.HTTP_404_NOT_FOUND
+        raise HTTPException(status_code=code, detail=str(exc)) from exc
+
+
+@router.post("/listings/bulk/recalculate", response_model=BulkContentResult)
+async def bulk_recalculate_listings(session: AsyncSession = Depends(get_db_session)):
+    return await recalculate_listing_readiness_bulk(session)
 
 
 @router.post("/supplier-offers", response_model=SupplierOfferRead, status_code=status.HTTP_201_CREATED)

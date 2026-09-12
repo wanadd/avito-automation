@@ -1,6 +1,15 @@
 from app.models.audit_log import AuditLog
 from app.models.base import Base
 from app.models.conflict import DataConflict
+from app.models.content import (
+    GenericListingDraft,
+    ProductContentDraft,
+    ProductContentFacts,
+    ProductFactOverride,
+    ProductImageAsset,
+    ProductImageSet,
+    ProductImageSetItem,
+)
 from app.models.match_review import MatchReview
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.parsed_supplier_item import ParsedSupplierItem

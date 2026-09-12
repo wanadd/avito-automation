@@ -197,6 +197,27 @@ Idempotency and concurrency:
 
 Snapshot creation is idempotent by supplier/source/raw record. Processing a completed or rejected snapshot is read-only. Active processing is serialized by snapshot id so concurrent requests do not duplicate offers or line items.
 
+## Generic Content & Listing Engine
+
+Sprint 0.9 adds an internal preparation pipeline for marketplace-ready content without pretending that the Avito listing contract is known:
+
+```text
+ProductVariant
+-> ProductContentFacts
+-> ProductContentDraft
+-> ProductImageSet
+-> GenericListingDraft
+-> Review / Approval
+```
+
+The fact layer stores only trusted structured evidence with provenance and a deterministic `fact_hash`. AI output is not a valid factual source. Missing values remain unknown; for example nullable `ProductVariant.condition` stays `UNKNOWN` in content facts and is never defaulted to `NEW`.
+
+The copy layer can phrase and organize confirmed facts through the deterministic provider. It must not invent condition, warranty, package contents, region, availability, price, authenticity, certification, delivery, or other factual claims. Generated or manually edited drafts are validated against structured facts and high-risk unsupported claims before approval.
+
+The generic listing layer is internal. `generic_category` and `generic_attributes` are not Avito category IDs or Avito field names. `GENERIC READY` means approved content, approved images, valid current price, and acceptable stock/pricing state.
+
+`GENERIC READY` does not mean `AVITO READY`. The Avito adapter boundary exists only as a disabled interface and returns `DISABLED_CONTRACT_INCOMPLETE` until the Avito contract gate passes. Sprint 0.9 does not publish, prepare fake Avito payloads, call Avito, or add Avito publication endpoints.
+
 ## Telegram Supplier Collector v1
 
 Sprint 0.5 adds a Telegram MTProto collector using Telethon. Telegram becomes a raw evidence source only:
