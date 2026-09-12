@@ -25,6 +25,7 @@ from app.models.enums import (
 )
 from app.models.match_review import MatchReview
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
+from app.models.pricing import PricingDecisionHistory, PricingPolicy, VariantPricingState
 from app.models.product import Product, ProductVariant
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.raw_source_record import RawSourceRecord
@@ -37,6 +38,15 @@ from app.models.telegram_collection import TelegramCollectionRun
 from app.schemas.conflict import DataConflictRead
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.one_c import InventoryListItem, InventoryStateRead, OneCImportRunRead, OneCItemRead, OneCMapRequest, VariantInventoryRead
+from app.schemas.pricing import (
+    BulkPricingResult,
+    ManualPriceRequest,
+    PricingDecisionHistoryRead,
+    PricingPolicyCreate,
+    PricingPolicyPatch,
+    PricingPolicyRead,
+    VariantPricingStateRead,
+)
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
 from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummary
 from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecordRead
@@ -62,6 +72,14 @@ from app.services.products import create_variant
 from app.services.raw_records import create_raw_record
 from app.services.supplier_snapshots import create_snapshot as create_supplier_snapshot
 from app.services.supplier_snapshots import process_snapshot
+from app.services.pricing.engine import (
+    clear_manual_price,
+    create_pricing_policy,
+    recalculate_all_pricing,
+    recalculate_variant_pricing,
+    set_manual_price,
+    update_pricing_policy,
+)
 
 router = APIRouter(prefix="/api/v1")
 
@@ -232,6 +250,91 @@ async def retry_source_collection_job(
 @router.get("/operations/status", response_model=OperationsStatusRead)
 async def get_operations_status(session: AsyncSession = Depends(get_db_session)) -> dict:
     return await operations_status(session)
+
+
+@router.post("/pricing/policies", response_model=PricingPolicyRead, status_code=status.HTTP_201_CREATED)
+async def create_pricing_policy_endpoint(
+    payload: PricingPolicyCreate, session: AsyncSession = Depends(get_db_session)
+) -> PricingPolicy:
+    try:
+        return await create_pricing_policy(session, **payload.model_dump())
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/pricing/policies", response_model=list[PricingPolicyRead])
+async def list_pricing_policies(session: AsyncSession = Depends(get_db_session)) -> list[PricingPolicy]:
+    return list(await session.scalars(select(PricingPolicy).order_by(PricingPolicy.created_at)))
+
+
+@router.get("/pricing/policies/{policy_id}", response_model=PricingPolicyRead)
+async def get_pricing_policy(policy_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> PricingPolicy:
+    policy = await session.get(PricingPolicy, policy_id)
+    if policy is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="PricingPolicy not found")
+    return policy
+
+
+@router.patch("/pricing/policies/{policy_id}", response_model=PricingPolicyRead)
+async def patch_pricing_policy(
+    policy_id: uuid.UUID, payload: PricingPolicyPatch, session: AsyncSession = Depends(get_db_session)
+) -> PricingPolicy:
+    try:
+        return await update_pricing_policy(session, policy_id, payload.model_dump(exclude_unset=True))
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/pricing/variants/{variant_id}", response_model=VariantPricingStateRead)
+async def get_variant_pricing(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> VariantPricingState:
+    state = await session.get(VariantPricingState, variant_id)
+    if state is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="VariantPricingState not found")
+    return state
+
+
+@router.post("/pricing/variants/{variant_id}/recalculate", response_model=VariantPricingStateRead)
+async def recalculate_variant_pricing_endpoint(
+    variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> VariantPricingState:
+    try:
+        return await recalculate_variant_pricing(session, variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/pricing/variants/{variant_id}/history", response_model=list[PricingDecisionHistoryRead])
+async def get_variant_pricing_history(
+    variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)
+) -> list[PricingDecisionHistory]:
+    return list(
+        await session.scalars(
+            select(PricingDecisionHistory)
+            .where(PricingDecisionHistory.product_variant_id == variant_id)
+            .order_by(PricingDecisionHistory.created_at.desc())
+        )
+    )
+
+
+@router.put("/pricing/variants/{variant_id}/manual-price", response_model=VariantPricingStateRead)
+async def put_manual_price(
+    variant_id: uuid.UUID, payload: ManualPriceRequest, session: AsyncSession = Depends(get_db_session)
+) -> VariantPricingState:
+    await set_manual_price(session, variant_id, payload.manual_price_minor, payload.note)
+    state = await session.get(VariantPricingState, variant_id)
+    return state
+
+
+@router.delete("/pricing/variants/{variant_id}/manual-price", response_model=VariantPricingStateRead)
+async def delete_manual_price(variant_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> VariantPricingState:
+    await clear_manual_price(session, variant_id)
+    state = await session.get(VariantPricingState, variant_id)
+    return state
+
+
+@router.post("/pricing/recalculate", response_model=BulkPricingResult)
+async def recalculate_pricing(session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await recalculate_all_pricing(session)
 
 
 @router.post("/1c/import", response_model=OneCImportRunRead)

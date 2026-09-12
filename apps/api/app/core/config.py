@@ -30,6 +30,8 @@ class Settings(BaseSettings):
     one_c_min_valid_row_ratio: float = 0.90
     one_c_max_missing_ratio: float = 0.50
     one_c_min_full_export_rows: int = 1
+    supplier_offer_freshness_minutes: int = 180
+    price_rounding_step_minor: int = 10000
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
