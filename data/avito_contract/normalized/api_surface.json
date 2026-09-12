@@ -1,0 +1,82 @@
+[
+  {
+    "auth_type": "OAuth2",
+    "confidence": "PARTIAL",
+    "deprecated": false,
+    "evidence_url": "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+    "lifecycle": "LEGACY",
+    "method": "GET",
+    "operation_id": null,
+    "path": "/autoload/v1/accounts/{user_id}/items/{ad_id}",
+    "rate_limits": [],
+    "request_schema": null,
+    "required_scopes": [],
+    "response_schema": null,
+    "runtime_access": "AUTH_REQUIRED",
+    "source_type": "PUBLIC_API_MIRROR",
+    "summary": null,
+    "tags": [
+      "Autoload"
+    ]
+  },
+  {
+    "auth_type": "OAuth2",
+    "confidence": "PARTIAL",
+    "deprecated": false,
+    "evidence_url": "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+    "lifecycle": "LEGACY",
+    "method": "GET",
+    "operation_id": null,
+    "path": "/autoload/v1/accounts/{user_id}/reports",
+    "rate_limits": [],
+    "request_schema": null,
+    "required_scopes": [],
+    "response_schema": null,
+    "runtime_access": "AUTH_REQUIRED",
+    "source_type": "PUBLIC_API_MIRROR",
+    "summary": null,
+    "tags": [
+      "Autoload"
+    ]
+  },
+  {
+    "auth_type": "OAuth2",
+    "confidence": "PARTIAL",
+    "deprecated": false,
+    "evidence_url": "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+    "lifecycle": "LEGACY",
+    "method": "GET",
+    "operation_id": null,
+    "path": "/autoload/v1/accounts/{user_id}/reports/last_report",
+    "rate_limits": [],
+    "request_schema": null,
+    "required_scopes": [],
+    "response_schema": null,
+    "runtime_access": "AUTH_REQUIRED",
+    "source_type": "PUBLIC_API_MIRROR",
+    "summary": null,
+    "tags": [
+      "Autoload"
+    ]
+  },
+  {
+    "auth_type": "OAuth2",
+    "confidence": "PARTIAL",
+    "deprecated": false,
+    "evidence_url": "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+    "lifecycle": "LEGACY",
+    "method": "GET",
+    "operation_id": null,
+    "path": "/autoload/v1/accounts/{user_id}/reports/{reportId}",
+    "rate_limits": [],
+    "request_schema": null,
+    "required_scopes": [],
+    "response_schema": null,
+    "runtime_access": "AUTH_REQUIRED",
+    "source_type": "PUBLIC_API_MIRROR",
+    "summary": null,
+    "tags": [
+      "Autoload"
+    ]
+  }
+]

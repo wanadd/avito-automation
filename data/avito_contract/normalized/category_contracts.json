@@ -1,0 +1,162 @@
+[
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": "avito-mc-1104365",
+    "category_path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Мобильные телефоны"
+    ],
+    "category_slug": "avito-mc-1104365",
+    "conditional_fields": [],
+    "contract_completeness": "PARTIAL",
+    "display_name": "Мобильные телефоны",
+    "enum_fields": [],
+    "mapping_status": "PARTIAL_SOURCE_MATCH",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "SMARTPHONES"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": "avito-mc-48",
+    "category_path": [
+      "Все категории",
+      "Электроника",
+      "Планшеты и электронные книги"
+    ],
+    "category_slug": "avito-mc-48",
+    "conditional_fields": [],
+    "contract_completeness": "PARTIAL",
+    "display_name": "Планшеты и электронные книги",
+    "enum_fields": [],
+    "mapping_status": "PARTIAL_SOURCE_MATCH",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "TABLETS"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": "avito-mc-2304124",
+    "category_path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Смарт-часы и фитнес-браслеты"
+    ],
+    "category_slug": "avito-mc-2304124",
+    "conditional_fields": [],
+    "contract_completeness": "PARTIAL",
+    "display_name": "Смарт-часы и фитнес-браслеты",
+    "enum_fields": [],
+    "mapping_status": "PARTIAL_SOURCE_MATCH",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "WATCHES"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": "avito-mc-293",
+    "category_path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Наушники"
+    ],
+    "category_slug": "avito-mc-293",
+    "conditional_fields": [],
+    "contract_completeness": "PARTIAL",
+    "display_name": "Наушники",
+    "enum_fields": [],
+    "mapping_status": "PARTIAL_SOURCE_MATCH",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "HEADPHONES"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": null,
+    "category_path": [],
+    "category_slug": null,
+    "conditional_fields": [],
+    "contract_completeness": "BLOCKED_BY_AUTH",
+    "display_name": null,
+    "enum_fields": [],
+    "mapping_status": "UNCONFIRMED",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "LAPTOPS"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": null,
+    "category_path": [],
+    "category_slug": null,
+    "conditional_fields": [],
+    "contract_completeness": "BLOCKED_BY_AUTH",
+    "display_name": null,
+    "enum_fields": [],
+    "mapping_status": "UNCONFIRMED",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "POWER_STATIONS"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": null,
+    "category_path": [],
+    "category_slug": null,
+    "conditional_fields": [],
+    "contract_completeness": "BLOCKED_BY_AUTH",
+    "display_name": null,
+    "enum_fields": [],
+    "mapping_status": "UNCONFIRMED",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "GENERATORS"
+  },
+  {
+    "auth_locked_fields": [
+      "category_fields"
+    ],
+    "autoload_category_value": "avito-mc-282",
+    "category_path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Аксессуары"
+    ],
+    "category_slug": "avito-mc-282",
+    "conditional_fields": [],
+    "contract_completeness": "PARTIAL",
+    "display_name": "Аксессуары",
+    "enum_fields": [],
+    "mapping_status": "PARTIAL_SOURCE_MATCH",
+    "optional_fields": [],
+    "parent_category": null,
+    "required_fields": [],
+    "target": "ACCESSORIES"
+  }
+]

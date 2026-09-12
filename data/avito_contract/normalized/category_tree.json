@@ -1,0 +1,6211 @@
+[
+  {
+    "confidence": "PARTIAL",
+    "name": "Страхование",
+    "parent_slug": null,
+    "path": [
+      "Страхование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-115710",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Дезинфекция, дезинсекция, спецуборка",
+    "parent_slug": null,
+    "path": [
+      "Дезинфекция, дезинсекция, спецуборка"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-116608",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Полиграфия, наружная реклама",
+    "parent_slug": null,
+    "path": [
+      "Полиграфия, наружная реклама"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-123374",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ремонт спортинвентаря",
+    "parent_slug": null,
+    "path": [
+      "Ремонт спортинвентаря"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-150400",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Уход за животными",
+    "parent_slug": null,
+    "path": [
+      "Уход за животными"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-66863",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Охрана, безопасность",
+    "parent_slug": null,
+    "path": [
+      "Охрана, безопасность"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-66906",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Няни, сиделки",
+    "parent_slug": null,
+    "path": [
+      "Няни, сиделки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-66925",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Услуги эвакуатора",
+    "parent_slug": null,
+    "path": [
+      "Услуги эвакуатора"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-71631",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Водоёмы, бассейны, фонтаны",
+    "parent_slug": null,
+    "path": [
+      "Водоёмы, бассейны, фонтаны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77216",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Дорожное строительство",
+    "parent_slug": null,
+    "path": [
+      "Дорожное строительство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77217",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ограждения, навесы, рольставни",
+    "parent_slug": null,
+    "path": [
+      "Ограждения, навесы, рольставни"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77218",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Земляные работы",
+    "parent_slug": null,
+    "path": [
+      "Земляные работы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77219",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Озеленение, уход за садом и огородом",
+    "parent_slug": null,
+    "path": [
+      "Озеленение, уход за садом и огородом"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77324",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77326",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бурение, скважины, септики, колодцы",
+    "parent_slug": null,
+    "path": [
+      "Бурение, скважины, септики, колодцы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "autoload-template-77327",
+    "source_type": "OFFICIAL_TEMPLATE"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Всё для офисов",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Работа",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Работа"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-10",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Готовые строения и срубы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Готовые строения и срубы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1090296",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мобильные телефоны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Мобильные телефоны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1104365",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Навесное оборудование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Навесное оборудование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1114763",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1114991",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сумки, рюкзаки и чемоданы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Сумки, рюкзаки и чемоданы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1175239",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мужская обувь",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Мужская обувь"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1175240",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Женская обувь",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Женская обувь"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1175241",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шины для грузовиков и спецтехники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Шины для грузовиков и спецтехники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1177597",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Водный транспорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Водный транспорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-12",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автобизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Автобизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1210563",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Красота и здоровье",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Красота и здоровье"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1210564",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Туризм",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Туризм"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1210566",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Моторные масла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Моторные масла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286980",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Трансмиссионные масла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Трансмиссионные масла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286981",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Охлаждающие жидкости",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Охлаждающие жидкости"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286982",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Тормозные жидкости",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Тормозные жидкости"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286983",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Гидравлические жидкости",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Гидравлические жидкости"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286984",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Жидкости для омывателя стекла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Жидкости для омывателя стекла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286985",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Промывочные жидкости, присадки и смазки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Промывочные жидкости, присадки и смазки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286986",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другие масла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Другие масла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286987",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автокосметика и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Автокосметика и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286988",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Топливо",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия",
+      "Топливо"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1286989",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Майнинг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Майнинг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1287252",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Лабораторное",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Лабораторное"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1287255",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Медицинское",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Медицинское"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1287256",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Телекоммуникационное",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Телекоммуникационное"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-1287257",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автомобили",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Автомобили"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-14",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мотоциклы и мототехника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-15",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Грузовики и спецтехника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Грузовики и спецтехника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-16",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Запчасти и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Запчасти и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-17",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Продукты питания",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-18",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Растения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-19",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Транспорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бытовая техника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-20",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Прицепы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-200",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Багажники и фаркопы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-201",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "GPS-навигаторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "GPS-навигаторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-202",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Экипировка",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-203",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Инструменты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Инструменты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-204",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Противоугонные устройства",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Противоугонные устройства"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-205",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Логистика и склад",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Логистика и склад"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2059303",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для автобизнеса",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Для автобизнеса"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2059304",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-206",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Масла и автохимия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Масла и автохимия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-207",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аудио- и видеотехника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-209",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Моноблоки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Настольные компьютеры",
+      "Моноблоки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2093775",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Настольные компьютеры",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2093776",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Системные блоки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Настольные компьютеры",
+      "Системные блоки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2093777",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для мото- и водного транспорта",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Для мото- и водного транспорта"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097256",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Щётки стеклоочистителя",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Щётки стеклоочистителя"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097257",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для салона",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Для салона"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097258",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Защита и декор",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Защита и декор"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097259",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Набор автомобилиста",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Набор автомобилиста"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097260",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для колёс",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Для колёс"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097261",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Отопительное оборудование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Отопительное оборудование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097262",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Уход",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аксессуары",
+      "Уход"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097263",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары для автоакустики",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Аксессуары для автоакустики"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097557",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097558",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Магнитолы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Магнитолы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097559",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автоакустика",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Автоакустика"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097560",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Видеорегистраторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Видеорегистраторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097561",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Усилители",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Усилители"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097562",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Переходные рамки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Переходные рамки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097563",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Короба и подиумы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Аудио- и видеотехника",
+      "Короба и подиумы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097564",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Компьютерная помощь",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Компьютерная помощь"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2097572",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мебель и интерьер",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-21",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шины, диски и колёса",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-210",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Запчасти",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Запчасти"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-211",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Вёсельные лодки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Водный транспорт",
+      "Вёсельные лодки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-212",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Моторные лодки и моторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Водный транспорт",
+      "Моторные лодки и моторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-214",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Гидроциклы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Водный транспорт",
+      "Гидроциклы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-216",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Торговое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Торговое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2169964",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Катера и яхты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Водный транспорт",
+      "Катера и яхты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-217",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Франшизы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Готовый бизнес и франшизы",
+      "Франшизы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2179494",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мопеды и скутеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Мопеды и скутеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-218",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Квадроциклы и багги",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Квадроциклы и багги"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-219",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Посуда и товары для кухни",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Посуда и товары для кухни"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-22",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Вездеходы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Вездеходы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-220",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Снегоходы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Снегоходы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-221",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Картинг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Картинг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-223",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мотоциклы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Мотоциклы и мототехника",
+      "Мотоциклы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-224",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Красота и здоровье",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Красота и здоровье"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242397",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Производство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Производство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242398",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "IT бизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "IT бизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242399",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Арендный бизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Арендный бизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242400",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Общественное питание",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Общественное питание"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242401",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Строительство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Строительство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242402",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сфера услуг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Сфера услуг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242403",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Торговля",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Торговля"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242404",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автобизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Автобизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242405",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Пункты выдачи заказов",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Пункты выдачи заказов"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242406",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сельское хозяйство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Сельское хозяйство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242407",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сфера развлечений",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Сфера развлечений"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242408",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Туризм",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Франшизы",
+      "Туризм"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2242409",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сантехника, водоснабжение и сауна",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Сантехника, водоснабжение и сауна"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-225",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для сада и дачи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Для сада и дачи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-226",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Камины и обогреватели",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Камины и обогреватели"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-227",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ворота, заборы и ограждения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Ворота, заборы и ограждения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2271482",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Арендный бизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Арендный бизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2272218",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Пункты выдачи заказов",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Пункты выдачи заказов"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2272219",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Отели",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Путешествия",
+      "Отели"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2274594",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Охота",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Охота и рыбалка",
+      "Охота"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2279726",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рыбалка",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Охота и рыбалка",
+      "Рыбалка"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2279727",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Костюмы для охоты и рыбалки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Охота и рыбалка",
+      "Костюмы для охоты и рыбалки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2279728",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ножи, мультитулы, топоры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Охота и рыбалка",
+      "Ножи, мультитулы, топоры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2279729",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Стройматериалы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Стройматериалы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-228",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ремонт и строительство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Ремонт и строительство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-23",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Двери",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Двери"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-230",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Городские",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Городские"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2300668",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бортовые",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы",
+      "Бортовые"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301087",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для водного транспорта",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы",
+      "Для водного транспорта"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301088",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Эвакуаторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы",
+      "Эвакуаторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301089",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Запчасти и комплектующие",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы",
+      "Запчасти и комплектующие"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301090",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Прицепы",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301091",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для ухода за растениями",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Товары для ухода за растениями"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301273",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Панно и искусственные растения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Панно и искусственные растения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301274",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301275",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Комнатные растения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Комнатные растения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301276",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Букеты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Букеты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301277",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Садовые растения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Садовые растения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301278",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Семена, луковицы, клубни",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Растения",
+      "Семена, луковицы, клубни"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301279",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "ПО для бизнеса",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301496",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Чай, кофе, какао",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Чай, кофе, какао"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301604",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Специализированное питание",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Специализированное питание"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301605",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фрукты и ягоды",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Фрукты и ягоды"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301606",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Хлеб и выпечка",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Хлеб и выпечка"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301607",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Напитки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Напитки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301608",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бакалея",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Бакалея"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301609",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Молочные продукты, сыры, яйца",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Молочные продукты, сыры, яйца"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301610",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Овощи, грибы и зелень",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Овощи, грибы и зелень"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301611",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301612",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мёд и продукты пчеловодства",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Мёд и продукты пчеловодства"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301613",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мясо, птица, субпродукты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Мясо, птица, субпродукты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301614",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рыба, морепродукты, икра",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Рыба, морепродукты, икра"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301615",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кондитерские изделия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Продукты питания",
+      "Кондитерские изделия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301616",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Управление персоналом и обучение",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Управление персоналом и обучение"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301770",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Отраслевое ПО",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Отраслевое ПО"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301771",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Продажи и маркетинг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Продажи и маркетинг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301772",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аналитика",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Аналитика"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301773",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Безопасность",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Безопасность"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301774",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Управление предприятием и производством",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Управление предприятием и производством"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301775",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Управление IT инфраструктурой",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Управление IT инфраструктурой"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301776",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Офисное ПО",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Офисное ПО"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301777",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Закупки, склад, логистика",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "ПО для бизнеса",
+      "Закупки, склад, логистика"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301778",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рейлинги на крышу",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Рейлинги на крышу"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301860",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фаркопы и комплектующие",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Фаркопы и комплектующие"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301861",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Крепления для перевозки велосипедов и лыж",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Крепления для перевозки велосипедов и лыж"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301862",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Экспедиционные багажники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Экспедиционные багажники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301863",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автобоксы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Автобоксы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301864",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "КУНГ",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "КУНГ"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301865",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Поперечные дуги и комплектующие",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Багажники и фаркопы",
+      "Поперечные дуги и комплектующие"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2301866",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Садовая мебель",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Садовая мебель"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302729",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "БАДы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "БАДы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302769",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Самокаты и гироскутеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Самокаты и гироскутеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302796",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бег",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Бег"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302797",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Награды и кубки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Награды и кубки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302798",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Гимнастика и танцы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Гимнастика и танцы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302799",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Конный спорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Конный спорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302800",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Электровелосипеды",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Электровелосипеды"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302897",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Детская гигиена",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Детская гигиена"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2302987",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рыбы и рептилии",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных",
+      "Рыбы и рептилии"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303264",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фермерское хозяйство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных",
+      "Фермерское хозяйство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303265",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Собаки и кошки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных",
+      "Собаки и кошки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303266",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Грызуны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных",
+      "Грызуны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303267",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Птицы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных",
+      "Птицы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303268",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сим-карты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Сим-карты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303814",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Очки, маски",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Очки, маски"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303818",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303819",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рюкзаки и сумки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Рюкзаки и сумки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303820",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шлемы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Шлемы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303821",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Одежда",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Одежда"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303822",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Обувь",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Обувь"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303823",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Защита",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Защита"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303824",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Перчатки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Экипировка",
+      "Перчатки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2303825",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Потерянные и найденные животные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Потерянные и найденные животные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2304067",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Потерянные и найденные кошки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Потерянные и найденные животные",
+      "Потерянные и найденные кошки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2304082",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Потерянные и найденные собаки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Потерянные и найденные животные",
+      "Потерянные и найденные собаки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2304083",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Смарт-часы и фитнес-браслеты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Смарт-часы и фитнес-браслеты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-2304124",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Потолки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Потолки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-231",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Окна и балконы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Стройматериалы и сырье",
+      "Окна и балконы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-232",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Инструменты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Оборудование",
+      "Инструменты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-233",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Предметы интерьера, искусство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Предметы интерьера, искусство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-234",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-235",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шкафы, комоды и стеллажи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Шкафы, комоды и стеллажи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-236",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кровати, диваны и кресла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Кровати, диваны и кресла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-237",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Освещение",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Освещение"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-238",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Подставки и тумбы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Подставки и тумбы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-239",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Собаки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Собаки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-24",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Столы и стулья",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Столы и стулья"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-240",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Текстиль и ковры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Текстиль и ковры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-241",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кухонные гарнитуры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Мебель и интерьер",
+      "Кухонные гарнитуры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-242",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Компьютерные столы и кресла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Компьютерные столы и кресла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-243",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Климатическое оборудование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника",
+      "Климатическое оборудование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-244",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для индивидуального ухода",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника",
+      "Для индивидуального ухода"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-245",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для дома",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника",
+      "Для дома"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-246",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для кухни",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника",
+      "Для кухни"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-247",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Бытовая техника",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-248",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кошки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Кошки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-25",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Комнаты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Купить жильё",
+      "Комнаты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-251",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Снять долгосрочно",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Снять долгосрочно"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-254",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Каталог новостроек",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Купить жильё",
+      "Каталог новостроек"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-255",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Дома, дачи и коттеджи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Снять долгосрочно",
+      "Дома, дачи и коттеджи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-258",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Дома, дачи, коттеджи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Купить жильё",
+      "Дома, дачи, коттеджи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-259",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Птицы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Птицы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-26",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-265",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мужская одежда",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Мужская одежда"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-266",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Женская одежда",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары",
+      "Женская одежда"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-267",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Часы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Часы и украшения",
+      "Часы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-268",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ювелирные изделия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Часы и украшения",
+      "Ювелирные изделия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-269",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аквариум",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Аквариум"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-27",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бижутерия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Часы и украшения",
+      "Бижутерия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-270",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для мальчиков",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Детская одежда и обувь",
+      "Для мальчиков"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-271",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для девочек",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Детская одежда и обувь",
+      "Для девочек"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-272",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автомобильные кресла",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Автомобильные кресла"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-273",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Детская мебель",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Детская мебель"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-274",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игрушки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Игрушки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-275",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Детские коляски",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Детские коляски"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-276",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для кормления",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Товары для кормления"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-277",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Постельные принадлежности",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Постельные принадлежности"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-278",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для купания",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Товары для купания"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-279",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другие животные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-28",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для школы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Товары для школы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-280",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Самокаты и беговелы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Товары для детей и игрушки",
+      "Самокаты и беговелы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-281",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-282",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Музыка и фильмы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Музыка и фильмы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-283",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Видео, DVD и Blu-ray плееры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Видео, DVD и Blu-ray плееры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-284",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "MP3-плееры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "MP3-плееры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-285",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Усилители и ресиверы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Усилители и ресиверы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-286",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Телевизоры и проекторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Телевизоры и проекторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-287",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Видеокамеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Видеокамеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-288",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Акустика, колонки, сабвуферы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Акустика, колонки, сабвуферы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-289",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для животных",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Товары для животных"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-29",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кабели и адаптеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Кабели и адаптеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-290",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Микрофоны, радиосистемы и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Микрофоны, радиосистемы и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-291",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Музыкальные центры, магнитолы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Музыкальные центры, магнитолы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-292",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Наушники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео",
+      "Наушники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-293",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Цирк, кино",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Цирк, кино"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-294",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Карты, купоны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Карты, купоны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-295",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шоу, мюзикл",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Шоу, мюзикл"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-296",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Театр, опера, балет",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Театр, опера, балет"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-297",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Спорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Спорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-298",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Путешествия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Путешествия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-299",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для дома и дачи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Концерты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия",
+      "Концерты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-300",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "ВМХ",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "ВМХ"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-301",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шоссейные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Шоссейные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-302",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Детские",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Детские"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-303",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Горные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Горные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-304",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Запчасти и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды",
+      "Запчасти и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-305",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-306",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Банкноты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Банкноты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-307",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Билеты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Билеты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-308",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Вещи знаменитостей, автографы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Вещи знаменитостей, автографы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-309",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Военные вещи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Военные вещи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-310",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Документы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Документы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-311",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Жетоны, медали, значки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Жетоны, медали, значки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-312",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Игры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-313",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Календари",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Календари"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-314",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Киндер-сюрприз",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Киндер-сюрприз"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-315",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Конверты и почтовые карточки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Конверты и почтовые карточки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-317",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Марки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Марки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-318",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Модели, фигурки, куклы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Модели, фигурки, куклы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-319",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Монеты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Монеты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-320",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Открытки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Открытки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-321",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Пластиковые карточки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Пластиковые карточки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-322",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Пепельницы, зажигалки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Пепельницы, зажигалки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-323",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Спортивные карточки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Спортивные карточки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-324",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фотографии, письма",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Фотографии, письма"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-325",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Этикетки, бутылки, пробки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Этикетки, бутылки, пробки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-326",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Картины",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Картины"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-327",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Грампластинки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование",
+      "Грампластинки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-328",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-329",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Земельные участки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Недвижимость",
+      "Земельные участки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-33",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аккордеоны, гармони, баяны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Аккордеоны, гармони, баяны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-330",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Гитары и другие струнные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Гитары и другие струнные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-331",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для студии и концертов",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Для студии и концертов"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-332",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Духовые",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Духовые"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-333",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Клавишные и синтезаторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Клавишные и синтезаторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-334",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ударные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Ударные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-335",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Скрипки и другие смычковые",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты",
+      "Скрипки и другие смычковые"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-336",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ролики и скейтбординг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Ролики и скейтбординг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-337",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Настольные и карточные игры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Настольные и карточные игры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-338",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Теннис и бадминтон",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Теннис и бадминтон"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-339",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Гаражи и машиноместа",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Недвижимость",
+      "Гаражи и машиноместа"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-34",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Стрелковый спорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Стрелковый спорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-340",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Единоборства",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Единоборства"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-341",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бильярд и боулинг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Бильярд и боулинг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-342",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для отдыха",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Товары для отдыха"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-343",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фитнес и тренажёры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Фитнес и тренажёры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-344",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Туризм и отдых на природе",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Туризм и отдых на природе"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-345",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игры с мячом",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Игры с мячом"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-346",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Зимний спорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Зимний спорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-347",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Дайвинг и водный спорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Дайвинг и водный спорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-348",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Промышленное",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Промышленное"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-349",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Коммерческая недвижимость",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Недвижимость",
+      "Коммерческая недвижимость"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-35",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для салона красоты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Для салона красоты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-350",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Пищевое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Пищевое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-351",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Оборудование для бизнеса",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-354",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Зарубежная недвижимость",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Другие категории",
+      "Зарубежная недвижимость"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-36",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Одежда, обувь, аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Одежда, обувь, аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-37",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Квартиры посуточно",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Путешествия",
+      "Квартиры посуточно"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3768",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Квартиры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Снять долгосрочно",
+      "Квартиры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3769",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Лёгкий коммерческий транспорт",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Лёгкий коммерческий транспорт"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-377",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сельхозтехника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Сельхозтехника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-378",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Техника для лесозаготовки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Техника для лесозаготовки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-379",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Детская одежда и обувь",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Детская одежда и обувь"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-38",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Коммунальная техника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Коммунальная техника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-380",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Строительная техника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Строительная техника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-381",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автобусы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Автобусы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-382",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Склады",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Коммерческая недвижимость",
+      "Склады"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3823",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Торговые площади",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Коммерческая недвижимость",
+      "Торговые площади"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3824",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Каталог бизнес-центров",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Коммерческая недвижимость",
+      "Каталог бизнес-центров"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3826",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Свободного назначения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Коммерческая недвижимость",
+      "Свободного назначения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3827",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Грузовики",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Грузовики"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-383",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Комнаты и койко-места",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Путешествия",
+      "Комнаты и койко-места"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3833",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Комнаты и койко-места",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость",
+      "Снять долгосрочно",
+      "Комнаты и койко-места"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3834",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для водного транспорта",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Запчасти",
+      "Для водного транспорта"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3835",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для грузовиков и спецтехники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Запчасти",
+      "Для грузовиков и спецтехники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3836",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для мототехники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Запчасти",
+      "Для мототехники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3837",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Для автомобилей",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Запчасти",
+      "Для автомобилей"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3838",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автокраны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Автокраны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-384",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бульдозеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Бульдозеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-385",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Погрузчики",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Погрузчики"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-386",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Прицепы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Прицепы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-387",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Седельные тягачи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Седельные тягачи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-388",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Экскаваторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Экскаваторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-389",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для детей и игрушки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Товары",
+      "Товары для детей и игрушки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-39",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автодома",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Транспорт",
+      "Грузовики и спецтехника",
+      "Автодома"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-390",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Журналы, газеты, брошюры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Книги и журналы",
+      "Журналы, газеты, брошюры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-391",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Книги",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Книги и журналы",
+      "Книги"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-392",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Колпаки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Колпаки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3927",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Колёса",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Колёса"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3928",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Диски",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Диски"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3929",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Учебная литература",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Книги и журналы",
+      "Учебная литература"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-393",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мотошины",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Мотошины"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3930",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Шины",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Шины, диски и колёса",
+      "Шины"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-3931",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рации",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Рации"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-394",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Стационарные телефоны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Стационарные телефоны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-396",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Животные и товары для животных",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Товары",
+      "Животные и товары для животных"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Часы и украшения",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Часы и украшения"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-40",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Красота и здоровье",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Товары",
+      "Красота и здоровье"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-41",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аренда спецтехники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Аренда спецтехники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4128",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автосервисы для автомобилей",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Транспорт",
+      "Автосервисы для автомобилей"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4129",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-413",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аренда оборудования",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Оборудование",
+      "Аренда оборудования"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4149",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для компьютера",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Товары для компьютера"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-42",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Автосигнализации",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Противоугонные устройства",
+      "Автосигнализации"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4213",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Иммобилайзеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Противоугонные устройства",
+      "Иммобилайзеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4214",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Механические блокираторы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Противоугонные устройства",
+      "Механические блокираторы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4215",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Спутниковые системы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Запчасти и аксессуары",
+      "Противоугонные устройства",
+      "Спутниковые системы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-4216",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Посуда",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Посуда и товары для кухни",
+      "Посуда"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-427",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Товары для кухни",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Для дома и дачи",
+      "Посуда и товары для кухни",
+      "Товары для кухни"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-428",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Средства для волос",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Средства для волос"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-429",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аудио и видео",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Аудио и видео"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-43",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Уход и гигиена",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Уход и гигиена"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-430",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Медицинские изделия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Медицинские изделия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-431",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Парфюмерия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Парфюмерия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-432",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Макияж и маникюр",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Макияж и маникюр"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-434",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Монтаж оборудования",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Оборудование",
+      "Монтаж оборудования"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-43434",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Приборы и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи",
+      "Красота и здоровье",
+      "Приборы и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-435",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игры, приставки и программы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Игры, приставки и программы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-44",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Настольные компьютеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Настольные компьютеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-45",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Ноутбуки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Ноутбуки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-46",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Оргтехника и расходники",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Всё для офисов",
+      "Оргтехника и расходники"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-47",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Планшеты и электронные книги",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Планшеты и электронные книги"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-48",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Телефоны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Телефоны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-49",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Недвижимость",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Недвижимость"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-5",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Фототехника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-50",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Билеты и путешествия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Билеты и путешествия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-51",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Музыкальные инструменты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Музыкальные инструменты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-52",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Велосипеды",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Велосипеды"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-53",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Книги и журналы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Книги и журналы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-54",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Коллекционирование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Коллекционирование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-55",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Охота и рыбалка",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Охота и рыбалка"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-56",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Кролики",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Кролики"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-560",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Хорьки",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Хорьки"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-561",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Лошади",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Лошади"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-562",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сельскохозяйственные животные",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Сельскохозяйственные животные"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-563",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-564",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Рептилии",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Рептилии"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-565",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Грызуны",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Грызуны"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-566",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Амфибии",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Животные",
+      "Другие животные",
+      "Амфибии"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-567",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Планшеты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Планшеты и электронные книги",
+      "Планшеты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-569",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Спорт и отдых",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-57",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Электронные книги",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Планшеты и электронные книги",
+      "Электронные книги"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-570",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Планшеты и электронные книги",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-571",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Программы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Игры, приставки и программы",
+      "Программы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-572",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игры для приставок",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Игры, приставки и программы",
+      "Игры для приставок"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-573",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Компьютерные игры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Игры, приставки и программы",
+      "Компьютерные игры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-574",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Игровые приставки и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Игры, приставки и программы",
+      "Игровые приставки и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-575",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Принтеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "Принтеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-576",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Расходные материалы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "Расходные материалы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-577",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Канцелярия",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "Канцелярия"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-578",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "МФУ, копиры и сканеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "МФУ, копиры и сканеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-579",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Телефония",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "Телефония"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-580",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "ИБП, сетевые фильтры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "ИБП, сетевые фильтры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-581",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Уничтожители бумаг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Оргтехника и расходники",
+      "Уничтожители бумаг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-582",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Мониторы и запчасти",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Мониторы и запчасти"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-583",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Флэшки и карты памяти",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Флэшки и карты памяти"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-584",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "ТВ-тюнеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "ТВ-тюнеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-585",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Переносные жёсткие диски",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Переносные жёсткие диски"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-586",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Клавиатуры и мыши",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Клавиатуры и мыши"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-587",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Веб-камеры",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Веб-камеры"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-588",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Джойстики и рули",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Джойстики и рули"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-589",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Готовый бизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Готовый бизнес и франшизы",
+      "Готовый бизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-59",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-590",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Комплектующие",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Комплектующие"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-591",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сетевое оборудование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Сетевое оборудование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-592",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Акустика",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Товары для компьютера",
+      "Акустика"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-593",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Оборудование и аксессуары",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Оборудование и аксессуары"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-598",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бинокли и телескопы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Бинокли и телескопы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-599",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Личные вещи",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Личные вещи"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-6",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Оборудование для бизнеса",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Оборудование",
+      "Оборудование для бизнеса"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-60",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Объективы",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Объективы"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-600",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Плёночные фотоаппараты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Плёночные фотоаппараты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-601",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Зеркальные фотоаппараты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Зеркальные фотоаппараты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-602",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Компактные фотоаппараты",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника",
+      "Фототехника",
+      "Компактные фотоаппараты"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-603",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Юриспруденция",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Работа",
+      "Ищу работу",
+      "Юриспруденция"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-61",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Поиск сотрудников",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Поиск сотрудников"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-62",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Услуги",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Услуги"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-63",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Электроника",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Электроника"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-7",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Охрана, безопасность",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Услуги",
+      "Охрана, безопасность"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-736",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Производство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Производство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-763",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "IT бизнес",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "IT бизнес"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-764",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Другое",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Другое"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-765",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Торговля",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Торговля"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-766",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сфера услуг",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Сфера услуг"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-767",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Строительство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Строительство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-768",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сельское хозяйство",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Сельское хозяйство"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-769",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Сфера развлечений",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Сфера развлечений"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-770",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Общественное питание",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование",
+      "Готовый бизнес",
+      "Общественное питание"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-771",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Хобби и отдых",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес 360",
+      "Товары",
+      "Хобби и отдых"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-8",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Спортивное питание",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Хобби и отдых",
+      "Спорт и отдых",
+      "Спортивное питание"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-85914",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  },
+  {
+    "confidence": "PARTIAL",
+    "name": "Бизнес и оборудование",
+    "parent_slug": null,
+    "path": [
+      "Все категории",
+      "Бизнес и оборудование"
+    ],
+    "runtime_access": "PUBLIC",
+    "slug": "avito-mc-9",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT"
+  }
+]

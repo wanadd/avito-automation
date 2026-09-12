@@ -1,0 +1,12 @@
+{
+  "auth_locked_fields": 0,
+  "confirmed_fields": 0,
+  "enum_fields_with_values": 0,
+  "enum_fields_without_values": 0,
+  "partial_fields": 0,
+  "required_fields_confirmed": 0,
+  "required_fields_unknown": 0,
+  "strong_fields": 0,
+  "total_discovered_fields": 0,
+  "unknown_fields": 0
+}

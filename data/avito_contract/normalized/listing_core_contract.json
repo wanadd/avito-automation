@@ -1,0 +1,56 @@
+{
+  "confirmed_count": 0,
+  "fields": {
+    "Address": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Category": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Condition": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "ContactMethod": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Delivery": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Description": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Id": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Images": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Price": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    "Title": {
+      "evidence_url": null,
+      "source_type": "UNKNOWN",
+      "status": "UNKNOWN"
+    }
+  },
+  "partial_count": 0
+}

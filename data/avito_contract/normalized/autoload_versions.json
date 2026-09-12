@@ -1,0 +1,15 @@
+{
+  "versions": [
+    {
+      "component": "autoload",
+      "evidence": [
+        "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+        "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+        "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md",
+        "https://raw.githubusercontent.com/covox/avito_api/master/docs/Api/AutoloadApi.md"
+      ],
+      "lifecycle": "LEGACY",
+      "version": "v1"
+    }
+  ]
+}

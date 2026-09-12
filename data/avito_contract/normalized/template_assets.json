@@ -1,0 +1,171 @@
+[
+  {
+    "asset_type": "svg",
+    "content_type": "image/svg+xml",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/017_public_endpoint_static_autoload-frontend_assets_c1c9a39d5dfab2c0.svg",
+    "runtime_access": "PUBLIC",
+    "sha256": "34934c518d636ae5ea4dec76ef56a72e84eb74ced4164ceecd06f0815900aee6",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.ru/static/autoload-frontend/assets/c1c9a39d5dfab2c0.svg"
+  },
+  {
+    "asset_type": "css",
+    "content_type": "text/css",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/018_public_endpoint_static_autoload-frontend_client_Documentation.e7728d06cd46d938.css",
+    "runtime_access": "PUBLIC",
+    "sha256": "c64cb38da0d595c4f758b17dc234f22f94439e9a1f31ed83dd1954108b084b0c",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.ru/static/autoload-frontend/client/Documentation.e7728d06cd46d938.css"
+  },
+  {
+    "asset_type": "js",
+    "content_type": "application/javascript; charset=utf-8",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/019_javascript_static_autoload-frontend_client_Documentation.e8eb47e27a5e1560.js",
+    "runtime_access": "PUBLIC",
+    "sha256": "8cae0ecc999e81263db35f3faf53781a995ee316edfb3ceb09808e5bfe9fa11f",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.ru/static/autoload-frontend/client/Documentation.e8eb47e27a5e1560.js"
+  },
+  {
+    "asset_type": "js",
+    "content_type": "application/javascript; charset=utf-8",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/020_javascript_static_autoload-frontend_client_remoteEntry.ad6d466143f64590.js",
+    "runtime_access": "PUBLIC",
+    "sha256": "bbe1c84ece45066bcbb249cdcacb96a13790bb21242c902e172066a981b5b1db",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.ru/static/autoload-frontend/client/remoteEntry.ad6d466143f64590.js"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/021_public_endpoint_s_autoload_getting-started_close-all-items.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "c00576ec22d7a85d6c68d7b6e7dad5f9ec625f7d353df2024484ebcba3ea276a",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/close-all-items.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/022_public_endpoint_s_autoload_getting-started_create-item.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "1a5686590e23bc1dda978bc6fe300832c0e8b85c8d4972fe5c238f8b960fc34c",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/create-item.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/023_public_endpoint_s_autoload_getting-started_download-template.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "751efcce0c49fee98b6501c353aa577a1c9b0d8aa14a5b1459d4605f29ed08f4",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/download-template.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/024_public_endpoint_s_autoload_getting-started_edit-item.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "c1d70d4a1a94a63cb3da0432bac1060d3507fea3cc4faaafe39ea685e9f6fe6b",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/edit-item.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/025_public_endpoint_s_autoload_getting-started_photo-by-files.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "1ad88b9bc161e295c4a067519253b78f060867009be02d211213851244a3647b",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/photo-by-files.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/026_public_endpoint_s_autoload_getting-started_photo-by-urls.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "679cbcc540af9fc43e5b27cf9dfcb9e46ef15bba97ac4055b8f2d66cecd96e5f",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/photo-by-urls.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/027_public_endpoint_s_autoload_getting-started_template-overview.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "e5e9c9e8841d69810398dc53b691e6273405deca7427f71cf6262ff6f1b7d29b",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/getting-started/template-overview.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/028_public_endpoint_s_autoload_redesign-docs_how-to-open-last-report.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "d1589adb79d7281ff18c0d993aff56a5c3fb26d837e6d87eabdec7732b361ac6",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/redesign-docs/how-to-open-last-report.mp4"
+  },
+  {
+    "asset_type": "mp4",
+    "content_type": "video/mp4",
+    "parsed": {
+      "fields": [],
+      "status": "UNSUPPORTED"
+    },
+    "raw_path": "raw/recovery/029_public_endpoint_s_autoload_redesign-docs_how-to-open-reports-history.mp4",
+    "runtime_access": "PUBLIC",
+    "sha256": "f3225192517048f4495e285c895f05ecf80668a8a73dbef2d44274a39598d81b",
+    "source_type": "PUBLIC_FRONTEND_CONTRACT",
+    "url": "https://www.avito.st/s/autoload/redesign-docs/how-to-open-reports-history.mp4"
+  }
+]

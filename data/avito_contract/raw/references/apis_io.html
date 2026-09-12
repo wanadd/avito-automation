@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    
+    
+    
+    <title>APIs.io - Search APIs by What You Want to Accomplish</title>
+    <meta name="description" content="Search APIs by provider, schema, or name. Find the right API for what you want to accomplish.">
+    <meta name="keywords" content="APIs, Search, Discovery, API Directory, API Catalog, REST APIs, APIs.json">
+    <link rel="canonical" href="https://apis.io/">
+    <link rel="api-catalog" href="https://apis.io/.well-known/api-catalog" type="application/linkset+json">
+    <link rel="agent-skills" href="https://apis.io/skills/">
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="index.html | APIs.io">
+    <meta property="og:description" content="Search and discover APIs by what you want to accomplish. Find API providers, individual APIs, and schemas across the APIs.io network.">
+    <meta property="og:url" content="https://apis.io/">
+    <meta property="og:site_name" content="APIs.io">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://apis.io/assets/branding/apisio-social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="APIs.io">
+    
+    
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://apis.io/assets/branding/apisio-social-card.png">
+    <meta name="twitter:image:alt" content="APIs.io">
+    <meta name="twitter:title" content="index.html | APIs.io">
+    <meta name="twitter:description" content="Search and discover APIs by what you want to accomplish. Find API providers, individual APIs, and schemas across the APIs.io network.">
+
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/sticky-footer.css" rel="stylesheet">
+    <script src="/assets/jquery-3.7.1.min.js"></script>
+    <script src="/assets/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js-yaml.min.js"></script>
+
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #333; }
+      .navbar { padding: 0.75rem 0; }
+      .navbar-brand { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.5px; padding-top: 0; padding-bottom: 0; }
+      .navbar-brand img { display: block; height: 28px; width: auto; }
+      .nav-link { font-size: 0.95rem; padding: 0.5rem 0.7rem !important; }
+      .container.my-5 { max-width: 960px; }
+      a { color: #0d6efd; }
+      a:hover { color: #0a58ca; }
+
+      /* ------------------------------------------------------------------
+         Masthead — three shallow mega-menus (Browse / Artifacts / Signals)
+         replacing the single 26-link "More" column (2026-07-28). Menus are
+         built from _data/nav.yml by _includes/nav.html; `columns:` there maps
+         to .nav-mega-N here.
+         Breakpoint is XL (1200px), not LG: eight top-level items plus the
+         search field and the CTA don't fit at 992px.
+      ------------------------------------------------------------------ */
+      .navbar-search { min-width: 15rem; }
+      .navbar-cta { white-space: nowrap; }
+
+      @media (min-width: 1200px) {
+        .navbar-search { margin-right: 0.5rem; }
+        .navbar .dropdown-menu { padding: 0.75rem 0.25rem; border: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+        .navbar .dropdown-header { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #6c757d; padding: 0.15rem 1rem 0.35rem; }
+        .navbar .dropdown-item { font-size: 0.9rem; padding: 0.3rem 1rem; }
+        .navbar .dropdown-item.active, .navbar .dropdown-item:active { background-color: #0d6efd; color: #fff; }
+
+        /* Multi-column menus: groups lay out side by side as flex children.
+           Bootstrap's dropdown JS only cares about .dropdown-toggle /
+           .dropdown-menu / .dropdown-item, all of which survive the nesting,
+           so keyboard navigation still works. */
+        .nav-mega { display: none; }
+        .nav-mega.show { display: flex; flex-wrap: wrap; }
+        .nav-mega-1 { min-width: 13rem; }
+        .nav-mega-2 { min-width: 26rem; }
+        .nav-mega-3 { min-width: 39rem; }
+        .nav-mega-group { flex: 1 1 12rem; min-width: 12rem; padding-bottom: 0.35rem; }
+        .nav-mega-list { list-style: none; margin: 0; padding: 0; }
+
+        /* Right-align the last menu so a wide 3-column panel can't push the
+           page into a horizontal scrollbar. */
+        .navbar-nav > .nav-item.dropdown:last-of-type .nav-mega { right: 0; left: auto; }
+      }
+
+      /* Collapsed navbar: render menus inline (no light popover card floating
+         over the dark bar) and match the dark styling so the whole drawer
+         reads as one list. */
+      @media (max-width: 1199px) {
+        .navbar-collapse { padding: 0.5rem 0 0.25rem; }
+        .navbar-nav .nav-link { padding: 0.6rem 0 !important; }
+        .navbar .dropdown-menu {
+          position: static; float: none; display: block;
+          background-color: transparent; border: 0; box-shadow: none;
+          padding: 0.25rem 0 0.5rem 0.75rem;
+          margin: 0; width: auto;
+        }
+        .navbar .dropdown-toggle::after { display: none; }
+        .nav-mega-list { list-style: none; margin: 0; padding: 0; }
+        .navbar .dropdown-header {
+          color: rgba(255,255,255,0.55);
+          font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.6px;
+          padding: 0.75rem 0 0.25rem; font-weight: 600;
+        }
+        .navbar-dark .dropdown-menu .dropdown-item {
+          color: rgba(255,255,255,0.85);
+          padding: 0.5rem 0; font-size: 0.95rem;
+        }
+        .navbar-dark .dropdown-menu .dropdown-item:hover,
+        .navbar-dark .dropdown-menu .dropdown-item:focus {
+          color: #fff; background-color: rgba(255,255,255,0.06); border-radius: 4px;
+          padding-left: 0.5rem; padding-right: 0.5rem;
+        }
+        .navbar-dark .dropdown-menu .dropdown-item.active {
+          color: #fff; background-color: rgba(13,110,253,0.6); border-radius: 4px;
+          padding-left: 0.5rem; padding-right: 0.5rem;
+        }
+        .navbar-search { margin-top: 0.5rem; min-width: 0; }
+        .navbar-cta { margin-top: 0.6rem; align-self: flex-start; }
+      }
+    </style>
+    <script>
+      // Collapsed navbar: expand every menu automatically when the drawer is
+      // opened, so Browse / Artifacts / Signals are visible without a second
+      // tap. Boundary must match the CSS above (1199px).
+      document.addEventListener('DOMContentLoaded', function () {
+        var collapseEl = document.getElementById('navbarSupportedContent');
+        if (!collapseEl) return;
+        collapseEl.addEventListener('show.bs.collapse', function () {
+          if (window.matchMedia('(max-width: 1199px)').matches) {
+            collapseEl.querySelectorAll('.dropdown-menu').forEach(function (m) {
+              m.classList.add('show');
+            });
+          }
+        });
+        collapseEl.addEventListener('hidden.bs.collapse', function () {
+          collapseEl.querySelectorAll('.dropdown-menu.show').forEach(function (m) {
+            m.classList.remove('show');
+          });
+        });
+      });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6H4KFSEF6P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6H4KFSEF6P');
+
+      function getQueryVariable(variable) {
+          var query = window.location.search.substring(1);
+          var vars = query.split('&');
+          for (var i = 0; i < vars.length; i++) {
+              var pair = vars[i].split('=');
+              if (decodeURIComponent(pair[0]) == variable) {
+                  return decodeURIComponent(pair[1]);
+              }
+          }
+      }
+    </script><script>
+(function () {
+  'use strict';
+
+  var BEACON_URL = '/webmcp/beacon';
+  // Sampling rate for the NEGATIVE case (browser has no modelContext). Positives
+  // are always sent. Keep in sync with the scale-up factor in QUERIES.md.
+  var NEGATIVE_SAMPLE_RATE = 0.01;
+
+  var registered = [];   // every tool registered on this page, across surfaces
+  var surfaces = {};     // surface -> true, so a double register() is a no-op
+  var ctx = null;        // the live modelContext object
+  var flavor = null;     // 'document' (current spec) | 'navigator' (<= Chrome 149)
+
+  // --- capability detection ------------------------------------------------
+  // Document first: that is where the spec put it. Navigator is the deprecated
+  // fallback, kept only while Chrome 149 is still in the field.
+  try {
+    if (typeof document !== 'undefined' && document.modelContext &&
+        typeof document.modelContext.registerTool === 'function') {
+      ctx = document.modelContext;
+      flavor = 'document';
+    } else if (typeof navigator !== 'undefined' && navigator.modelContext &&
+               typeof navigator.modelContext.provideContext === 'function') {
+      ctx = navigator.modelContext;
+      flavor = 'navigator';
+    }
+  } catch (err) {
+    ctx = null;
+    flavor = null;
+  }
+
+  // --- measurement ---------------------------------------------------------
+  function beacon(payload) {
+    try {
+      payload.flavor = flavor || 'none';
+      payload.path = (location && location.pathname) || '';
+      var body = JSON.stringify(payload);
+      if (navigator && typeof navigator.sendBeacon === 'function') {
+        navigator.sendBeacon(BEACON_URL, new Blob([body], { type: 'application/json' }));
+      } else if (typeof fetch === 'function') {
+        fetch(BEACON_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body,
+          keepalive: true
+        }).catch(function () {});
+      }
+    } catch (err) {
+      // Telemetry must never break a page or a tool call.
+    }
+  }
+
+  // --- return-shape normalization -----------------------------------------
+  function toContent(value) {
+    if (value && typeof value === 'object' && Array.isArray(value.content)) return value;
+    var text;
+    try {
+      text = (typeof value === 'string') ? value : JSON.stringify(value, null, 2);
+    } catch (err) {
+      text = String(value);
+    }
+    return { content: [{ type: 'text', text: text }] };
+  }
+
+  function wrapExecute(surface, tool) {
+    var fn = tool.execute;
+    return function (args) {
+      var started = (typeof performance !== 'undefined' && performance.now)
+        ? performance.now() : Date.now();
+      function done(ok) {
+        var ms = ((typeof performance !== 'undefined' && performance.now)
+          ? performance.now() : Date.now()) - started;
+        beacon({ event: 'call', surface: surface, tool: tool.name, ok: ok, ms: Math.round(ms) });
+      }
+      var out;
+      try {
+        out = fn.apply(this, arguments);
+      } catch (err) {
+        done(false);
+        throw err;
+      }
+      return Promise.resolve(out).then(function (value) {
+        done(true);
+        return toContent(value);
+      }, function (err) {
+        done(false);
+        throw err;
+      });
+    };
+  }
+
+  // --- registration --------------------------------------------------------
+  function pushToBrowser(tools) {
+    if (flavor === 'document') {
+      for (var i = 0; i < tools.length; i++) ctx.registerTool(tools[i]);
+    } else {
+      // Legacy provideContext replaces the entire set, so always send the
+      // accumulated list rather than just this surface's slice.
+      ctx.provideContext({ tools: registered });
+    }
+  }
+
+  function register(surface, tools) {
+    surface = String(surface || 'unknown');
+    if (!ctx || !Array.isArray(tools) || !tools.length) return false;
+    if (surfaces[surface]) return false;
+    surfaces[surface] = true;
+
+    var prepared = [];
+    for (var i = 0; i < tools.length; i++) {
+      var t = tools[i];
+      if (!t || !t.name || typeof t.execute !== 'function') continue;
+      prepared.push({
+        name: t.name,
+        description: t.description || '',
+        inputSchema: t.inputSchema || { type: 'object', properties: {} },
+        execute: wrapExecute(surface, t)
+      });
+    }
+    if (!prepared.length) return false;
+
+    registered = registered.concat(prepared);
+    try {
+      pushToBrowser(prepared);
+    } catch (err) {
+      // The API surface is a moving draft — a failed registration must not take
+      // the page down with it. Record it, because a spike here is the signal
+      // that the spec moved under us again.
+      if (typeof console !== 'undefined') console.warn('WebMCP registration failed', err);
+      beacon({ event: 'error', surface: surface, tool: '', ok: false, ms: 0 });
+      return false;
+    }
+    beacon({ event: 'register', surface: surface, tool: '', ok: true, ms: prepared.length });
+    return true;
+  }
+
+  window.apisioWebMCP = {
+    get available() { return !!ctx; },
+    get flavor() { return flavor; },
+    get tools() { return registered.map(function (t) { return t.name; }); },
+    register: register
+  };
+
+  // Capability census — one beacon per pageview. Always when a modelContext
+  // exists (rare, and the whole point); sampled when it does not, so the
+  // denominator is measurable without a write per pageview.
+  if (ctx) {
+    beacon({ event: 'capability', surface: 'page', tool: '', ok: true, ms: 0 });
+  } else if (Math.random() < NEGATIVE_SAMPLE_RATE) {
+    beacon({ event: 'capability', surface: 'page', tool: '', ok: false, ms: 0, sampled: 1 });
+  }
+})();
+</script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="https://apis.io/" aria-label="apis.io home"><img src="/assets/branding/apisio-wordmark-white.png" alt="apis.io"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-xl-0"><li class="nav-item">
+                <a class="nav-link" href="https://apis.io/providers/">Providers</a>
+              </li><li class="nav-item">
+                <a class="nav-link" href="https://apis.io/apis/">APIs</a>
+              </li><li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="nav-browse" role="button" data-bs-toggle="dropdown" aria-expanded="false">Browse</a>
+                <ul class="dropdown-menu nav-mega nav-mega-2" aria-labelledby="nav-browse"><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Taxonomy</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/tags/">Tags</a></li><li><a class="dropdown-item" href="https://apis.io/industries/">Industries</a></li><li><a class="dropdown-item" href="https://apis.io/areas/">Areas</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Business Architecture</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/capabilities/">Business Capabilities</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Use Cases & Features</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/use-cases/">Use Cases</a></li><li><a class="dropdown-item" href="https://apis.io/features/">Features</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Geography</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/regions/">Regions</a></li><li><a class="dropdown-item" href="https://apis.io/countries/">Countries</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Market</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/vcs/">Venture Capital</a></li><li><a class="dropdown-item" href="https://apis.io/secondary-market/">Secondary Market</a></li><li><a class="dropdown-item" href="https://apis.io/estates/">API Estates</a></li></ul>
+                    </li></ul>
+              </li><li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="nav-artifacts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Artifacts</a>
+                <ul class="dropdown-menu nav-mega nav-mega-3" aria-labelledby="nav-artifacts"><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Specifications</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/extensions/">OpenAPI Extensions</a></li><li><a class="dropdown-item" href="https://apis.io/headers/">HTTP Headers</a></li><li><a class="dropdown-item" href="https://apis.io/schemas/">Schemas</a></li><li><a class="dropdown-item" href="https://apis.io/json-structure/">JSON Structure</a></li><li><a class="dropdown-item" href="https://apis.io/asyncapis/">AsyncAPI</a></li><li><a class="dropdown-item" href="https://apis.io/graphqls/">GraphQL</a></li><li><a class="dropdown-item" href="https://apis.io/jsonld/">JSON-LD</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Usage</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/examples/">Examples</a></li><li><a class="dropdown-item" href="https://apis.io/collections/">Collections</a></li><li><a class="dropdown-item" href="https://apis.io/arazzos/">Arazzo Workflows</a></li><li><a class="dropdown-item" href="https://apis.io/channels/">Event Channels</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Agents & Governance</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/servers/">MCP Servers</a></li><li><a class="dropdown-item" href="https://apis.io/a2a/">A2A Agent Cards</a></li><li><a class="dropdown-item" href="https://apis.io/ard/">Agent Discovery</a></li><li><a class="dropdown-item" href="https://apis.io/agent-skills/">Agent Skills</a></li><li><a class="dropdown-item" href="https://apis.io/rules/">Spectral Rules</a></li></ul>
+                    </li></ul>
+              </li><li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="nav-signals" role="button" data-bs-toggle="dropdown" aria-expanded="false">Signals</a>
+                <ul class="dropdown-menu nav-mega nav-mega-2" aria-labelledby="nav-signals"><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Security</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/security/">Security Posture</a></li><li><a class="dropdown-item" href="https://apis.io/scopes/">OAuth Scopes</a></li><li><a class="dropdown-item" href="https://apis.io/agentic-access/">Agentic Access</a></li></ul>
+                    </li><li class="nav-mega-group">
+                      <h6 class="dropdown-header">Commercial</h6>
+                      <ul class="nav-mega-list"><li><a class="dropdown-item" href="https://apis.io/plans/">Plans</a></li><li><a class="dropdown-item" href="https://apis.io/rate-limits/">Rate Limits</a></li><li><a class="dropdown-item" href="https://apis.io/finops/">FinOps</a></li></ul>
+                    </li></ul>
+              </li><li class="nav-item">
+                <a class="nav-link" href="https://apis.io/rating/">Kin Score</a>
+              </li><li class="nav-item">
+                <a class="nav-link" href="https://apis.io/stack/">Stack</a>
+              </li><li class="nav-item">
+                <a class="nav-link" href="https://apis.io/blog/">Blog</a>
+              </li></ul><form class="d-flex navbar-search" role="search" action="https://apis.io/" method="get">
+        <input class="form-control form-control-sm" type="search" name="search" placeholder="Search APIs, providers, capabilities…" aria-label="Search APIs">
+      </form><a class="btn btn-sm btn-outline-light navbar-cta" href="https://apis.io/add/">Add your API</a></div>
+  </div>
+</nav>
+
+    
+    <!-- Laneworks ad network (ads.laneworks.net) -->
+    <script async src="https://ads.laneworks.net/embed.js"></script>
+    <div data-laneworks-ad="top-banner"></div>
+    <main class="container mt-2 mb-5" role="main">
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "APIs.io",
+  "url": "https://apis.io",
+  "description": "Search and discover APIs by what you want to accomplish. Find API providers, individual APIs, and schemas across the APIs.io network.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://apis.io/?search={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://apis.io/#catalog",
+  "name": "APIs.io",
+  "url": "https://apis.io/",
+  "description": "Federated, agent-friendly API discovery network indexing API providers and their published APIs, schemas, event-driven specs, governance rules, JSON-LD contexts, pricing plans, rate limits, and FinOps profiles.",
+  "license": "https://apis.io/terms/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Person",
+    "name": "Kin Lane",
+    "url": "https://apievangelist.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APIs.io",
+    "url": "https://apis.io/"
+  },
+  "keywords": "API discovery, API directory, API catalog, OpenAPI, AsyncAPI, JSON Schema, JSON-LD, machine-readable APIs, APIs.json",
+  "dataset": [
+    {"@type": "Dataset", "name": "Providers", "url": "https://apis.io/providers/", "description": "27554 API provider profiles"},
+    {"@type": "Dataset", "name": "APIs", "url": "https://apis.io/apis/", "description": "133606 individual API records"},
+    {"@type": "Dataset", "name": "Industries", "url": "https://apis.io/industries/", "description": "82 industry verticals with provider/API mappings"},
+    {"@type": "Dataset", "name": "Schemas", "url": "https://apis.io/schemas/", "description": "127117 JSON Schemas"},
+    {"@type": "Dataset", "name": "AsyncAPI", "url": "https://apis.io/asyncapis/", "description": "2772 event-driven specifications"},
+    {"@type": "Dataset", "name": "JSON-LD Contexts", "url": "https://apis.io/jsonld/", "description": "5641 semantic vocabularies"},
+    {"@type": "Dataset", "name": "Governance Rules", "url": "https://apis.io/rules/", "description": "5689 Spectral rulesets"},
+    {"@type": "Dataset", "name": "Pricing Plans", "url": "https://apis.io/plans/", "description": "9631 pricing plan profiles"},
+    {"@type": "Dataset", "name": "Rate Limits", "url": "https://apis.io/rate-limits/", "description": "9907 rate-limit profiles"},
+    {"@type": "Dataset", "name": "FinOps", "url": "https://apis.io/finops/", "description": "7257 FinOps profiles"}
+  ],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "application/linkset+json",
+      "contentUrl": "https://apis.io/.well-known/api-catalog",
+      "name": "RFC 9727 api-catalog linkset"
+    },
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://apis.io/apis.json",
+      "name": "APIs.json self-description"
+    },
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/plain",
+      "contentUrl": "https://apis.io/llms.txt",
+      "name": "llms.txt index"
+    },
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/plain",
+      "contentUrl": "https://apis.io/llms-full.txt",
+      "name": "llms-full.txt full reference"
+    }
+  ]
+}
+</script>
+
+<div style="text-align: center; padding: 2rem 0 1rem;">
+  <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">API Search</h1>
+  <p id="search-stats" style="color: #666; margin-bottom: 1.5rem;">
+    Search across <strong>27554</strong> providers, <strong>133606</strong> APIs, and <strong>2600</strong> MCP servers
+  </p>
+
+  <form onsubmit="runSearch(); return false;" style="max-width: 820px; margin: 0 auto; position: relative;" autocomplete="off">
+    <div class="d-flex justify-content-center align-items-center gap-2 mb-3 flex-wrap">
+      <div class="input-group" style="flex: 1 1 340px;">
+        <input type="text" class="form-control form-control-lg" id="api-search" placeholder="What do you want to accomplish?" aria-label="Search" autocomplete="off">
+        <button class="btn btn-dark btn-lg" type="submit">Search</button>
+      </div>
+      <!-- Install the apis.io MCP server in any MCP client, via api-commons/mcp-install -->
+      <script src="https://install.apicommons.org/button.js?v=2" async></script>
+      <mcp-install-button config="eyJuYW1lIjogIkFQSXMuaW8gTUNQIFNlcnZlciIsICJkZXNjcmlwdGlvbiI6ICJSZWFkLW9ubHkgTUNQIHNlcnZlciBvdmVyIHRoZSBBUElzLmlvIGNhdGFsb2cuIDE1IGN1cmF0ZWQgdG9vbHMgbGVkIGJ5IGFwaXNfaW9fc2VhcmNoIGxldCBhZ2VudHMgZGlzY292ZXIgQVBJcywgcHJvdmlkZXJzLCB0YWdzLCByYXRpbmdzLCBpbmR1c3RyaWVzLCByZWdpb25zLCBhbmQgcHVibGlzaGVkIGFydGlmYWN0cy4iLCAicmVtb3RlIjogeyJ0eXBlIjogImh0dHAiLCAidXJsIjogImh0dHBzOi8vYXBpcy5pby9tY3AifX0" label="MCP" theme="light" style="--mcp-btn-font-size:1.25rem;--mcp-btn-pad-y:.5rem;--mcp-btn-pad-x:1rem;--mcp-btn-radius:.5rem;--mcp-btn-line-height:1.5;"></mcp-install-button>
+
+      <!-- Download an apis.io Agent Skill. Rendered from _data/skills.json, the same manifest
+           skills/index.html and skills/index.json are generated from by skills/build-index.py,
+           so this list can never drift from what /skills/ publishes. -->
+      <div class="dropdown">
+        <!-- Same download icon the mcp-install-button renders, so the two read as a pair. -->
+        <button class="btn btn-outline-dark btn-lg dropdown-toggle text-nowrap d-inline-flex align-items-center gap-2" type="button" id="skills-download-btn" data-bs-toggle="dropdown" aria-expanded="false"><svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 10v26" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M18 26l14 14 14-14" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 52h36" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg><span>Skills</span></button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="skills-download-btn" style="max-height: 24rem; overflow-y: auto; text-align: left; min-width: 19rem;">
+          
+          <li><h6 class="dropdown-header">Orientation</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/discover-apis-io/SKILL.md" download="discover-apis-io-SKILL.md" title="Learn how to read the apis.io API catalog — the v1 REST API, the MCP server, and the markdown mirror of every page — so other skills can find APIs without scraping HTML. Use this first when the user mentions apis.io or asks to discover APIs across a catalog."><code style="color: inherit;">discover-apis-io</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/resolve-provider/SKILL.md" download="resolve-provider-SKILL.md" title="Turn a domain, URL, company name, or GitHub org into an apis.io provider slug, with its quality band and composite score. Use first whenever the user names a company rather than a catalog slug — which is almost always."><code style="color: inherit;">resolve-provider</code></a></li>
+          
+          
+          <li><h6 class="dropdown-header">Discovery</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/search-apis/SKILL.md" download="search-apis-SKILL.md" title="Search the apis.io catalog for APIs, providers, and tags by keyword, capability, tag, or provider. Use when the user asks what APIs exist for something, which providers offer a capability, or wants to filter the catalog."><code style="color: inherit;">search-apis</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/find-api/SKILL.md" download="find-api-SKILL.md" title="Find the right API for a task — search the apis.io catalog, inspect the strongest candidates, and recommend one with its spec and links. Use when the user asks what API to use for something, or whether an API exists for a job."><code style="color: inherit;">find-api</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/fetch-api-spec/SKILL.md" download="fetch-api-spec-SKILL.md" title="Fetch and parse the OpenAPI, AsyncAPI, GraphQL, or Postman description for an API in the apis.io catalog, given its aid or its apis.io URL. Use to inspect operations, summarize endpoints, or generate code from a real spec."><code style="color: inherit;">fetch-api-spec</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/find-artifact/SKILL.md" download="find-artifact-SKILL.md" title="Search the apis.io catalog for any artifact type beyond OpenAPI — Arazzo workflows, Spectral rules, pricing plans, FinOps, rate limits, GraphQL, Postman collections, JSON Schemas, examples, and more. Use when the user wants governance, commercial, or workflow artifacts rather than an API contract."><code style="color: inherit;">find-artifact</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/integrate-provider/SKILL.md" download="integrate-provider-SKILL.md" title="Onboard an API provider end-to-end — pull its signup, authentication, base URLs and OpenAPI from the apis.io catalog and produce concrete, runnable first-integration steps. Use when a provider is chosen and the user wants to actually wire it up."><code style="color: inherit;">integrate-provider</code></a></li>
+          
+          
+          <li><h6 class="dropdown-header">Agent readiness</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/agent-readiness-scan/SKILL.md" download="agent-readiness-scan-SKILL.md" title="Check whether an API provider is ready for autonomous AI agents — machine-readable contracts, MCP servers, agent skills, llms.txt, agent-native access controls, and the operational signals an agent needs. Use when asked if an API is agent-ready, or to compare providers on agent readiness."><code style="color: inherit;">agent-readiness-scan</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/discover-mcp-servers/SKILL.md" download="discover-mcp-servers-SKILL.md" title="Find providers in the apis.io catalog that publish an MCP server, with the endpoint and install method, so you can plug real tools into an agent. Use when the user wants agent-ready tools rather than raw REST."><code style="color: inherit;">discover-mcp-servers</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/discover-agent-skills/SKILL.md" download="discover-agent-skills-SKILL.md" title="Search the apis.io catalog for Agent Skills published by API providers — packaged SKILL.md files you can adopt directly. Use when the user wants ready-made skills for a vendor or capability rather than writing integration code."><code style="color: inherit;">discover-agent-skills</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/verify-provenance/SKILL.md" download="verify-provenance-SKILL.md" title="Check where an apis.io provider record&#39;s evidence came from — which artifacts the provider published first-party versus which apis.io derived — before citing a score or an artifact as fact. Use when accuracy matters, or when a provider disputes their rating."><code style="color: inherit;">verify-provenance</code></a></li>
+          
+          
+          <li><h6 class="dropdown-header">Scoring your own API</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/score-my-api/SKILL.md" download="score-my-api-SKILL.md" title="Read a provider&#39;s apis.io quality score and the Kin Score rubric, then turn it into a ranked, do-this-next punch list of what to publish to move up a band. Use when someone wants to know how their own API rates and how to improve it."><code style="color: inherit;">score-my-api</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/benchmark-against-peers/SKILL.md" download="benchmark-against-peers-SKILL.md" title="Benchmark one API provider against its closest peers facet by facet — score, artifact coverage, and where it leads or trails. Use for competitive positioning or to justify an API investment. Pro tier, with a free fallback."><code style="color: inherit;">benchmark-against-peers</code></a></li>
+          
+          
+          <li><h6 class="dropdown-header">Deciding and monitoring</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/shortlist-vendors/SKILL.md" download="shortlist-vendors-SKILL.md" title="Turn one capability into a scored, compared vendor shortlist from the apis.io catalog, with a clear recommendation. Use for a buy decision on a single capability. Pro tier."><code style="color: inherit;">shortlist-vendors</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/assemble-api-stack/SKILL.md" download="assemble-api-stack-SKILL.md" title="Design a capability stack from the apis.io catalog — the best-rated provider per capability — and export it as an adoptable APIs.json. Use when the user needs several APIs at once, not one. Pro tier."><code style="color: inherit;">assemble-api-stack</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/audit-api-estate/SKILL.md" download="audit-api-estate-SKILL.md" title="Inventory, score, and gap a set of API providers from the apis.io catalog — what they publish, how they rate, and what they are missing. Use to assess a vendor portfolio. Pro tier."><code style="color: inherit;">audit-api-estate</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/watch-providers/SKILL.md" download="watch-providers-SKILL.md" title="Set up ongoing monitoring of the apis.io catalog using saved searches and lists — track a vendor set, get only what is new since last check, and watch for rating movement. Use for recurring vendor monitoring rather than one-off queries. Pro tier, with a free fallback."><code style="color: inherit;">watch-providers</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/track-api-changes/SKILL.md" download="track-api-changes-SKILL.md" title="Monitor the apis.io catalog for providers added or updated and for rating movement, across a chosen set or the whole network. Use for ongoing vendor monitoring. Pro tier."><code style="color: inherit;">track-api-changes</code></a></li>
+          
+          
+          <li><h6 class="dropdown-header">Market research</h6></li>
+          
+          <li><a class="dropdown-item" href="/skills/explore-cohort/SKILL.md" download="explore-cohort-SKILL.md" title="Explore any slice of the API market as a scored cohort — an industry, topic area, region, or tag — with its members, their Kin Scores and agent readiness. Use to size a market, find the leaders in a category, or research a sector."><code style="color: inherit;">explore-cohort</code></a></li>
+          
+          <li><a class="dropdown-item" href="/skills/company-readiness/SKILL.md" download="company-readiness-SKILL.md" title="Read the demand side of the API market — what technologies a company is investing in, where it is thin, and which catalog providers are already in its stack. Use for account research, sales targeting, or to find where demand outruns supply."><code style="color: inherit;">company-readiness</code></a></li>
+          
+          
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/skills/">All 20 skills, plugin install &amp; manifest &rarr;</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dimension filter tabs -->
+    <div class="d-flex justify-content-center gap-2 flex-wrap mb-2" id="dimension-tabs">
+      <button type="button" class="btn btn-sm btn-dark dim-tab active" data-dim="all">All</button>
+      <button type="button" class="btn btn-sm btn-outline-primary dim-tab" data-dim="api">APIs</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary dim-tab" data-dim="provider">Providers</button>
+      <button type="button" class="btn btn-sm btn-outline-danger dim-tab" data-dim="schema">Schemas</button>
+      <button type="button" class="btn btn-sm btn-outline-info dim-tab" data-dim="asyncapi">AsyncAPI</button>
+      <button type="button" class="btn btn-sm btn-outline-purple dim-tab" data-dim="jsonld">JSON-LD</button>
+      <button type="button" class="btn btn-sm btn-outline-warning dim-tab" data-dim="rules">Rules</button>
+    </div>
+
+    <!-- Band filter (applies to provider results) -->
+    <div class="d-flex justify-content-center gap-1 flex-wrap mt-2 mb-1" id="band-filter">
+      <span style="font-size: 0.75rem; color: #6c757d; align-self: center; margin-right: 0.25rem;">Rating:</span>
+      <button type="button" class="band-tab band-tab-active" data-band="all">All</button>
+      <button type="button" class="band-tab" data-band="exemplar"><span class="band-pill band-exemplar">Exemplar</span></button>
+      <button type="button" class="band-tab" data-band="strong"><span class="band-pill band-strong">Strong</span></button>
+      <button type="button" class="band-tab" data-band="developing"><span class="band-pill band-developing">Developing</span></button>
+      <button type="button" class="band-tab" data-band="thin"><span class="band-pill band-thin">Thin</span></button>
+      <button type="button" class="band-tab" data-band="emerging"><span class="band-pill band-emerging">Emerging</span></button>
+      <button type="button" class="band-tab" data-band="minimal"><span class="band-pill band-minimal">Minimal</span></button>
+    </div>
+
+    <!-- Access filter (applies to provider results): how a developer gets in -->
+    <div class="d-flex justify-content-center gap-1 flex-wrap mt-1 mb-1" id="access-filter">
+      <span style="font-size: 0.75rem; color: #6c757d; align-self: center; margin-right: 0.25rem;">Access:</span>
+      <button type="button" class="access-tab access-tab-active" data-access="all">All</button>
+      <button type="button" class="access-tab" data-access="try"><span class="access-pill ax-try">&#9889; Free to try</span></button>
+      <button type="button" class="access-tab" data-access="open"><span class="access-pill ax-open">Open &middot; no signup</span></button>
+      <button type="button" class="access-tab" data-access="free"><span class="access-pill ax-free">Free / Freemium</span></button>
+      <button type="button" class="access-tab" data-access="paid"><span class="access-pill ax-paid">Paid</span></button>
+    </div>
+
+    <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">
+      Try: "run reports", "firewall rules", "event tracking", "audience segmentation", "compliance"
+    </p>
+  </form>
+</div>
+
+
+<div id="active-filters" style="max-width: 800px; margin: 1rem auto 0; text-align: center; display: none;"></div>
+
+<!-- Sense chips: when a query matches a polysemous tag (e.g. "images", "tracking"),
+     these narrow results to one meaning. Populated by refreshSenseChips() from the
+     federated /search tags section. -->
+<div id="sense-chips" style="max-width: 800px; margin: 0.75rem auto 0; text-align: center; display: none;"></div>
+
+<div id="status-bar" style="max-width: 800px; margin: 1.5rem auto 0.5rem; display: none; color: #666; font-size: 0.9rem;">
+  <span id="status-text"></span>
+</div>
+
+<div id="search-results" style="max-width: 800px; margin: 0 auto;"></div>
+<div id="pagination" style="max-width: 800px; margin: 1.5rem auto; text-align: center;"></div>
+
+
+<noscript>
+  <h2>Browse APIs</h2>
+  <p>Visit <a href="https://apis.io/providers/">providers.apis.io</a> to browse all providers, or <a href="https://apis.io/apis/">apis.apis.io</a> to browse individual APIs.</p>
+</noscript>
+
+<style>
+  mark.hl { background: #fff3a3; padding: 0 2px; border-radius: 2px; }
+  .result-card { transition: background 0.1s; }
+  .result-card:hover { background: #f8f9fa; }
+  .tag-chip { cursor: pointer; user-select: none; }
+  .tag-chip:hover { background: #6c757d !important; color: white !important; }
+  .tag-chip.active { background: #0d6efd !important; color: white !important; }
+  .dim-tab { transition: all 0.15s; }
+  .dim-tab.active { pointer-events: none; }
+  .type-badge { font-size: 0.65rem; font-weight: 600; padding: 0.15em 0.5em; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle; color: white; }
+  .type-provider { background: #6c757d; }
+  .type-api { background: #0d6efd; }
+  .type-schema { background: #dc3545; }
+  .type-asyncapi { background: #1e40af; }
+  .type-jsonld { background: #7c3aed; }
+  .type-rules { background: #c2410c; }
+  .btn-outline-purple { color: #7c3aed; border-color: #7c3aed; }
+  .btn-outline-purple:hover { background: #7c3aed; color: white; border-color: #7c3aed; }
+  .btn-purple { background: #7c3aed; color: white; border-color: #7c3aed; }
+  .band-pill { display: inline-block; padding: 0.15em 0.55em; border-radius: 999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; vertical-align: middle; margin-left: 0.25rem; }
+  .band-tab { background: transparent; border: 1px solid transparent; padding: 0.15rem 0.5rem; border-radius: 999px; cursor: pointer; font-size: 0.78rem; color: #6c757d; transition: all 0.15s; }
+  .band-tab:hover { background: #f1f3f5; }
+  .band-tab-active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  .band-tab .band-pill { margin: 0; }
+  /* Access filter — how a developer gets in. Same tab chrome as the rating band
+     tabs; pill palette matches the provider page (green easiest, gray paid). */
+  .access-tab { background: transparent; border: 1px solid transparent; padding: 0.15rem 0.5rem; border-radius: 999px; cursor: pointer; font-size: 0.78rem; color: #6c757d; transition: all 0.15s; }
+  .access-tab:hover { background: #f1f3f5; }
+  .access-tab-active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  .access-pill { display: inline-block; padding: 0.15em 0.55em; border-radius: 999px; font-size: 0.7rem; font-weight: 600; vertical-align: middle; }
+  .access-tab .access-pill { margin: 0; }
+  .ax-free, .ax-freemium, .ax-open, .ax-try { background: #d1f7e0; color: #0f5132; }
+  .ax-self-serve { background: #cfe2ff; color: #0a3d91; }
+  .ax-free-trial { background: #cff4e4; color: #0f5132; }
+  .ax-paid { background: #e9ecef; color: #495057; }
+  .ax-enterprise, .ax-approval { background: #ffe0c2; color: #7a3e07; }
+  .band-exemplar   { background: #d1f7e0; color: #0f5132; }
+  .band-strong     { background: #cfe2ff; color: #0a3d91; }
+  .band-developing { background: #fff3cd; color: #664d03; }
+  .band-thin       { background: #ffe0c2; color: #7a3e07; }
+  .band-emerging   { background: #f8d7da; color: #842029; }
+  .band-minimal    { background: #e9ecef; color: #495057; }
+  /* Agent-readiness bands — a separate axis, own palette (teal/agent family). */
+  .band-agent-native { background: #cff4e6; color: #0b6b4f; }
+  .band-agent-ready  { background: #d7ebff; color: #0a4b8c; }
+  .band-agent-aware  { background: #fff0d4; color: #7a5200; }
+  .band-human-only   { background: #eceef1; color: #5a6472; }
+  /* Trend marker next to the band pill. score.delta ships in the catalog already;
+     it is week-over-week movement in composite, per the thresholds in scoring.yml. */
+  .res-trend { font-size: 0.72rem; font-weight: 600; font-variant-numeric: tabular-nums; margin-left: 0.15rem; }
+  .trend-rising  { color: #0f5132; }
+  .trend-falling { color: #842029; }
+</style>
+
+<script src="/assets/minisearch.min.js"></script>
+<script>
+(function() {
+  var PAGE_SIZE = 25;
+  var index = null;
+  var mainMiniSearch = null;       // used only on the no-Worker fallback path
+  var searchWorker = null;         // off-main-thread index build + queries
+  var workerReqId = 0;
+  var workerPending = {};
+  var indexLoading = null;
+  var currentResults = [];
+  var currentPage = 0;
+  var currentQuery = '';
+  var searchSeq = 0;               // guards against out-of-order async renders
+  var activeTags = new Set();
+  var activeDimension = 'all';
+  var activeBand = 'all';
+  // Sense (polysemy) filter state. "<tagSlug>:<senseId>" once a user picks a
+  // meaning from the sense chips; null otherwise. Threaded into the /providers
+  // and /apis requests as &sense=, understood by the search Lambda.
+  var activeSense = null;
+  var senseChipQuery = null; // query the cached chips were built for
+  var senseChipData = null;  // the sensed tag object (name, slug, senses[])
+  // Access filter state — how a developer gets in. Each option maps to the
+  // provider filter params the search Lambda understands (added alongside
+  // industry/region/band). Applied to PROVIDER results only (APIs carry no
+  // access model). 'free' spans free+freemium — the "can I start at no cost" cut.
+  var activeAccess = 'all';
+  var ACCESS_PARAMS = {
+    all:  {},
+    try:  { try_now: 'true' },
+    open: { onboarding: 'open' },
+    free: { pricing: 'free,freemium' },
+    paid: { pricing: 'paid' },
+  };
+  var debounceTimer = null;
+
+  // All artifact types in network priority order (highest first). This single
+  // list drives BOTH which indexes load by default vs on demand AND how results
+  // rank — higher-priority types get a gentle ranking boost. `key` equals the
+  // `type` field each index emits, so it doubles as the rank key.
+  //   published:false -> subdomain exists but doesn't emit a search-index.json
+  //                      yet; skipped until it goes live (then flip the flag).
+  //   lazy:true       -> not loaded up front; fetched on first use of its
+  //                      dimension (schemas are ~110K docs / 35MB raw).
+  var ARTIFACTS = [
+    { key: 'provider',   url: 'https://apis.io/search-index.json' },
+    { key: 'api',        url: 'https://apis.io/search-index.json' },
+    { key: 'asyncapi',   url: 'https://apis.io/search-index.json' },
+    { key: 'graphql',    url: 'https://apis.io/search-index.json',      published: false },
+    { key: 'arazzo',     url: 'https://apis.io/search-index.json',       published: false },
+    { key: 'collection', url: 'https://apis.io/search-index.json',  published: false },
+    { key: 'schema',     url: 'https://apis.io/search-index.json',      lazy: true },
+    { key: 'event',      url: 'https://apis.io/search-index.json',       published: false },
+    { key: 'jsonld',     url: 'https://apis.io/search-index.json' },
+    { key: 'rules',      url: 'https://apis.io/search-index.json' }
+  ];
+
+  // Priority rank lookup + a gentle boost (tunable). Top type ~+18%, lowest
+  // ~+1.6%; the composite-score blend (up to +50%) still dominates relevance.
+  var TYPE_RANK = {};
+  ARTIFACTS.forEach(function(a, idx) { TYPE_RANK[a.key] = idx; });
+  var TYPE_COUNT = ARTIFACTS.length;
+  var TYPE_BOOST_MAX = 0.18;
+  function typeRank(type) { var r = TYPE_RANK[type]; return (r == null) ? TYPE_COUNT : r; }
+  function typeBoost(type) { return 1 + (TYPE_COUNT - typeRank(type)) / TYPE_COUNT * TYPE_BOOST_MAX; }
+
+  // Rating-band ordering for results. Same ladder as scripts/lib_rating.py and
+  // the band pills — exemplar, strong, developing on top, in that order.
+  //
+  // Only provider records carry a band (`b`); APIs and artifacts arrive with
+  // b:null and sort into UNRANKED. That is why every band sort below must be
+  // STABLE (it is, per ES2019): unranked results then keep the relevance order
+  // the search engine returned rather than being shuffled into filename order.
+  var BAND_RANK = { exemplar: 0, strong: 1, developing: 2, thin: 3, emerging: 4, minimal: 5 };
+  var BAND_UNRANKED = 6;
+  function bandRank(b) { var r = BAND_RANK[b]; return (r == null) ? BAND_UNRANKED : r; }
+  function sortByBand(items) {
+    return items.sort(function(a, b) {
+      return (bandRank(a.b) - bandRank(b.b)) || ((b.s || 0) - (a.s || 0));
+    });
+  }
+
+  // Derived load lists (published only), preserving priority order.
+  var DEFAULT_INDEXES = ARTIFACTS
+    .filter(function(a) { return a.published !== false && !a.lazy; })
+    .map(function(a) { return a.url; });
+  var LAZY_INDEXES = {};   // dimension/type -> url, fetched on demand
+  ARTIFACTS.forEach(function(a) {
+    if (a.published !== false && a.lazy) LAZY_INDEXES[a.key] = a.url;
+  });
+  var extraState = {};       // dimension key -> Promise (memoizes lazy loads)
+  var extraPending = {};     // dimension key -> resolver awaiting worker 'more'
+
+  // MiniSearch field list, shared between the Worker and the fallback path.
+  var MS_FIELDS = ['n', 'd', 't', 'st'];
+
+  // Update the headline stats line once the merged index is in hand.
+  function updateStatsLine(merged) {
+    var counts = {};
+    merged.forEach(function(it) { counts[it.type] = (counts[it.type] || 0) + 1; });
+    var statsEl = document.getElementById('search-stats');
+    if (!statsEl) return;
+    var parts = [];
+    if (counts.provider) parts.push('<strong>' + counts.provider + '</strong> providers');
+    if (counts.api) parts.push('<strong>' + counts.api + '</strong> APIs');
+    if (counts.schema) parts.push('<strong>' + counts.schema + '</strong> schemas');
+    if (counts.asyncapi) parts.push('<strong>' + counts.asyncapi + '</strong> event specs');
+    if (counts.jsonld) parts.push('<strong>' + counts.jsonld + '</strong> vocabularies');
+    if (counts.rules) parts.push('<strong>' + counts.rules + '</strong> rulesets');
+    statsEl.innerHTML = 'Search across ' + parts.join(', ');
+  }
+
+  // Build an inline Web Worker that fetches the federated indexes, merges +
+  // ranks them, and builds the MiniSearch index OFF the main thread, so the
+  // tokenization never freezes the UI. URLs arrive by message so additional
+  // dimensions (schemas) can be appended later via "loadMore". Returns null
+  // when Workers are unavailable (we then fall back to the main thread).
+  function buildWorker() {
+    if (typeof Worker === 'undefined' || typeof URL === 'undefined' || !URL.createObjectURL) return null;
+    var miniSearchUrl = location.origin + '/assets/minisearch.min.js';
+    var src =
+      'importScripts(' + JSON.stringify(miniSearchUrl) + ');\n' +
+      'var MS_FIELDS=' + JSON.stringify(MS_FIELDS) + ';\n' +
+      'var TYPE_RANK=' + JSON.stringify(TYPE_RANK) + ';\n' +
+      'function rank(t){var r=TYPE_RANK[t];return r==null?999:r;}\n' +
+      'var BAND_RANK=' + JSON.stringify(BAND_RANK) + ';\n' +
+      'function brank(b){var r=BAND_RANK[b];return r==null?6:r;}\n' +
+      'var miniSearch=null;\n' +
+      'var merged=[];\n' +
+      'function fetchAll(urls){return Promise.all(urls.map(function(u){return fetch(u).then(function(r){return r.json();}).catch(function(){return [];});}));}\n' +
+      'self.onmessage=function(e){\n' +
+      '  var msg=e.data;\n' +
+      '  if(msg.type==="load"){\n' +
+      '    fetchAll(msg.urls).then(function(results){\n' +
+      '      merged=[];\n' +
+      '      for(var r=0;r<results.length;r++){for(var j=0;j<results[r].length;j++){merged.push(results[r][j]);}}\n' +
+      '      merged.sort(function(a,b){return (brank(a.b)-brank(b.b))||(rank(a.type)-rank(b.type))||((b.s||0)-(a.s||0));});\n' +
+      '      for(var k=0;k<merged.length;k++)merged[k].i=k;\n' +
+      '      miniSearch=new MiniSearch({fields:MS_FIELDS,storeFields:["i"],idField:"i",\n' +
+      '        extractField:function(doc,field){if(field==="t")return (doc.t||[]).join(" ");return doc[field]||"";}});\n' +
+      '      miniSearch.addAll(merged);\n' +
+      '      self.postMessage({type:"loaded",index:merged});\n' +
+      '    }).catch(function(err){self.postMessage({type:"error",message:String(err)});});\n' +
+      '  } else if(msg.type==="loadMore"){\n' +
+      '    fetchAll(msg.urls).then(function(results){\n' +
+      '      var added=[];\n' +
+      '      for(var r=0;r<results.length;r++){for(var j=0;j<results[r].length;j++){var doc=results[r][j];doc.i=merged.length;merged.push(doc);added.push(doc);}}\n' +
+      '      if(miniSearch&&added.length)miniSearch.addAll(added);\n' +
+      '      self.postMessage({type:"more",key:msg.key,docs:added});\n' +
+      '    }).catch(function(err){self.postMessage({type:"more",key:msg.key,docs:[]});});\n' +
+      '  } else if(msg.type==="search"){\n' +
+      '    var hits=miniSearch?miniSearch.search(msg.query,{boost:{n:4,st:3,t:2,d:1},prefix:true,fuzzy:msg.fuzzy,combineWith:"AND"}):[];\n' +
+      '    self.postMessage({type:"results",reqId:msg.reqId,hits:hits.map(function(h){return {i:h.i,score:h.score};})});\n' +
+      '  }\n' +
+      '};';
+    try {
+      var blob = new Blob([src], { type: 'application/javascript' });
+      return new Worker(URL.createObjectURL(blob));
+    } catch (err) {
+      return null;
+    }
+  }
+
+  // Fallback: build the default index on the main thread (no Worker).
+  function loadIndexMainThread(resolve) {
+    Promise.all(DEFAULT_INDEXES.map(function(url) {
+      return fetch(url).then(function(r) { return r.json(); }).catch(function() { return []; });
+    })).then(function(results) {
+      var merged = [];
+      for (var r = 0; r < results.length; r++) {
+        for (var j = 0; j < results[r].length; j++) merged.push(results[r][j]);
+      }
+      merged.sort(function(a, b) { return (bandRank(a.b) - bandRank(b.b)) || (typeRank(a.type) - typeRank(b.type)) || ((b.s || 0) - (a.s || 0)); });
+      for (var k = 0; k < merged.length; k++) merged[k].i = k;
+      index = merged;
+      mainMiniSearch = new MiniSearch({
+        fields: MS_FIELDS,
+        storeFields: ['i'],
+        idField: 'i',
+        extractField: function(doc, field) {
+          if (field === 't') return (doc.t || []).join(' ');
+          return doc[field] || '';
+        }
+      });
+      mainMiniSearch.addAll(merged);
+      setStatus('');
+      resolve(index);
+    });
+  }
+
+  // Fallback: append a lazy index (e.g. schemas) on the main thread, keeping
+  // doc ids contiguous with their position in `index`.
+  function loadMoreMainThread(urls) {
+    return Promise.all(urls.map(function(url) {
+      return fetch(url).then(function(r) { return r.json(); }).catch(function() { return []; });
+    })).then(function(results) {
+      var added = [];
+      for (var r = 0; r < results.length; r++) {
+        for (var j = 0; j < results[r].length; j++) {
+          var doc = results[r][j];
+          doc.i = index.length;
+          index.push(doc);
+          added.push(doc);
+        }
+      }
+      if (mainMiniSearch && added.length) mainMiniSearch.addAll(added);
+      updateStatsLine(index);
+    });
+  }
+
+  // Dimensions are fetched on demand from the API — no lazy index to warm.
+  function ensureExtra(key) { return Promise.resolve(); }
+
+  // The index lives behind /api/v1 now — nothing to build client-side.
+  function loadIndex() { return Promise.resolve(); }
+
+  function setStatus(text) {
+    var bar = document.getElementById('status-bar');
+    if (!text) { bar.style.display = 'none'; return; }
+    document.getElementById('status-text').innerHTML = text;
+    bar.style.display = '';
+  }
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function highlight(text, query) {
+    if (!text || !query) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    var terms = query.trim().split(/\s+/).filter(function(t) { return t.length > 1; });
+    terms.forEach(function(term) {
+      var re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      escaped = escaped.replace(re, '<mark class="hl">$1</mark>');
+    });
+    return escaped;
+  }
+
+  // Dimension -> endpoint/return, band + tags -> query params are all applied
+  // server-side by executeSearch, so this is now a pass-through.
+  function applyFilters(results) { return results; }
+
+  // Run the MiniSearch query (in the Worker when available, otherwise on the
+  // main thread) and resolve to ranked hit ids + scores.
+  function searchHits(query, fuzzy) {
+    if (searchWorker) {
+      return new Promise(function(resolve) {
+        var id = ++workerReqId;
+        workerPending[id] = resolve;
+        searchWorker.postMessage({ type: 'search', reqId: id, query: query, fuzzy: fuzzy });
+      });
+    }
+    var hits = mainMiniSearch
+      ? mainMiniSearch.search(query, { boost: { n: 4, st: 3, t: 2, d: 1 }, prefix: true, fuzzy: fuzzy, combineWith: 'AND' })
+      : [];
+    return Promise.resolve(hits.map(function(h) { return { i: h.i, score: h.score }; }));
+  }
+
+  // API-backed search with server-side pagination. Hits /api/v1 and maps the
+  // response into the render item shape {n,d,t,type,u,h,p,s,b,ac}. Dimension,
+  // band, tags, page, and limit are all pushed to the server. The returned
+  // array carries `_total` (true match count) and `_pages` (total pages) so the
+  // stat line and pager can drive page-by-page fetches rather than slicing a
+  // capped client-side window.
+  //   opts: { page=0, limit=PAGE_SIZE, dimension, band, tags }  (all optional;
+  //          default to the active UI state)
+  function executeSearch(query, opts) {
+    opts = opts || {};
+    var API = '/api/v1';
+    var limit = opts.limit || PAGE_SIZE;
+    var page = (opts.page || 0) + 1; // API is 1-based
+    var d = opts.dimension || activeDimension;
+    // An access filter is a provider concept — when one is active in the default
+    // 'all' view, show providers so the filter actually applies (APIs would ignore it).
+    if (activeAccess !== 'all' && d === 'all') d = 'provider';
+    var band = (opts.band != null ? opts.band : (activeBand !== 'all' ? activeBand : ''));
+    var tags = opts.tags != null ? opts.tags : (activeTags.size ? Array.from(activeTags).join(',') : '');
+    function qstr(params) {
+      var s = [];
+      for (var k in params) { var v = params[k]; if (v == null || v === '') continue; s.push(encodeURIComponent(k) + '=' + encodeURIComponent(v)); }
+      return s.length ? '?' + s.join('&') : '';
+    }
+    function get(path) {
+      return fetch(API + path).then(function(r) { return r.ok ? r.json() : { meta: {}, data: [] }; })
+                              .catch(function() { return { meta: {}, data: [] }; });
+    }
+    function apiSlug(o) { return (o.aid && o.aid.indexOf(':') > -1) ? o.aid.split(':')[1] : (o.slug || ''); }
+    function mapProvider(p) {
+      // tr/dl: the catalog already ships trend + week-over-week delta on every score;
+      // the result card renders an arrow for movement. Not defaulted to 0/flat — a
+      // provider with no prior snapshot has no trend, which is different from "flat".
+      // ar/ars: standalone agent-readiness band + score (see /rating/). Flows from the
+      // catalog on provider records; null on providers scored before it shipped.
+      return { n: p.name, d: p.description || '', t: (p.tags || []).slice(0, 8), type: 'provider',
+               u: '/providers/' + p.slug + '/', h: null, p: null,
+               s: (p.score && p.score.composite) || 0, b: (p.score && p.score.band) || null, ac: p.api_count || 0,
+               tr: (p.score && p.score.trend) || null, dl: (p.score && p.score.delta) || 0,
+               ar: (p.agent_readiness && p.agent_readiness.band) || null, ars: (p.agent_readiness && p.agent_readiness.score) || 0,
+               ax: p.access_model || null,
+               // delivery model — what the composite was measured against
+               dm: (p.delivery_model && p.delivery_model.model !== 'unknown')
+                     ? p.delivery_model.model : null };
+    }
+    function mapApi(a) {
+      return { n: a.name, d: a.description || '', t: a.tags || [], type: 'api',
+               u: '/apis/' + a.provider_slug + '/' + apiSlug(a) + '/', h: a.humanURL || a.baseURL || null,
+               p: a.provider_name || a.provider_slug, s: 0, b: null, ac: 0 };
+    }
+    function mapArt(r, type) {
+      return { n: r.name || r.aid, d: '', t: [], type: type,
+               u: '/apis/' + r.provider_slug + '/' + apiSlug(r) + '/', h: r.url || null,
+               p: r.provider_slug, s: 0, b: null, ac: 0 };
+    }
+    // Every result set leaves here ordered by rating band first. Pagination
+    // totals come from the API, so this reorders the page in hand rather than
+    // claiming to reorder the whole result set.
+    function tag(items, meta) { meta = meta || {}; sortByBand(items); items._total = (meta.total != null) ? meta.total : items.length; items._pages = meta.pages || Math.ceil((items._total || 0) / limit); return items; }
+    var base = { q: query, limit: limit, page: page, tags: tags, match: 'all' };
+    // Sense filter (polysemy) — narrows every dimension to the picked meaning.
+    if (activeSense) base.sense = activeSense;
+    // Access filter -> provider query params (providers only; APIs have no access model).
+    var acc = ACCESS_PARAMS[activeAccess] || {};
+    // Use the dedicated, paginated list endpoints (/providers, /apis) which return
+    // {data, meta}. /search is federated-only (per-section {total, top}, no data[]),
+    // so calling it here returned nothing and broke the homepage results.
+    if (d === 'provider') return get('/providers' + qstr(Object.assign({ band: band }, base, acc))).then(function(j) { return tag((j.data || []).map(mapProvider), j.meta); });
+    if (d === 'api')      return get('/apis' + qstr(Object.assign({ band: band }, base))).then(function(j) { return tag((j.data || []).map(mapApi), j.meta); });
+    if (d === 'schema')   return get('/json-schemas' + qstr(base)).then(function(j) { return tag((j.data || []).map(function(r) { return mapArt(r, 'schema'); }), j.meta); });
+    if (d === 'asyncapi') return get('/asyncapis' + qstr(base)).then(function(j) { return tag((j.data || []).map(function(r) { return mapArt(r, 'asyncapi'); }), j.meta); });
+    if (d === 'jsonld')   return get('/json-ld' + qstr(base)).then(function(j) { return tag((j.data || []).map(function(r) { return mapArt(r, 'jsonld'); }), j.meta); });
+    if (d === 'rules')    return get('/rules' + qstr(base)).then(function(j) { return tag((j.data || []).map(function(r) { return mapArt(r, 'rules'); }), j.meta); });
+    // 'all' -> APIs paginated (the dominant intent); on page 1 only, prepend a
+    // few top matching providers so they're visible on entry. Deep pages are
+    // APIs, with totals/pages from the APIs response.
+    var reqs = [get('/apis' + qstr(Object.assign({ band: band }, base)))];
+    if (page === 1) reqs.push(get('/providers' + qstr(Object.assign({ band: band, q: query, tags: tags, match: 'all', limit: 8 }, acc))));
+    return Promise.all(reqs).then(function(rs) {
+      var apis = (rs[0].data || []).map(mapApi);
+      var provs = (page === 1 && rs[1]) ? (rs[1].data || []).map(mapProvider) : [];
+      return tag(provs.concat(apis), rs[0].meta);
+    });
+  }
+
+  // submitted = true for explicit submits (Enter / Search button). While the
+  // user is still typing we (a) require >=2 chars before searching and (b)
+  // skip the costly fuzzy matcher, applying it only on submit.
+  function runSearch(submitted) {
+    var query = document.getElementById('api-search').value.trim();
+    // A changed query invalidates any picked sense (it belonged to the old term).
+    // A chip click re-runs with the same query text, so the sense survives that.
+    if (query !== currentQuery) activeSense = null;
+    currentQuery = query;
+    currentPage = 0;
+    var mySeq = ++searchSeq;
+    var noFilters = activeTags.size === 0 && activeDimension === 'all' && activeBand === 'all' && activeAccess === 'all';
+    var effectiveQuery = (query.length >= 2 || (submitted && query.length > 0)) ? query : '';
+
+    loadIndex().then(function() {
+      if (mySeq !== searchSeq) return; // superseded by a newer keystroke
+      if (!effectiveQuery && noFilters) {
+        setStatus(query.length === 1 ? 'Keep typing&hellip;' : '');
+        currentResults = [];
+        renderResults([], 0);
+        activeSense = null; senseChipQuery = null; senseChipData = null;
+        hideSenseChips();
+        return;
+      }
+      executeSearch(effectiveQuery, { page: 0 }).then(function(results) {
+        if (mySeq !== searchSeq) return; // a newer search has taken over
+        results = applyFilters(results);
+        currentResults = results;
+        currentPage = 0;
+        renderResults(results, 0);
+        updateUrl(query);
+        refreshSenseChips(effectiveQuery);
+      });
+    });
+  }
+
+  // Fetch a specific result page from the API (server-side pagination).
+  function goToPage(p) {
+    if (p < 0) return;
+    var mySeq = ++searchSeq;
+    setStatus('Loading page ' + (p + 1) + '&hellip;');
+    executeSearch(currentQuery, { page: p }).then(function(results) {
+      if (mySeq !== searchSeq) return;
+      currentResults = results;
+      currentPage = p;
+      renderResults(results, p);
+      window.scrollTo({ top: document.querySelector('form').offsetTop, behavior: 'smooth' });
+    });
+  }
+
+  function getTypeBadge(type) {
+    var labels = { provider: 'Provider', api: 'API', schema: 'Schema', asyncapi: 'AsyncAPI', jsonld: 'JSON-LD', rules: 'Rules' };
+    return '<span class="type-badge type-' + type + '">' + (labels[type] || type) + '</span>';
+  }
+
+  function getBorderColor(type) {
+    var colors = { provider: '#6c757d', api: '#0d6efd', schema: '#dc3545', asyncapi: '#1e40af', jsonld: '#7c3aed', rules: '#c2410c' };
+    return colors[type] || '#6c757d';
+  }
+
+  function renderResults(results, page) {
+    var container = document.getElementById('search-results');
+    var pageCount = results.length;                                  // items on this server page
+    var trueTotal = (results && results._total != null) ? results._total : pageCount;
+    var totalPages = (results && results._pages != null) ? results._pages : 0;
+    var start = page * PAGE_SIZE;
+    var end = start + pageCount;
+
+    if (pageCount === 0) {
+      if (currentQuery || activeTags.size > 0 || activeDimension !== 'all' || activeBand !== 'all' || activeAccess !== 'all') {
+        setStatus('No results found. Try different terms or remove filters.');
+      } else {
+        setStatus('');
+      }
+      container.innerHTML = '';
+      renderPagination(0, 0);
+      return;
+    }
+
+    var dimLabels = { asyncapi: 'AsyncAPI specs', jsonld: 'JSON-LD vocabularies' };
+    var dimLabel = activeDimension === 'all' ? 'results' : (dimLabels[activeDimension] || activeDimension + 's');
+    setStatus('Found <strong>' + trueTotal + '</strong> ' + dimLabel + (currentQuery ? ' matching "' + escapeHtml(currentQuery) + '"' : '') + ' (showing ' + (start + 1) + '&ndash;' + end + ')');
+
+    var html = '<div class="list-group">';
+    for (var i = 0; i < results.length; i++) {                       // render the whole page
+      var item = results[i];
+      var name = highlight(item.n || '', currentQuery);
+      var desc = highlight(item.d || '', currentQuery);
+      var borderColor = getBorderColor(item.type);
+
+      html += '<div class="list-group-item result-card" style="border-left: 3px solid ' + borderColor + ';">';
+      html += '<div class="d-flex justify-content-between align-items-start">';
+      html += '<div style="flex: 1; min-width: 0;">';
+      html += '<h6 style="margin-bottom: 0.25rem;">';
+      html += '<a href="' + item.u + '" style="text-decoration: none;">' + name + '</a> ';
+      html += getTypeBadge(item.type);
+      if (item.b && item.type === 'provider') {
+        html += ' <span class="band-pill band-' + item.b + '" title="Composite score: ' + (item.s || 0) + '/100">' + item.b + ' &middot; ' + (item.s || 0) + '</span>';
+        // Only render an arrow for actual movement. `flat` is the overwhelming majority
+        // of any given week, so marking it would add a glyph to nearly every row and
+        // make the ones that DID move harder to spot — the opposite of the point.
+        if (item.tr === 'rising' || item.tr === 'falling') {
+          var up = item.tr === 'rising';
+          var d = Math.abs(Number(item.dl) || 0).toFixed(1);
+          html += ' <span class="res-trend trend-' + item.tr + '" title="' + (up ? 'Up' : 'Down') + ' ' + d +
+                  ' points since the previous scoring run">' + (up ? '&#9650;' : '&#9660;') + ' ' + (up ? '+' : '&minus;') + d + '</span>';
+        }
+        // Standalone agent-readiness pill — a different axis from the composite (see /rating/).
+        if (item.ar) {
+          html += ' <span class="band-pill band-' + item.ar + '" title="Agent readiness: ' + (item.ars || 0) + '/100 — how safely an AI agent can drive this API">' + item.ar.replace('-', ' ') + ' &middot; ' + (item.ars || 0) + '</span>';
+        }
+        // Access model pill — how a developer gets in (pricing + onboarding). Hidden
+        // when both facets are unknown so it only appears when it says something.
+        if (item.ax && (item.ax.pricing && item.ax.pricing !== 'unknown' || item.ax.onboarding && item.ax.onboarding !== 'unknown')) {
+          var axLabel = item.ax.label || [item.ax.pricing, item.ax.onboarding].filter(function(x) { return x && x !== 'unknown'; }).join(' · ');
+          var axCls = (item.ax.pricing && item.ax.pricing !== 'unknown') ? item.ax.pricing : item.ax.onboarding;
+          html += ' <span class="access-pill ax-' + axCls + '" title="How to get started">' + axLabel + '</span>';
+        }
+      }
+      if (item.p) html += ' <small style="color: #999; font-weight: normal;">&middot; ' + escapeHtml(item.p) + '</small>';
+      html += '</h6>';
+      if (item.d) html += '<p style="font-size: 0.85rem; color: #666; margin-bottom: 0.4rem;">' + desc + '</p>';
+
+      if (item.type === 'provider') {
+        html += '<div style="font-size: 0.8rem; color: #999;">';
+        if (item.ac) html += item.ac + ' APIs';
+        html += '</div>';
+      }
+
+      if (item.t && item.t.length > 0) {
+        html += '<div style="display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem;">';
+        var maxTags = Math.min(item.t.length, 5);
+        for (var t = 0; t < maxTags; t++) {
+          if (item.t[t]) {
+            var tagSafe = escapeHtml(item.t[t]);
+            html += '<span class="badge bg-light text-dark tag-chip" data-tag="' + tagSafe + '" style="font-size: 0.7rem; font-weight: 500;">' + tagSafe + '</span>';
+          }
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="d-flex gap-2 ms-3 flex-shrink-0">';
+      if (item.h) html += '<a href="' + item.h + '" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">Docs</a>';
+      html += '<a href="' + item.u + '" class="btn btn-sm btn-outline-dark">View</a>';
+      html += '</div>';
+
+      html += '</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+
+    container.querySelectorAll('.tag-chip').forEach(function(el) {
+      el.addEventListener('click', function() { addTagFilter(el.getAttribute('data-tag')); });
+    });
+
+    renderPagination(totalPages, page);
+  }
+
+  // totalPages comes straight from the API meta; clicks re-fetch that page.
+  function renderPagination(totalPages, page) {
+    var container = document.getElementById('pagination');
+    if (!totalPages || totalPages <= 1) { container.innerHTML = ''; return; }
+    var html = '<nav><ul class="pagination justify-content-center">';
+    html += '<li class="page-item' + (page === 0 ? ' disabled' : '') + '"><a class="page-link" href="#" data-page="' + (page - 1) + '">Previous</a></li>';
+    var startP = Math.max(0, page - 2);
+    var endP = Math.min(totalPages, startP + 5);
+    if (startP > 0) html += '<li class="page-item"><a class="page-link" href="#" data-page="0">1</a></li><li class="page-item disabled"><span class="page-link">&hellip;</span></li>';
+    for (var p = startP; p < endP; p++) {
+      html += '<li class="page-item' + (p === page ? ' active' : '') + '"><a class="page-link" href="#" data-page="' + p + '">' + (p + 1) + '</a></li>';
+    }
+    if (endP < totalPages) html += '<li class="page-item disabled"><span class="page-link">&hellip;</span></li><li class="page-item"><a class="page-link" href="#" data-page="' + (totalPages - 1) + '">' + totalPages + '</a></li>';
+    html += '<li class="page-item' + (page >= totalPages - 1 ? ' disabled' : '') + '"><a class="page-link" href="#" data-page="' + (page + 1) + '">Next</a></li>';
+    html += '</ul></nav>';
+    container.innerHTML = html;
+
+    container.querySelectorAll('.page-link[data-page]').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        var p = parseInt(el.getAttribute('data-page'), 10);
+        if (p < 0 || p >= totalPages) return;
+        goToPage(p); // server-side: fetch the requested page
+      });
+    });
+  }
+
+  function addTagFilter(tag) {
+    activeTags.add(tag);
+    renderActiveFilters();
+    runSearch();
+  }
+
+  function removeTagFilter(tag) {
+    activeTags.delete(tag);
+    renderActiveFilters();
+    runSearch();
+  }
+
+  function renderActiveFilters() {
+    var container = document.getElementById('active-filters');
+    if (activeTags.size === 0) { container.style.display = 'none'; return; }
+    var html = '<small style="color: #888;">Filtering by: </small>';
+    activeTags.forEach(function(tag) {
+      html += '<span class="badge bg-primary" style="margin-right: 0.3rem; cursor: pointer;" data-rm="' + escapeHtml(tag) + '">' + escapeHtml(tag) + ' &times;</span>';
+    });
+    container.innerHTML = html;
+    container.style.display = '';
+    container.querySelectorAll('[data-rm]').forEach(function(el) {
+      el.addEventListener('click', function() { removeTagFilter(el.getAttribute('data-rm')); });
+    });
+  }
+
+  // --- Sense chips (polysemy disambiguation) ---------------------------------
+  // After results render, ask the federated /search endpoint for the top matching
+  // tags. If the best one is polysemous (carries senses[]), offer its senses as
+  // chips so the user can narrow "images" to AI generation vs container registries
+  // vs digital archives, etc. Cached per query so a chip click doesn't refetch.
+  function refreshSenseChips(query) {
+    var box = document.getElementById('sense-chips');
+    if (!query || query.length < 2) { hideSenseChips(); return; }
+    if (query === senseChipQuery) {                 // same query -> just re-highlight
+      if (senseChipData) renderSenseChips(senseChipData); else hideSenseChips();
+      return;
+    }
+    get('/search' + qstr({ q: query, limit: 6 })).then(function(j) {
+      if (query !== currentQuery) return;           // superseded by a newer query
+      var tags = (j && j.tags && j.tags.top) || [];
+      var sensed = null;
+      for (var i = 0; i < tags.length; i++) {
+        if (tags[i].senses && tags[i].senses.length >= 2) { sensed = tags[i]; break; }
+      }
+      senseChipQuery = query;
+      senseChipData = sensed;
+      if (!sensed) { if (activeSense) { activeSense = null; } hideSenseChips(); return; }
+      // Drop a picked sense that doesn't belong to the tag now on offer.
+      if (activeSense && activeSense.split(':')[0] !== sensed.slug) activeSense = null;
+      renderSenseChips(sensed);
+    });
+  }
+
+  function hideSenseChips() {
+    var box = document.getElementById('sense-chips');
+    box.style.display = 'none';
+    box.innerHTML = '';
+  }
+
+  function senseChip(val, label, active) {
+    return '<span class="badge sense-chip" data-sense="' + escapeHtml(val) + '" ' +
+      'style="cursor:pointer;margin:0.15rem;font-size:0.75rem;padding:0.4em 0.7em;' +
+      (active ? 'background:#0d6efd;color:#fff;' : 'background:#e7f1ff;color:#0d6efd;') + '">' +
+      label + '</span>';
+  }
+
+  function renderSenseChips(tag) {
+    var box = document.getElementById('sense-chips');
+    var html = '<small style="color:#888;">&ldquo;' + escapeHtml(tag.name) + '&rdquo; can mean: </small> ';
+    html += senseChip('', 'All', !activeSense);
+    for (var i = 0; i < tag.senses.length; i++) {
+      var s = tag.senses[i];
+      var val = tag.slug + ':' + s.id;
+      var count = s.provider_count ? ' <span style="opacity:.6;">' + s.provider_count + '</span>' : '';
+      html += senseChip(val, escapeHtml(s.label || s.id) + count, activeSense === val);
+    }
+    box.innerHTML = html;
+    box.style.display = '';
+    box.querySelectorAll('[data-sense]').forEach(function(el) {
+      el.addEventListener('click', function() { pickSense(el.getAttribute('data-sense')); });
+    });
+  }
+
+  function pickSense(val) {
+    activeSense = val || null;
+    if (senseChipData) renderSenseChips(senseChipData); // instant highlight, no refetch
+    runSearch();                                        // re-query with &sense=
+  }
+
+  function updateUrl(query) {
+    if (window.history.replaceState) {
+      var url = query ? '?search=' + encodeURIComponent(query) : window.location.pathname;
+      window.history.replaceState(null, '', url);
+    }
+  }
+
+  // Dimension tab switching
+  document.querySelectorAll('.dim-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.dim-tab').forEach(function(b) {
+        b.classList.remove('active');
+        b.classList.remove('btn-dark', 'btn-success', 'btn-primary', 'btn-secondary', 'btn-danger', 'btn-info', 'btn-purple', 'btn-warning');
+        var dim = b.getAttribute('data-dim');
+        var outlineClass = {
+          all: 'btn-outline-dark',
+          api: 'btn-outline-primary',
+          provider: 'btn-outline-secondary',
+          schema: 'btn-outline-danger',
+          asyncapi: 'btn-outline-info',
+          jsonld: 'btn-outline-purple',
+          rules: 'btn-outline-warning'
+        }[dim] || 'btn-outline-dark';
+        b.classList.add(outlineClass);
+      });
+      btn.classList.add('active');
+      var dim = btn.getAttribute('data-dim');
+      var solidMap = {
+        all: ['btn-outline-dark', 'btn-dark'],
+        api: ['btn-outline-primary', 'btn-primary'],
+        provider: ['btn-outline-secondary', 'btn-secondary'],
+        schema: ['btn-outline-danger', 'btn-danger'],
+        asyncapi: ['btn-outline-info', 'btn-info'],
+        jsonld: ['btn-outline-purple', 'btn-purple'],
+        rules: ['btn-outline-warning', 'btn-warning']
+      };
+      var pair = solidMap[dim] || solidMap.all;
+      btn.classList.remove(pair[0]);
+      btn.classList.add(pair[1]);
+      activeDimension = dim;
+      if (LAZY_INDEXES[dim]) {
+        // Schemas (the only lazy dimension today) are fetched on first use.
+        setStatus('Loading schemas index&hellip;');
+        ensureExtra(dim).then(function() { runSearch(false); });
+      } else {
+        runSearch(false);
+      }
+    });
+  });
+
+  // Band filter clicks
+  document.querySelectorAll('.band-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.band-tab').forEach(function(b) {
+        b.classList.remove('band-tab-active');
+      });
+      btn.classList.add('band-tab-active');
+      activeBand = btn.getAttribute('data-band');
+      runSearch();
+    });
+  });
+
+  // Access filter clicks
+  document.querySelectorAll('.access-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.access-tab').forEach(function(b) {
+        b.classList.remove('access-tab-active');
+      });
+      btn.classList.add('access-tab-active');
+      activeAccess = btn.getAttribute('data-access');
+      runSearch();
+    });
+  });
+
+  // Wire up events
+  var input = document.getElementById('api-search');
+  input.addEventListener('focus', loadIndex);
+  input.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { runSearch(false); }, 300);
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(debounceTimer);
+      runSearch(true);
+    }
+  });
+
+  // Inline form onsubmit + any external callers submit explicitly.
+  window.runSearch = function(submitted) { return runSearch(submitted !== false); };
+
+  // Init from URL query
+  var qs = getQueryVariable('search');
+  if (qs && qs !== '') {
+    input.value = qs;
+    loadIndex().then(function() { runSearch(true); });
+  }
+
+  // WebMCP — expose catalog search to in-browser agents
+  // (https://webmachinelearning.github.io/webmcp/, draft).
+  //
+  // Registration, capability detection, deprecated-surface fallback and the
+  // measurement beacon all live in _includes/webmcp.html. This block only
+  // declares the tools. Do NOT reintroduce a direct navigator.modelContext
+  // call here: that surface is deprecated as of Chrome 150 and failed SILENTLY
+  // for months because the feature-detect simply stopped matching.
+  if (window.apisioWebMCP) {
+    var VALID_DIMENSIONS = ['all', 'provider', 'api', 'schema', 'asyncapi', 'jsonld', 'rules'];
+    function trimResult(item) {
+      return {
+        type: item.type,
+        name: item.n,
+        description: item.d || '',
+        url: item.u || '',
+        tags: item.t || [],
+        score: item.s || 0,
+        band: item.b || null
+      };
+    }
+    window.apisioWebMCP.register('home', [
+          {
+            name: 'search_apis',
+            description: 'Search the apis.io federated catalog by keyword, tag, or provider. Returns ranked matches across providers, APIs, AsyncAPI specs, JSON-LD vocabularies, and rule sets. JSON Schemas are large and only included when dimension is "schema".',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                query: { type: 'string', description: 'Free-text search query.' },
+                dimension: { type: 'string', enum: VALID_DIMENSIONS, description: 'Optional dimension filter. Defaults to "all".' },
+                limit: { type: 'integer', minimum: 1, maximum: 100, description: 'Maximum number of results to return. Default 20.' }
+              },
+              required: ['query']
+            },
+            execute: function(args) {
+              var query = (args && args.query) || '';
+              var dim = (args && args.dimension) || 'all';
+              var limit = Math.min(Math.max(parseInt((args && args.limit) || 20, 10) || 20, 1), 100);
+              return executeSearch(query, { dimension: dim, limit: limit, page: 0 }).then(function(results) {
+                return {
+                  query: query,
+                  dimension: dim,
+                  total: (results && results._total != null) ? results._total : results.length,
+                  results: results.map(trimResult)
+                };
+              });
+            }
+          },
+          {
+            name: 'describe_network',
+            description: 'Describe the apis.io network: subdomains, machine-readable catalogs, and primary discovery endpoints. Use this before searching to understand the available scopes.',
+            inputSchema: { type: 'object', properties: {} },
+            execute: function() {
+              return Promise.resolve({
+                name: 'APIs.io',
+                description: 'Federated catalog of public APIs maintained by API Evangelist.',
+                discovery: {
+                  apiCatalog: 'https://apis.io/.well-known/api-catalog',
+                  agentSkills: 'https://apis.io/.well-known/agent-skills/index.json',
+                  mcpServerCard: 'https://apis.io/.well-known/mcp/server-card.json',
+                  apisJson: 'https://apis.io/apis.json',
+                  sitemap: 'https://apis.io/sitemap.xml'
+                },
+                subdomains: [
+                  { host: 'apis.apis.io', purpose: 'Individual APIs' },
+                  { host: 'providers.apis.io', purpose: 'API providers' },
+                  { host: 'schemas.apis.io', purpose: 'JSON Schema definitions' },
+                  { host: 'asyncapi.apis.io', purpose: 'AsyncAPI event specs' },
+                  { host: 'tags.apis.io', purpose: 'Topic tags' },
+                  { host: 'json-ld.apis.io', purpose: 'JSON-LD contexts' },
+                  { host: 'rules.apis.io', purpose: 'Governance rules' },
+                  { host: 'plans.apis.io', purpose: 'API plan definitions' },
+                  { host: 'rate-limits.apis.io', purpose: 'Rate limit metadata' },
+                  { host: 'finops.apis.io', purpose: 'Pricing and cost metadata' }
+                ]
+              });
+            }
+          }
+    ]);
+  }
+})();
+</script>
+
+    </main>
+
+    <footer class="footer">
+  <div class="container"><div class="footer-grid"><div class="footer-col">
+            <h6 class="footer-col-title">Catalog</h6>
+            <ul class="footer-col-list"><li><a href="https://apis.io/providers/">Providers</a></li><li><a href="https://apis.io/apis/">APIs</a></li><li><a href="https://apis.io/tags/">Tags</a></li><li><a href="https://apis.io/industries/">Industries</a></li><li><a href="https://apis.io/areas/">Areas</a></li><li><a href="https://apis.io/regions/">Regions</a></li><li><a href="https://apis.io/countries/">Countries</a></li><li><a href="https://apis.io/vcs/">Venture Capital</a></li><li><a href="https://apis.io/secondary-market/">Secondary Market</a></li><li><a href="https://apis.io/estates/">API Estates</a></li><li><a href="https://apis.io/capabilities/">Business Capabilities</a></li></ul>
+          </div><div class="footer-col">
+            <h6 class="footer-col-title">Artifacts</h6>
+            <ul class="footer-col-list"><li><a href="https://apis.io/capabilities/">Business Capabilities</a></li><li><a href="https://apis.io/extensions/">OpenAPI Extensions</a></li><li><a href="https://apis.io/headers/">HTTP Headers</a></li><li><a href="https://apis.io/schemas/">Schemas</a></li><li><a href="https://apis.io/examples/">Examples</a></li><li><a href="https://apis.io/json-structure/">JSON Structure</a></li><li><a href="https://apis.io/collections/">Collections</a></li><li><a href="https://apis.io/arazzos/">Arazzo Workflows</a></li><li><a href="https://apis.io/servers/">MCP Servers</a></li><li><a href="https://apis.io/a2a/">A2A Agent Cards</a></li><li><a href="https://apis.io/ard/">Agent Discovery</a></li><li><a href="https://apis.io/agent-skills/">Agent Skills</a></li></ul>
+          </div><div class="footer-col">
+            <h6 class="footer-col-title">Signals</h6>
+            <ul class="footer-col-list"><li><a href="https://apis.io/rating/">Kin Score</a></li><li><a href="https://apis.io/security/">Security Posture</a></li><li><a href="https://apis.io/scopes/">OAuth Scopes</a></li><li><a href="https://apis.io/agentic-access/">Agentic Access</a></li><li><a href="https://apis.io/plans/">Plans</a></li><li><a href="https://apis.io/rate-limits/">Rate Limits</a></li><li><a href="https://apis.io/finops/">FinOps</a></li></ul>
+          </div><div class="footer-col">
+            <h6 class="footer-col-title">Platform</h6>
+            <ul class="footer-col-list"><li><a href="https://apis.io/developer/">Developer Docs</a></li><li><a href="https://apis.io/trust/">The Trust Layer</a></li><li><a href="https://apis.io/onboarding/">Onboarding</a></li><li><a href="https://apis.io/kya/">KYA — Know Your Agent</a></li><li><a href="https://apis.io/blueprint/">Blueprint</a></li><li><a href="https://apis.io/analytics/">Analytics</a></li><li><a href="https://apis.io/search-terms/">Search Terms</a></li><li><a href="https://apis.io/model-visibility/">Model Visibility</a></li><li><a href="https://apis.io/changelog/">Changelog</a></li></ul>
+          </div><div class="footer-col">
+            <h6 class="footer-col-title">APIs.io</h6>
+            <ul class="footer-col-list"><li><a href="https://apis.io/about/">About</a></li><li><a href="https://apis.io/blog/">Blog</a></li><li><a href="https://usecommune.com/n/apisio">Newsletter</a></li><li><a href="https://apis.io/add/">Add Your API</a></li><li><a href="https://apis.io/support/">Support</a></li><li><a href="https://github.com/api-search">GitHub</a></li></ul>
+          </div></div><div class="footer-bar">
+      <span class="footer-copy">© APIs.io</span>
+      <div class="footer-legal"><a href="http://apisjson.org">APIs.json</a><a href="http://apicommons.org">API Commons</a><a href="https://apievangelist.com">API Evangelist</a><a href="https://apis.io/terms/">Terms</a><a href="https://apis.io/privacy/">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/kin-glyph.js"></script>
+
+  </body>
+</html>

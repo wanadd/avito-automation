@@ -1,0 +1,42 @@
+[
+  {
+    "account_specific": true,
+    "operation": "GET /autoload/v1/accounts/{user_id}/items/{ad_id}",
+    "paid_tariff_likely_required": "UNKNOWN",
+    "public_schema_available": true,
+    "runtime_auth_required": true,
+    "safe_for_future_use": false
+  },
+  {
+    "account_specific": true,
+    "operation": "GET /autoload/v1/accounts/{user_id}/reports",
+    "paid_tariff_likely_required": "UNKNOWN",
+    "public_schema_available": true,
+    "runtime_auth_required": true,
+    "safe_for_future_use": false
+  },
+  {
+    "account_specific": true,
+    "operation": "GET /autoload/v1/accounts/{user_id}/reports/last_report",
+    "paid_tariff_likely_required": "UNKNOWN",
+    "public_schema_available": true,
+    "runtime_auth_required": true,
+    "safe_for_future_use": false
+  },
+  {
+    "account_specific": true,
+    "operation": "GET /autoload/v1/accounts/{user_id}/reports/{reportId}",
+    "paid_tariff_likely_required": "UNKNOWN",
+    "public_schema_available": true,
+    "runtime_auth_required": true,
+    "safe_for_future_use": false
+  },
+  {
+    "account_specific": true,
+    "operation": "GET /autoload/v1/user-docs/tree",
+    "paid_tariff_likely_required": "UNKNOWN",
+    "public_schema_available": false,
+    "runtime_auth_required": true,
+    "safe_for_future_use": "FUTURE"
+  }
+]
