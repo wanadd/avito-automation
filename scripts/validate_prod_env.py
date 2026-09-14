@@ -20,7 +20,6 @@ REQUIRED = {
     "COOKIE_SECURE",
     "ALLOWED_HOSTS",
     "CORS_ORIGINS",
-    "NEXT_PUBLIC_API_BASE_URL",
     "COMPOSE_PROJECT_NAME",
 }
 
@@ -83,12 +82,15 @@ def validate(values: dict[str, str], expected_domain: str) -> list[str]:
     if missing_hosts:
         errors.append("ALLOWED_HOSTS missing required production/internal hostnames")
 
-    for name in ("APP_BASE_URL", "NEXT_PUBLIC_API_BASE_URL"):
+    for name in ("APP_BASE_URL",):
         value = values.get(name)
         if value:
             require_https(name, value, errors)
             if urlparse(value).netloc != expected_domain:
                 errors.append(f"{name} must point to {expected_domain}")
+    next_public_url = values.get("NEXT_PUBLIC_API_BASE_URL")
+    if next_public_url:
+        errors.append("NEXT_PUBLIC_API_BASE_URL is not used for same-origin browser API calls; remove it")
 
     for name in ("POSTGRES_PASSWORD", "SESSION_SECRET"):
         value = values.get(name, "")

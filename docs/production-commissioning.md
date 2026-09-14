@@ -41,6 +41,12 @@ PORT=3000
 
 Use `/health` for web process health checks. Do not use `/` as a health check because `/` is the authenticated operator dashboard entrypoint and anonymous users are redirected to `/login`.
 
+Browser-side requests to this application's backend use same-origin `/api/...` URLs through the shared nginx vhost. Do not set `NEXT_PUBLIC_API_BASE_URL` for production; it is intentionally not required at runtime or build time. Server-side Next.js data requests still use:
+
+```env
+API_BASE_URL=http://api:8000
+```
+
 ## Production Env
 
 Create `/var/www/avito-automation/.env` from `.env.production.example`. Do not commit it.

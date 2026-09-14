@@ -16,7 +16,6 @@ def compose_config(*extra_args: str) -> dict:
         **os.environ,
         "DOMAIN": "avito.planam.ru",
         "APP_BASE_URL": "https://avito.planam.ru",
-        "NEXT_PUBLIC_API_BASE_URL": "https://avito.planam.ru",
         "POSTGRES_PASSWORD": "x" * 40,
         "SESSION_SECRET": "y" * 40,
         "ALLOWED_HOSTS": "avito.planam.ru,127.0.0.1,localhost,api,avito-automation-api",
@@ -75,6 +74,8 @@ def test_shared_prod_compose_web_binds_all_interfaces_and_uses_health_route():
     web = config["services"]["web"]
     assert web["environment"]["HOSTNAME"] == "0.0.0.0"
     assert web["environment"]["PORT"] == "3000"
+    assert web["environment"]["API_BASE_URL"] == "http://api:8000"
+    assert "NEXT_PUBLIC_API_BASE_URL" not in web["environment"]
     assert "http://127.0.0.1:3000/health" in web["healthcheck"]["test"][-1]
     assert "operator/dashboard" not in web["healthcheck"]["test"][-1]
 
@@ -104,7 +105,7 @@ def test_env_example_contains_no_real_secrets_and_uses_target_domain():
     text = ENV_EXAMPLE.read_text(encoding="utf-8")
     assert "DOMAIN=avito.planam.ru" in text
     assert "APP_BASE_URL=https://avito.planam.ru" in text
-    assert "NEXT_PUBLIC_API_BASE_URL=https://avito.planam.ru" in text
+    assert "NEXT_PUBLIC_API_BASE_URL" not in text
     assert "ALLOWED_HOSTS=avito.planam.ru,127.0.0.1,localhost,api,avito-automation-api" in text
     assert "ALLOWED_HOSTS=*" not in text
     assert "COMPOSE_PROJECT_NAME=avito_automation_prod" in text
@@ -144,7 +145,6 @@ def test_prod_env_validator_accepts_safe_env_and_rejects_placeholders(tmp_path):
                 "COOKIE_SECURE=true",
                 "ALLOWED_HOSTS=avito.planam.ru,127.0.0.1,localhost,api,avito-automation-api",
                 "CORS_ORIGINS=https://avito.planam.ru",
-                "NEXT_PUBLIC_API_BASE_URL=https://avito.planam.ru",
                 "COMPOSE_PROJECT_NAME=avito_automation_prod",
             ]
         ),
