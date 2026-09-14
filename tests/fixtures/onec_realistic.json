@@ -1,0 +1,16 @@
+{
+  "exported_at": "2026-09-14T10:00:00+00:00",
+  "source": "1c",
+  "items": [
+    {
+      "internal_code": "1C-S938B-256",
+      "sku": "S938B",
+      "barcode": "BAR-S938B",
+      "name": "Samsung Galaxy S25 Ultra S938B 12/256 Silverblue",
+      "stock_total": 3,
+      "cost": "61000.00",
+      "currency": "RUB",
+      "updated_at": "2026-09-14T10:00:00+00:00"
+    }
+  ]
+}

@@ -21,7 +21,7 @@ class RQQueueAdapter:
         self.target = target
 
     def enqueue_job(self, job_id: str) -> None:
-        self.queue.enqueue(self.target, job_id, job_id=f"avito:jobs:{job_id}")
+        self.queue.enqueue(self.target, job_id, job_id=f"avito-jobs-{job_id}")
 
 
 class RQPublicationQueueAdapter(RQQueueAdapter):

@@ -11,6 +11,7 @@ from app.models.content import (
     ProductImageSetItem,
 )
 from app.models.match_review import MatchReview
+from app.models.manual_import import ManualImportBatch
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.operator import LoginFailure, OperatorSession, OperatorUser
 from app.models.parsed_supplier_item import ParsedSupplierItem
@@ -38,6 +39,7 @@ __all__ = [
     "DataConflict",
     "LoginFailure",
     "MatchReview",
+    "ManualImportBatch",
     "OperatorSession",
     "OperatorUser",
     "ParsedSupplierItem",

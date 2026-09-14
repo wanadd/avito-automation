@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 const links = [
   ["/", "Dashboard"],
   ["/products", "Products"],
+  ["/imports", "Imports"],
+  ["/onboarding", "Onboarding"],
   ["/review", "Review"],
   ["/publication", "Publication"],
   ["/suppliers", "Suppliers"],

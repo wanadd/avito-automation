@@ -4,9 +4,11 @@ import getpass
 
 from sqlalchemy import select
 
+import app.db.base  # noqa: F401
 from app.db.session import AsyncSessionLocal
 from app.models.enums import OperatorRole
 from app.models.operator import OperatorUser
+from app.services.onboarding import pilot_readiness
 from app.services.operator_auth import create_operator_user
 
 
@@ -37,6 +39,14 @@ async def disable_operator(args) -> None:
     print(f"Operator {args.username} disabled")
 
 
+async def pilot_readiness_command(_args) -> None:
+    async with AsyncSessionLocal() as session:
+        report = await pilot_readiness(session)
+    print(report["status"])
+    for key, value in sorted(report["checks"].items()):
+        print(f"{key}={value}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m app.cli")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -53,6 +63,9 @@ def build_parser() -> argparse.ArgumentParser:
     disable = subparsers.add_parser("disable-operator")
     disable.add_argument("username")
     disable.set_defaults(func=disable_operator)
+
+    readiness = subparsers.add_parser("pilot-readiness")
+    readiness.set_defaults(func=pilot_readiness_command)
     return parser
 
 

@@ -54,6 +54,17 @@ pytest
 
 By default tests read `TEST_DATABASE_URL`; if it is not set, they fall back to `DATABASE_URL`.
 
+## Sprint 1.2 Real Data Onboarding
+
+Operational onboarding now supports preview-and-confirm flows for manual Telegram supplier prices and 1C stock/cost exports. Operator UI pages are available at `/imports`, `/imports/telegram`, `/imports/onec`, and `/onboarding`.
+
+Docs:
+
+- `docs/data-onboarding.md`
+- `docs/first-operational-run.md`
+
+The Avito publication path remains internal dry-run only. A ready listing can reach `INTERNAL_DRY_RUN_VALIDATED`; live Avito OAuth, publish, update, and external acceptance are intentionally disabled.
+
 ## Structure
 
 - `apps/api/app` - FastAPI application, domain models, schemas, services, repositories.

@@ -31,6 +31,7 @@ from app.models.enums import (
     TelegramCollectionRunStatus,
 )
 from app.models.match_review import MatchReview
+from app.models.manual_import import ManualImportBatch
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.pricing import PricingDecisionHistory, PricingPolicy, VariantPricingState
 from app.models.product import Product, ProductVariant
@@ -59,6 +60,17 @@ from app.schemas.content import (
 )
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.one_c import InventoryListItem, InventoryStateRead, OneCImportRunRead, OneCItemRead, OneCMapRequest, VariantInventoryRead
+from app.schemas.onboarding import (
+    ConfirmImportRequest,
+    ConflictResolveRequest,
+    ManualImportBatchRead,
+    MatchReviewAcceptRequest,
+    OneCManualPreviewRequest,
+    PilotReadinessReport,
+    ProductOnboardingRequest,
+    ProductOnboardingResult,
+    TelegramManualPreviewRequest,
+)
 from app.schemas.operator import OperatorCreateRequest, OperatorListItem, OperatorLoginRequest, OperatorSessionRead, OperatorUserRead
 from app.schemas.operator_read import AlertActionRequest, BackupSmokeRead, DashboardRead, Page, SettingsRead, SystemHealthRead
 from app.schemas.pricing import (
@@ -166,6 +178,17 @@ from app.services.operator_read import (
     system_health,
     update_alert_status,
     variant_detail,
+)
+from app.services.onboarding import (
+    confirm_one_c_manual_import,
+    confirm_telegram_manual_import,
+    accept_match_review,
+    listing_dry_run_validation,
+    onboard_product,
+    pilot_readiness,
+    preview_one_c_manual_import,
+    preview_telegram_manual_import,
+    resolve_conflict,
 )
 
 router = APIRouter(prefix="/api/v1")
@@ -391,6 +414,94 @@ async def retry_source_collection_job(
 @router.get("/operations/status", response_model=OperationsStatusRead)
 async def get_operations_status(session: AsyncSession = Depends(get_db_session)) -> dict:
     return await operations_status(session)
+
+
+@router.post(
+    "/onboarding/telegram/preview",
+    response_model=ManualImportBatchRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def preview_telegram_manual_import_endpoint(
+    payload: TelegramManualPreviewRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> ManualImportBatch:
+    return await preview_telegram_manual_import(
+        session,
+        source_id=payload.source_id,
+        raw_text=payload.raw_text,
+        snapshot_type=payload.snapshot_type,
+        captured_at=payload.captured_at,
+        actor=payload.actor,
+    )
+
+
+@router.post(
+    "/onboarding/telegram/{batch_id}/confirm",
+    response_model=ManualImportBatchRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def confirm_telegram_manual_import_endpoint(
+    batch_id: uuid.UUID,
+    payload: ConfirmImportRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> ManualImportBatch:
+    return await confirm_telegram_manual_import(session, batch_id, actor=payload.actor)
+
+
+@router.post(
+    "/onboarding/1c/preview",
+    response_model=ManualImportBatchRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def preview_one_c_manual_import_endpoint(
+    payload: OneCManualPreviewRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> ManualImportBatch:
+    return await preview_one_c_manual_import(
+        session,
+        filename=payload.filename,
+        content=payload.content,
+        mode=payload.mode,
+        actor=payload.actor,
+    )
+
+
+@router.post(
+    "/onboarding/1c/{batch_id}/confirm",
+    response_model=ManualImportBatchRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def confirm_one_c_manual_import_endpoint(
+    batch_id: uuid.UUID,
+    payload: ConfirmImportRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> ManualImportBatch:
+    return await confirm_one_c_manual_import(session, batch_id, actor=payload.actor)
+
+
+@router.get(
+    "/onboarding/imports",
+    response_model=list[ManualImportBatchRead],
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))],
+)
+async def list_manual_import_batches(
+    import_type: str | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+) -> list[ManualImportBatch]:
+    statement = select(ManualImportBatch).order_by(ManualImportBatch.created_at.desc()).limit(min(limit, 500))
+    if import_type is not None:
+        statement = statement.where(ManualImportBatch.import_type == import_type)
+    return list(await session.scalars(statement))
+
+
+@router.post(
+    "/onboarding/products",
+    response_model=ProductOnboardingResult,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def onboard_product_endpoint(payload: ProductOnboardingRequest, session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await onboard_product(session, payload)
 
 
 @router.post("/pricing/policies", response_model=PricingPolicyRead, status_code=status.HTTP_201_CREATED)
@@ -726,6 +837,25 @@ async def get_match_review(review_id: uuid.UUID, session: AsyncSession = Depends
     if review is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Match review not found")
     return review
+
+
+@router.post(
+    "/match-reviews/{review_id}/accept",
+    response_model=MatchReviewRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def accept_match_review_endpoint(
+    review_id: uuid.UUID,
+    payload: MatchReviewAcceptRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> MatchReview:
+    return await accept_match_review(
+        session,
+        review_id,
+        variant_id=payload.variant_id,
+        alias=payload.alias,
+        actor=payload.actor,
+    )
 
 
 @router.post("/products", response_model=ProductRead, status_code=status.HTTP_201_CREATED)
@@ -1171,6 +1301,23 @@ async def dry_run_publication_endpoint(
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
+@router.get(
+    "/control/listings/{listing_id}/dry-run-validation",
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))],
+)
+async def dry_run_validation_endpoint(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await listing_dry_run_validation(session, listing_id)
+
+
+@router.get(
+    "/operator/pilot-readiness",
+    response_model=PilotReadinessReport,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))],
+)
+async def pilot_readiness_endpoint(session: AsyncSession = Depends(get_db_session)) -> dict:
+    return await pilot_readiness(session)
+
+
 @router.get("/control/publication-intents", response_model=list[PublicationIntentRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def list_publication_intents(
     marketplace: Marketplace | None = None,
@@ -1284,3 +1431,16 @@ async def list_variant_offers(
 @router.get("/conflicts", response_model=list[DataConflictRead])
 async def list_conflicts(session: AsyncSession = Depends(get_db_session)) -> list[DataConflict]:
     return list(await session.scalars(select(DataConflict).order_by(DataConflict.created_at)))
+
+
+@router.post(
+    "/conflicts/{conflict_id}/resolve",
+    response_model=DataConflictRead,
+    dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))],
+)
+async def resolve_conflict_endpoint(
+    conflict_id: uuid.UUID,
+    payload: ConflictResolveRequest,
+    session: AsyncSession = Depends(get_db_session),
+) -> DataConflict:
+    return await resolve_conflict(session, conflict_id, actor=payload.actor, resolution=payload.resolution)

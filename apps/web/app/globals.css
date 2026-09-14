@@ -30,7 +30,8 @@ a {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -198,6 +199,26 @@ th {
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 10px;
+}
+
+.form textarea,
+.form select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.form textarea {
+  min-height: 220px;
+  resize: vertical;
+}
+
+.inlineActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .button {

@@ -213,6 +213,12 @@ async def test_scheduler_creates_and_enqueues_due_source():
     assert source.next_collection_at > NOW
 
 
+def test_rq_job_id_format_is_rq_compatible():
+    job_id = f"avito-jobs-{uuid.uuid4()}"
+    assert ":" not in job_id
+    assert all(char.isalnum() or char in {"_", "-"} for char in job_id)
+
+
 async def test_scheduler_skips_disabled_source():
     await seed_source(enabled=False, next_at=NOW)
     queue = InMemoryQueueAdapter()

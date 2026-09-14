@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "lint": "node --max-old-space-size=4096 ./node_modules/eslint/bin/eslint.js .",
+    "typecheck": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc --noEmit",
+    "test": "vitest run --pool forks --poolOptions.forks.singleFork true --poolOptions.forks.isolate false"
   },
   "dependencies": {
     "next": "^16.0.0",
