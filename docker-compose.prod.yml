@@ -20,6 +20,8 @@ x-api-env: &api-env
   PUBLICATION_RETRY_BASE_SECONDS: ${PUBLICATION_RETRY_BASE_SECONDS:-60}
   BACKUP_DIR: /data/backups
 
+name: ${COMPOSE_PROJECT_NAME:-avito_automation_prod}
+
 x-api-build: &api-build
   context: .
   dockerfile: infra/docker/Dockerfile
@@ -49,6 +51,8 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      - default
 
   redis:
     image: redis:7
@@ -65,6 +69,8 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      - default
 
   api:
     build: *api-build
@@ -74,11 +80,22 @@ services:
     volumes:
       - telegram_data:/data/telegram
       - backup_data:/data/backups
+      - private_data:/data/private
     depends_on: *depends
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5).read()\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     logging:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      default:
+      planam_ingress:
+        aliases:
+          - avito-automation-api
 
   worker:
     build: *api-build
@@ -88,11 +105,14 @@ services:
     volumes:
       - telegram_data:/data/telegram
       - backup_data:/data/backups
+      - private_data:/data/private
     depends_on: *depends
     logging:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      - default
 
   scheduler:
     build: *api-build
@@ -102,11 +122,14 @@ services:
     volumes:
       - telegram_data:/data/telegram
       - backup_data:/data/backups
+      - private_data:/data/private
     depends_on: *depends
     logging:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      - default
 
   web:
     build:
@@ -115,16 +138,28 @@ services:
     restart: unless-stopped
     environment:
       API_BASE_URL: http://api:8000
-      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-https://localhost}
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-https://avito.planam.ru}
     depends_on:
       api:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     logging:
       options:
         max-size: "10m"
         max-file: "5"
+    networks:
+      default:
+      planam_ingress:
+        aliases:
+          - avito-automation-web
 
   nginx:
+    profiles:
+      - standalone-ingress
     image: nginx:1.27-alpine
     restart: unless-stopped
     ports:
@@ -150,3 +185,10 @@ volumes:
   redis_data:
   telegram_data:
   backup_data:
+  private_data:
+
+networks:
+  default:
+    name: avito_automation_prod_net
+  planam_ingress:
+    external: true
