@@ -32,6 +32,15 @@ The production services are expected to be addressed through Docker DNS aliases 
 
 PostgreSQL and Redis are not attached to `planam_ingress` and must not publish host ports.
 
+The web container must run standalone Next.js on `0.0.0.0:3000`:
+
+```env
+HOSTNAME=0.0.0.0
+PORT=3000
+```
+
+Use `/health` for web process health checks. Do not use `/` as a health check because `/` is the authenticated operator dashboard entrypoint and anonymous users are redirected to `/login`.
+
 ## Production Env
 
 Create `/var/www/avito-automation/.env` from `.env.production.example`. Do not commit it.
@@ -49,6 +58,24 @@ python scripts/validate_prod_env.py /var/www/avito-automation/.env
 ```
 
 The validator rejects empty critical secrets, placeholder secrets, localhost public URLs, non-HTTPS production URLs, and domains other than `avito.planam.ru`.
+
+Production `ALLOWED_HOSTS` must include both the public host and required internal production names:
+
+```env
+ALLOWED_HOSTS=avito.planam.ru,127.0.0.1,localhost,api,avito-automation-api
+```
+
+Do not use wildcard hosts.
+
+## Deployment Script
+
+The deploy script requires the commit being deployed to be supplied explicitly:
+
+```powershell
+pwsh -File scripts/deploy-prod.ps1 -EnvFile .env -ExpectedCommit <commit-sha>
+```
+
+This keeps commit verification deterministic without baking stale SHAs into the repository.
 
 ## Bootstrap Nginx
 

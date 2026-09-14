@@ -75,6 +75,13 @@ def validate(values: dict[str, str], expected_domain: str) -> list[str]:
         errors.append("COOKIE_SECURE must be true")
     if values.get("COMPOSE_PROJECT_NAME") != "avito_automation_prod":
         errors.append("COMPOSE_PROJECT_NAME must be avito_automation_prod")
+    allowed_hosts = {item.strip() for item in values.get("ALLOWED_HOSTS", "").split(",") if item.strip()}
+    if "*" in allowed_hosts:
+        errors.append("ALLOWED_HOSTS must not use wildcard in production")
+    required_hosts = {expected_domain, "127.0.0.1", "localhost", "api", "avito-automation-api"}
+    missing_hosts = sorted(required_hosts - allowed_hosts)
+    if missing_hosts:
+        errors.append("ALLOWED_HOSTS missing required production/internal hostnames")
 
     for name in ("APP_BASE_URL", "NEXT_PUBLIC_API_BASE_URL"):
         value = values.get(name)

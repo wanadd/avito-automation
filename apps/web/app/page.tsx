@@ -1,5 +1,7 @@
 import { DataTable } from "@/components/data-table";
 import { apiGet } from "@/lib/api";
+import { isAuthError } from "@/lib/api-errors";
+import { redirect } from "next/navigation";
 
 type Dashboard = {
   counts: Record<string, number>;
@@ -27,7 +29,15 @@ const countLabels: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const data = await apiGet<Dashboard>("/api/v1/operator/dashboard");
+  let data: Dashboard;
+  try {
+    data = await apiGet<Dashboard>("/api/v1/operator/dashboard");
+  } catch (error) {
+    if (isAuthError(error)) {
+      redirect("/login");
+    }
+    throw error;
+  }
   return (
     <div className="stack">
       <div className="topbar">
