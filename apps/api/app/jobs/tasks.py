@@ -7,6 +7,7 @@ from app.core.config import get_settings
 from app.db.session import AsyncSessionLocal
 from app.jobs.locks import SourceLock
 from app.jobs.service import execute_job
+from app.services.publication import process_publication_job
 
 
 async def _execute_source_collection_job(job_id: str) -> None:
@@ -17,3 +18,12 @@ async def _execute_source_collection_job(job_id: str) -> None:
 
 def execute_source_collection_job(job_id: str) -> None:
     asyncio.run(_execute_source_collection_job(job_id))
+
+
+async def _execute_publication_job(job_id: str) -> None:
+    async with AsyncSessionLocal() as session:
+        await process_publication_job(session, uuid.UUID(job_id))
+
+
+def execute_publication_job(job_id: str) -> None:
+    asyncio.run(_execute_publication_job(job_id))

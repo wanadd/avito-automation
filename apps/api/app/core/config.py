@@ -32,6 +32,14 @@ class Settings(BaseSettings):
     one_c_min_full_export_rows: int = 1
     supplier_offer_freshness_minutes: int = 180
     price_rounding_step_minor: int = 10000
+    auto_prepare_publication: bool = False
+    publication_max_attempts: int = 1
+    publication_retry_base_seconds: int = 60
+    telegram_operator_ids: str = ""
+
+    @property
+    def telegram_operator_id_set(self) -> set[str]:
+        return {item.strip() for item in self.telegram_operator_ids.split(",") if item.strip()}
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

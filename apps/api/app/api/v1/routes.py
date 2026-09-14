@@ -12,9 +12,12 @@ from app.integrations.one_c.importer import import_one_c_file, map_one_c_item, u
 from app.jobs.queue import QueueAdapter, RQQueueAdapter
 from app.jobs.service import create_manual_job, operations_status, retry_failed_job, source_status
 from app.models.conflict import DataConflict
-from app.models.content import ProductContentDraft
+from app.models.content import GenericListingDraft, ProductContentDraft
 from app.models.enums import (
+    GenericListingStatus,
     GenericReadinessStatus,
+    Marketplace,
+    PublicationJobStatus,
     ReviewStatus,
     SourceCollectionJobStatus,
     SourceCollectionJobType,
@@ -29,6 +32,7 @@ from app.models.match_review import MatchReview
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
 from app.models.pricing import PricingDecisionHistory, PricingPolicy, VariantPricingState
 from app.models.product import Product, ProductVariant
+from app.models.publication import MarketplaceListingBinding, OperationalAlert, PublicationIntent, PublicationJob
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.raw_source_record import RawSourceRecord
 from app.models.source import Source
@@ -61,6 +65,16 @@ from app.schemas.pricing import (
     PricingPolicyPatch,
     PricingPolicyRead,
     VariantPricingStateRead,
+)
+from app.schemas.publication import (
+    ControlOverviewRead,
+    MarketplaceListingBindingRead,
+    OperationalAlertRead,
+    PublicationIntentCreate,
+    PublicationIntentRead,
+    PublicationJobRead,
+    ReconcileRequest,
+    RetryCancelRequest,
 )
 from app.schemas.product import ProductCreate, ProductRead, ProductVariantCreate, ProductVariantRead
 from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummary
@@ -114,6 +128,15 @@ from app.services.content import (
     validate_content_draft,
     validate_image_set,
     validate_listing,
+)
+from app.services.publication import (
+    cancel_publication_job,
+    control_overview,
+    create_publication_intent,
+    process_publication_job,
+    reconcile_listing,
+    retry_publication_job,
+    review_queue,
 )
 
 router = APIRouter(prefix="/api/v1")
@@ -809,6 +832,184 @@ async def approve_listing_endpoint(listing_id: uuid.UUID, session: AsyncSession 
 @router.post("/listings/bulk/recalculate", response_model=BulkContentResult)
 async def bulk_recalculate_listings(session: AsyncSession = Depends(get_db_session)):
     return await recalculate_listing_readiness_bulk(session)
+
+
+@router.get("/control/overview", response_model=ControlOverviewRead)
+async def control_overview_endpoint(session: AsyncSession = Depends(get_db_session)):
+    return await control_overview(session)
+
+
+@router.get("/control/review-queue")
+async def control_review_queue(limit: int = 20, session: AsyncSession = Depends(get_db_session)):
+    return await review_queue(session, limit=limit)
+
+
+@router.get("/control/listings", response_model=list[GenericListingDraftRead])
+async def control_listings(
+    generic_readiness: GenericReadinessStatus | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+):
+    return await list_variant_listings(session, status_filter=generic_readiness, limit=limit)
+
+
+@router.get("/control/listings/{listing_id}", response_model=GenericListingDraftRead)
+async def control_listing_detail(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    listing = await session.get(GenericListingDraft, listing_id)
+    if listing is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="GenericListingDraft not found")
+    return listing
+
+
+@router.post("/control/listings/{listing_id}/approve", response_model=GenericListingDraftRead)
+async def control_approve_listing(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await approve_listing(session, listing_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+
+@router.post("/control/listings/{listing_id}/reject", response_model=GenericListingDraftRead)
+async def control_reject_listing(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    listing = await session.get(GenericListingDraft, listing_id)
+    if listing is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="GenericListingDraft not found")
+    listing.status = GenericListingStatus.REJECTED
+    await session.commit()
+    await session.refresh(listing)
+    return listing
+
+
+@router.post("/control/listings/{listing_id}/publication-intents", response_model=PublicationIntentRead)
+async def create_publication_intent_endpoint(
+    listing_id: uuid.UUID,
+    payload: PublicationIntentCreate,
+    session: AsyncSession = Depends(get_db_session),
+):
+    try:
+        intent, _job, _created = await create_publication_intent(
+            session,
+            listing_id,
+            marketplace=payload.marketplace,
+            intent_type=payload.intent_type,
+            requested_by=payload.requested_by,
+            reason=payload.reason,
+            dry_run=payload.dry_run,
+        )
+        return intent
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.post("/control/listings/{listing_id}/dry-run", response_model=PublicationJobRead)
+async def dry_run_publication_endpoint(
+    listing_id: uuid.UUID,
+    payload: PublicationIntentCreate,
+    session: AsyncSession = Depends(get_db_session),
+):
+    try:
+        _intent, job, _created = await create_publication_intent(
+            session,
+            listing_id,
+            marketplace=payload.marketplace,
+            intent_type=payload.intent_type,
+            requested_by=payload.requested_by,
+            reason=payload.reason,
+            dry_run=True,
+        )
+        return await process_publication_job(session, job.id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+
+@router.get("/control/publication-intents", response_model=list[PublicationIntentRead])
+async def list_publication_intents(
+    marketplace: Marketplace | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+):
+    statement = select(PublicationIntent).order_by(PublicationIntent.created_at.desc()).limit(min(limit, 500))
+    if marketplace is not None:
+        statement = statement.where(PublicationIntent.marketplace == marketplace)
+    return list(await session.scalars(statement))
+
+
+@router.get("/control/publication-intents/{intent_id}", response_model=PublicationIntentRead)
+async def get_publication_intent(intent_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    intent = await session.get(PublicationIntent, intent_id)
+    if intent is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="PublicationIntent not found")
+    return intent
+
+
+@router.get("/control/publication-jobs", response_model=list[PublicationJobRead])
+async def list_publication_jobs(
+    status_filter: PublicationJobStatus | None = None,
+    marketplace: Marketplace | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+):
+    statement = select(PublicationJob).order_by(PublicationJob.created_at.desc()).limit(min(limit, 500))
+    if status_filter is not None:
+        statement = statement.where(PublicationJob.status == status_filter)
+    if marketplace is not None:
+        statement = statement.where(PublicationJob.marketplace == marketplace)
+    return list(await session.scalars(statement))
+
+
+@router.get("/control/publication-jobs/{job_id}", response_model=PublicationJobRead)
+async def get_publication_job(job_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
+    job = await session.get(PublicationJob, job_id)
+    if job is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="PublicationJob not found")
+    return job
+
+
+@router.post("/control/publication-jobs/{job_id}/retry", response_model=PublicationJobRead)
+async def retry_publication_job_endpoint(
+    job_id: uuid.UUID,
+    payload: RetryCancelRequest,
+    session: AsyncSession = Depends(get_db_session),
+):
+    try:
+        return await retry_publication_job(session, job_id, requested_by=payload.requested_by)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+
+@router.post("/control/publication-jobs/{job_id}/cancel", response_model=PublicationJobRead)
+async def cancel_publication_job_endpoint(
+    job_id: uuid.UUID,
+    payload: RetryCancelRequest,
+    session: AsyncSession = Depends(get_db_session),
+):
+    try:
+        return await cancel_publication_job(session, job_id, requested_by=payload.requested_by)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+
+@router.post("/control/reconcile")
+async def reconcile_endpoint(payload: ReconcileRequest, session: AsyncSession = Depends(get_db_session)):
+    try:
+        return await reconcile_listing(session, payload.listing_id, marketplace=payload.marketplace)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/control/recalculate", response_model=BulkContentResult)
+async def control_recalculate_endpoint(session: AsyncSession = Depends(get_db_session)):
+    return await recalculate_listing_readiness_bulk(session)
+
+
+@router.get("/control/bindings", response_model=list[MarketplaceListingBindingRead])
+async def list_marketplace_bindings(limit: int = 100, session: AsyncSession = Depends(get_db_session)):
+    return list(await session.scalars(select(MarketplaceListingBinding).order_by(MarketplaceListingBinding.created_at.desc()).limit(min(limit, 500))))
+
+
+@router.get("/control/alerts", response_model=list[OperationalAlertRead])
+async def list_operational_alerts(limit: int = 100, session: AsyncSession = Depends(get_db_session)):
+    return list(await session.scalars(select(OperationalAlert).order_by(OperationalAlert.created_at.desc()).limit(min(limit, 500))))
 
 
 @router.post("/supplier-offers", response_model=SupplierOfferRead, status_code=status.HTTP_201_CREATED)

@@ -218,6 +218,50 @@ The generic listing layer is internal. `generic_category` and `generic_attribute
 
 `GENERIC READY` does not mean `AVITO READY`. The Avito adapter boundary exists only as a disabled interface and returns `DISABLED_CONTRACT_INCOMPLETE` until the Avito contract gate passes. Sprint 0.9 does not publish, prepare fake Avito payloads, call Avito, or add Avito publication endpoints.
 
+## Control Layer & Publication Orchestration
+
+Sprint 1.0 adds the operational layer around approved generic listings:
+
+```text
+APPROVED GenericListingDraft
+-> PublicationIntent
+-> PublicationJob
+-> PublicationAttempt
+-> internal prepared marketplace representation
+-> DRY_RUN_SUCCESS or BLOCKED
+```
+
+Publication orchestration is separate from `GenericListingDraft`. `MarketplaceListingBinding` records the internal relationship to a marketplace, but Sprint 1.0 never creates a fake `external_listing_id`, never marks a binding `ACTIVE_EXTERNAL`, and never marks anything `SYNCED` from a dry run.
+
+Publication jobs use deterministic idempotency keys based on listing, marketplace, operation, and captured hashes. Every job re-validates the captured listing/content/image/pricing context before processing; stale input is blocked with `STALE_INPUT` and is not silently rebuilt under the old intent.
+
+Dry run builds only an internal normalized representation. It is deliberately marked as not Avito-compatible and includes `contract_status = DISABLED_CONTRACT_INCOMPLETE`. Real Avito execution is centrally blocked with `AVITO_CONTRACT_INCOMPLETE`; there are no live Avito HTTP mutations in Sprint 1.0.
+
+Control API:
+
+- `GET /api/v1/control/overview`
+- `GET /api/v1/control/review-queue`
+- `GET /api/v1/control/listings`
+- `POST /api/v1/control/listings/{listing_id}/publication-intents`
+- `POST /api/v1/control/listings/{listing_id}/dry-run`
+- `GET /api/v1/control/publication-jobs`
+- `POST /api/v1/control/publication-jobs/{job_id}/retry`
+- `POST /api/v1/control/publication-jobs/{job_id}/cancel`
+- `POST /api/v1/control/reconcile`
+- `GET /api/v1/control/bindings`
+- `GET /api/v1/control/alerts`
+
+Telegram operator commands are implemented as a control surface over the same backend services: `/status`, `/review`, `/ready`, `/blocked`, `/errors`, `/jobs`, `/help`, and `/dryrun <listing_id>`. Admin actions require `TELEGRAM_OPERATOR_IDS`; IDs are configured through environment variables and are not hardcoded.
+
+Configuration:
+
+- `AUTO_PREPARE_PUBLICATION`, default `false`
+- `PUBLICATION_MAX_ATTEMPTS`, default `1`
+- `PUBLICATION_RETRY_BASE_SECONDS`, default `60`
+- `TELEGRAM_OPERATOR_IDS`, comma-separated operator IDs
+
+NO LIVE AVITO MUTATIONS IN SPRINT 1.0.
+
 ## Telegram Supplier Collector v1
 
 Sprint 0.5 adds a Telegram MTProto collector using Telethon. Telegram becomes a raw evidence source only:

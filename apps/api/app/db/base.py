@@ -15,6 +15,14 @@ from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, Varia
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.pricing import PricingDecisionHistory, PricingPolicy, VariantPricingOverride, VariantPricingState
 from app.models.product import Product, ProductAlias, ProductVariant
+from app.models.publication import (
+    MarketplaceListingBinding,
+    OperationalAlert,
+    PublicationAttempt,
+    PublicationIntent,
+    PublicationJob,
+    PublicationStateHistory,
+)
 from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
 from app.models.source import Source
 from app.models.source_collection_job import SourceCollectionJob
