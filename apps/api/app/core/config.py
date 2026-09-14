@@ -36,10 +36,28 @@ class Settings(BaseSettings):
     publication_max_attempts: int = 1
     publication_retry_base_seconds: int = 60
     telegram_operator_ids: str = ""
+    app_base_url: str = "http://localhost:8000"
+    session_secret: str = "CHANGE_ME_LOCAL_ONLY"
+    session_ttl_seconds: int = 28800
+    cookie_secure: bool = False
+    cookie_samesite: str = "lax"
+    allowed_hosts: str = "localhost,127.0.0.1,testserver,test"
+    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
+    login_rate_limit_failures: int = 5
+    login_rate_limit_window_seconds: int = 600
+    backup_dir: str = "runtime/backups"
 
     @property
     def telegram_operator_id_set(self) -> set[str]:
         return {item.strip() for item in self.telegram_operator_ids.split(",") if item.strip()}
+
+    @property
+    def allowed_host_list(self) -> list[str]:
+        return [item.strip() for item in self.allowed_hosts.split(",") if item.strip()]
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        return [item.strip() for item in self.cors_origins.split(",") if item.strip()]
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

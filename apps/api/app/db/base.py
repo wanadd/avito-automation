@@ -12,6 +12,7 @@ from app.models.content import (
 )
 from app.models.match_review import MatchReview
 from app.models.one_c import OneCImportRun, OneCItem, VariantCostSnapshot, VariantInventoryState, VariantStockSnapshot
+from app.models.operator import LoginFailure, OperatorSession, OperatorUser
 from app.models.parsed_supplier_item import ParsedSupplierItem
 from app.models.pricing import PricingDecisionHistory, PricingPolicy, VariantPricingOverride, VariantPricingState
 from app.models.product import Product, ProductAlias, ProductVariant
@@ -35,7 +36,10 @@ __all__ = [
     "AuditLog",
     "Base",
     "DataConflict",
+    "LoginFailure",
     "MatchReview",
+    "OperatorSession",
+    "OperatorUser",
     "ParsedSupplierItem",
     "Product",
     "ProductAlias",

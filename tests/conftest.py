@@ -14,6 +14,8 @@ os.environ.setdefault(
 from app.db.base import Base
 from app.db.session import AsyncSessionLocal
 from app.main import app
+from app.models.enums import OperatorRole
+from app.services.operator_auth import create_operator_user
 
 
 @pytest.fixture(scope="session")
@@ -32,5 +34,19 @@ async def clean_database(apply_migrations) -> None:
 
 @pytest.fixture
 async def client(clean_database) -> AsyncClient:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as test_client:
+        async with AsyncSessionLocal() as session:
+            await create_operator_user(session, "admin", "correct horse battery staple", OperatorRole.ADMIN)
+        login = await test_client.post(
+            "/api/v1/auth/login",
+            json={"username": "admin", "password": "correct horse battery staple"},
+        )
+        assert login.status_code == 200
+        test_client.headers.update({"X-CSRF-Token": login.json()["csrf_token"]})
+        yield test_client
+
+
+@pytest.fixture
+async def unauthenticated_client(clean_database) -> AsyncClient:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as test_client:
         yield test_client

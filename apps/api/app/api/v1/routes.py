@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, Request, Response, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -24,6 +24,8 @@ from app.models.enums import (
     OneCImportMode,
     OneCImportRunStatus,
     OneCItemMatchStatus,
+    OperationalAlertStatus,
+    OperatorRole,
     SupplierSnapshotStatus,
     SupplierSnapshotType,
     TelegramCollectionRunStatus,
@@ -57,6 +59,8 @@ from app.schemas.content import (
 )
 from app.schemas.matcher import MatchRawRecordSummary, MatchResult, MatchReviewRead
 from app.schemas.one_c import InventoryListItem, InventoryStateRead, OneCImportRunRead, OneCItemRead, OneCMapRequest, VariantInventoryRead
+from app.schemas.operator import OperatorCreateRequest, OperatorListItem, OperatorLoginRequest, OperatorSessionRead, OperatorUserRead
+from app.schemas.operator_read import AlertActionRequest, BackupSmokeRead, DashboardRead, Page, SettingsRead, SystemHealthRead
 from app.schemas.pricing import (
     BulkPricingResult,
     ManualPriceRequest,
@@ -138,6 +142,31 @@ from app.services.publication import (
     retry_publication_job,
     review_queue,
 )
+from app.services.operator_auth import (
+    AuthenticatedOperator,
+    authenticate_operator,
+    create_operator_user,
+    get_authenticated_operator,
+    require_role,
+    revoke_current_session,
+)
+from app.services.operator_read import (
+    alert_page,
+    audit_page,
+    backup_smoke,
+    dashboard,
+    inventory_list,
+    product_list,
+    publication_job_detail,
+    publication_jobs,
+    pricing_list,
+    settings_read,
+    source_health,
+    supplier_list,
+    system_health,
+    update_alert_status,
+    variant_detail,
+)
 
 router = APIRouter(prefix="/api/v1")
 
@@ -148,6 +177,60 @@ def get_telegram_adapter() -> TelegramClientAdapter:
 
 def get_queue_adapter() -> QueueAdapter:
     return RQQueueAdapter()
+
+
+@router.post("/auth/login", response_model=OperatorSessionRead)
+async def login_operator(
+    payload: OperatorLoginRequest,
+    request: Request,
+    response: Response,
+    session: AsyncSession = Depends(get_db_session),
+) -> dict:
+    user, csrf_token, expires_at = await authenticate_operator(
+        session,
+        response,
+        request,
+        username=payload.username,
+        password=payload.password,
+    )
+    return {"user": user, "csrf_token": csrf_token, "expires_at": expires_at}
+
+
+@router.post("/auth/logout")
+async def logout_operator(
+    response: Response,
+    auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+    session: AsyncSession = Depends(get_db_session),
+) -> dict[str, str]:
+    await revoke_current_session(response, auth, session)
+    return {"status": "ok"}
+
+
+@router.get("/auth/session", response_model=OperatorUserRead)
+async def current_operator(auth: AuthenticatedOperator = Depends(get_authenticated_operator)) -> object:
+    return auth.user
+
+
+@router.post("/operators", response_model=OperatorUserRead, status_code=status.HTTP_201_CREATED)
+async def create_operator(
+    payload: OperatorCreateRequest,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN)),
+) -> object:
+    try:
+        return await create_operator_user(session, payload.username, payload.password, payload.role)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+
+
+@router.get("/operators", response_model=list[OperatorListItem])
+async def list_operators(
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN)),
+) -> list:
+    from app.models.operator import OperatorUser
+
+    return list(await session.scalars(select(OperatorUser).order_by(OperatorUser.username)))
 
 
 @router.post("/suppliers", response_model=SupplierRead, status_code=status.HTTP_201_CREATED)
@@ -834,17 +917,183 @@ async def bulk_recalculate_listings(session: AsyncSession = Depends(get_db_sessi
     return await recalculate_listing_readiness_bulk(session)
 
 
-@router.get("/control/overview", response_model=ControlOverviewRead)
+@router.get("/operator/dashboard", response_model=DashboardRead)
+async def operator_dashboard(
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await dashboard(session)
+
+
+@router.get("/operator/products", response_model=Page)
+async def operator_products(
+    search: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await product_list(session, search=search, limit=min(limit, 100), offset=offset)
+
+
+@router.get("/operator/products/{variant_id}")
+async def operator_variant_detail(
+    variant_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    try:
+        return await variant_detail(session, variant_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/operator/pricing", response_model=Page)
+async def operator_pricing(
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await pricing_list(session, limit=min(limit, 100), offset=offset)
+
+
+@router.get("/operator/inventory", response_model=Page)
+async def operator_inventory(
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await inventory_list(session, limit=min(limit, 100), offset=offset)
+
+
+@router.get("/operator/suppliers", response_model=Page)
+async def operator_suppliers(
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await supplier_list(session, limit=min(limit, 100), offset=offset)
+
+
+@router.get("/operator/sources", response_model=Page)
+async def operator_sources(
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await source_health(session, limit=min(limit, 100), offset=offset)
+
+
+@router.get("/operator/publication/jobs", response_model=Page)
+async def operator_publication_jobs(
+    status_filter: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await publication_jobs(session, limit=min(limit, 100), offset=offset, status_filter=status_filter)
+
+
+@router.get("/operator/publication/jobs/{job_id}")
+async def operator_publication_job_detail(
+    job_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    try:
+        return await publication_job_detail(session, job_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/operator/alerts", response_model=Page)
+async def operator_alerts(
+    status_filter: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await alert_page(session, limit=min(limit, 100), offset=offset, status_filter=status_filter)
+
+
+@router.post("/operator/alerts/{alert_id}/acknowledge", response_model=OperationalAlertRead)
+async def operator_acknowledge_alert(
+    alert_id: uuid.UUID,
+    _payload: AlertActionRequest,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+):
+    try:
+        return await update_alert_status(session, alert_id, OperationalAlertStatus.ACKNOWLEDGED)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.post("/operator/alerts/{alert_id}/resolve", response_model=OperationalAlertRead)
+async def operator_resolve_alert(
+    alert_id: uuid.UUID,
+    _payload: AlertActionRequest,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+):
+    try:
+        return await update_alert_status(session, alert_id, OperationalAlertStatus.RESOLVED)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/operator/audit", response_model=Page)
+async def operator_audit(
+    action: str | None = None,
+    entity_type: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await audit_page(session, limit=min(limit, 100), offset=offset, action=action, entity_type=entity_type)
+
+
+@router.get("/operator/settings", response_model=SettingsRead)
+async def operator_settings(
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await settings_read()
+
+
+@router.get("/operator/system/health", response_model=SystemHealthRead)
+async def operator_system_health(
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+):
+    return await system_health(session)
+
+
+@router.post("/operator/backups/smoke", response_model=BackupSmokeRead)
+async def operator_backup_smoke(
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN)),
+):
+    return await backup_smoke(session)
+
+
+@router.get("/control/overview", response_model=ControlOverviewRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def control_overview_endpoint(session: AsyncSession = Depends(get_db_session)):
     return await control_overview(session)
 
 
-@router.get("/control/review-queue")
+@router.get("/control/review-queue", dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def control_review_queue(limit: int = 20, session: AsyncSession = Depends(get_db_session)):
     return await review_queue(session, limit=limit)
 
 
-@router.get("/control/listings", response_model=list[GenericListingDraftRead])
+@router.get("/control/listings", response_model=list[GenericListingDraftRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def control_listings(
     generic_readiness: GenericReadinessStatus | None = None,
     limit: int = 100,
@@ -853,7 +1102,7 @@ async def control_listings(
     return await list_variant_listings(session, status_filter=generic_readiness, limit=limit)
 
 
-@router.get("/control/listings/{listing_id}", response_model=GenericListingDraftRead)
+@router.get("/control/listings/{listing_id}", response_model=GenericListingDraftRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def control_listing_detail(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
     listing = await session.get(GenericListingDraft, listing_id)
     if listing is None:
@@ -861,7 +1110,7 @@ async def control_listing_detail(listing_id: uuid.UUID, session: AsyncSession = 
     return listing
 
 
-@router.post("/control/listings/{listing_id}/approve", response_model=GenericListingDraftRead)
+@router.post("/control/listings/{listing_id}/approve", response_model=GenericListingDraftRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def control_approve_listing(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
     try:
         return await approve_listing(session, listing_id)
@@ -869,7 +1118,7 @@ async def control_approve_listing(listing_id: uuid.UUID, session: AsyncSession =
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
-@router.post("/control/listings/{listing_id}/reject", response_model=GenericListingDraftRead)
+@router.post("/control/listings/{listing_id}/reject", response_model=GenericListingDraftRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def control_reject_listing(listing_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
     listing = await session.get(GenericListingDraft, listing_id)
     if listing is None:
@@ -880,7 +1129,7 @@ async def control_reject_listing(listing_id: uuid.UUID, session: AsyncSession = 
     return listing
 
 
-@router.post("/control/listings/{listing_id}/publication-intents", response_model=PublicationIntentRead)
+@router.post("/control/listings/{listing_id}/publication-intents", response_model=PublicationIntentRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def create_publication_intent_endpoint(
     listing_id: uuid.UUID,
     payload: PublicationIntentCreate,
@@ -901,7 +1150,7 @@ async def create_publication_intent_endpoint(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
 
-@router.post("/control/listings/{listing_id}/dry-run", response_model=PublicationJobRead)
+@router.post("/control/listings/{listing_id}/dry-run", response_model=PublicationJobRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def dry_run_publication_endpoint(
     listing_id: uuid.UUID,
     payload: PublicationIntentCreate,
@@ -922,7 +1171,7 @@ async def dry_run_publication_endpoint(
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
-@router.get("/control/publication-intents", response_model=list[PublicationIntentRead])
+@router.get("/control/publication-intents", response_model=list[PublicationIntentRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def list_publication_intents(
     marketplace: Marketplace | None = None,
     limit: int = 100,
@@ -934,7 +1183,7 @@ async def list_publication_intents(
     return list(await session.scalars(statement))
 
 
-@router.get("/control/publication-intents/{intent_id}", response_model=PublicationIntentRead)
+@router.get("/control/publication-intents/{intent_id}", response_model=PublicationIntentRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def get_publication_intent(intent_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
     intent = await session.get(PublicationIntent, intent_id)
     if intent is None:
@@ -942,7 +1191,7 @@ async def get_publication_intent(intent_id: uuid.UUID, session: AsyncSession = D
     return intent
 
 
-@router.get("/control/publication-jobs", response_model=list[PublicationJobRead])
+@router.get("/control/publication-jobs", response_model=list[PublicationJobRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def list_publication_jobs(
     status_filter: PublicationJobStatus | None = None,
     marketplace: Marketplace | None = None,
@@ -957,7 +1206,7 @@ async def list_publication_jobs(
     return list(await session.scalars(statement))
 
 
-@router.get("/control/publication-jobs/{job_id}", response_model=PublicationJobRead)
+@router.get("/control/publication-jobs/{job_id}", response_model=PublicationJobRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def get_publication_job(job_id: uuid.UUID, session: AsyncSession = Depends(get_db_session)):
     job = await session.get(PublicationJob, job_id)
     if job is None:
@@ -965,7 +1214,7 @@ async def get_publication_job(job_id: uuid.UUID, session: AsyncSession = Depends
     return job
 
 
-@router.post("/control/publication-jobs/{job_id}/retry", response_model=PublicationJobRead)
+@router.post("/control/publication-jobs/{job_id}/retry", response_model=PublicationJobRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def retry_publication_job_endpoint(
     job_id: uuid.UUID,
     payload: RetryCancelRequest,
@@ -977,7 +1226,7 @@ async def retry_publication_job_endpoint(
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
-@router.post("/control/publication-jobs/{job_id}/cancel", response_model=PublicationJobRead)
+@router.post("/control/publication-jobs/{job_id}/cancel", response_model=PublicationJobRead, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def cancel_publication_job_endpoint(
     job_id: uuid.UUID,
     payload: RetryCancelRequest,
@@ -989,7 +1238,7 @@ async def cancel_publication_job_endpoint(
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
-@router.post("/control/reconcile")
+@router.post("/control/reconcile", dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def reconcile_endpoint(payload: ReconcileRequest, session: AsyncSession = Depends(get_db_session)):
     try:
         return await reconcile_listing(session, payload.listing_id, marketplace=payload.marketplace)
@@ -997,17 +1246,17 @@ async def reconcile_endpoint(payload: ReconcileRequest, session: AsyncSession = 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
 
-@router.post("/control/recalculate", response_model=BulkContentResult)
+@router.post("/control/recalculate", response_model=BulkContentResult, dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR))])
 async def control_recalculate_endpoint(session: AsyncSession = Depends(get_db_session)):
     return await recalculate_listing_readiness_bulk(session)
 
 
-@router.get("/control/bindings", response_model=list[MarketplaceListingBindingRead])
+@router.get("/control/bindings", response_model=list[MarketplaceListingBindingRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def list_marketplace_bindings(limit: int = 100, session: AsyncSession = Depends(get_db_session)):
     return list(await session.scalars(select(MarketplaceListingBinding).order_by(MarketplaceListingBinding.created_at.desc()).limit(min(limit, 500))))
 
 
-@router.get("/control/alerts", response_model=list[OperationalAlertRead])
+@router.get("/control/alerts", response_model=list[OperationalAlertRead], dependencies=[Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER))])
 async def list_operational_alerts(limit: int = 100, session: AsyncSession = Depends(get_db_session)):
     return list(await session.scalars(select(OperationalAlert).order_by(OperationalAlert.created_at.desc()).limit(min(limit, 500))))
 

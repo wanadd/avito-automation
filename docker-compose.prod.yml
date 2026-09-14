@@ -1,0 +1,152 @@
+x-api-env: &api-env
+  APP_ENV: production
+  APP_BASE_URL: ${APP_BASE_URL}
+  DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://avito:${POSTGRES_PASSWORD}@postgres:5432/avito_automation}
+  REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  SESSION_SECRET: ${SESSION_SECRET}
+  SESSION_TTL_SECONDS: ${SESSION_TTL_SECONDS:-28800}
+  COOKIE_SECURE: ${COOKIE_SECURE:-true}
+  COOKIE_SAMESITE: ${COOKIE_SAMESITE:-lax}
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+  CORS_ORIGINS: ${CORS_ORIGINS:-https://localhost}
+  TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
+  TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
+  TELEGRAM_SESSION_PATH: /data/telegram/session
+  TELEGRAM_COLLECTOR_ENABLED: ${TELEGRAM_COLLECTOR_ENABLED:-false}
+  TELEGRAM_OPERATOR_IDS: ${TELEGRAM_OPERATOR_IDS:-}
+  AUTO_PREPARE_PUBLICATION: ${AUTO_PREPARE_PUBLICATION:-false}
+  PUBLICATION_MAX_ATTEMPTS: ${PUBLICATION_MAX_ATTEMPTS:-1}
+  PUBLICATION_RETRY_BASE_SECONDS: ${PUBLICATION_RETRY_BASE_SECONDS:-60}
+  BACKUP_DIR: /data/backups
+
+x-api-build: &api-build
+  context: .
+  dockerfile: infra/docker/Dockerfile
+
+x-depends: &depends
+  postgres:
+    condition: service_healthy
+  redis:
+    condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-avito_automation}
+      POSTGRES_USER: ${POSTGRES_USER:-avito}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  api:
+    build: *api-build
+    restart: unless-stopped
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+    environment: *api-env
+    volumes:
+      - telegram_data:/data/telegram
+      - backup_data:/data/backups
+    depends_on: *depends
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  worker:
+    build: *api-build
+    restart: unless-stopped
+    command: ["python", "-m", "app.jobs.worker"]
+    environment: *api-env
+    volumes:
+      - telegram_data:/data/telegram
+      - backup_data:/data/backups
+    depends_on: *depends
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  scheduler:
+    build: *api-build
+    restart: unless-stopped
+    command: ["python", "-m", "app.jobs.scheduler"]
+    environment: *api-env
+    volumes:
+      - telegram_data:/data/telegram
+      - backup_data:/data/backups
+    depends_on: *depends
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+    restart: unless-stopped
+    environment:
+      API_BASE_URL: http://api:8000
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-https://localhost}
+    depends_on:
+      api:
+        condition: service_started
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./infra/nginx/avito-automation.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./runtime/certs:/etc/nginx/certs:ro
+    environment:
+      DOMAIN: ${DOMAIN}
+    depends_on:
+      web:
+        condition: service_started
+      api:
+        condition: service_started
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  postgres_data:
+  redis_data:
+  telegram_data:
+  backup_data:

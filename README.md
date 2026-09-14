@@ -509,3 +509,49 @@ Known limitations:
 
 - No direct 1C connection, file watcher, COM, write sync, sales/documents/customers/orders/reserves, Avito, pricing engine, LLM, OCR, or frontend admin.
 - SKU and barcode exact matching use `ProductAlias` until the catalog model grows first-class fields.
+
+## Sprint 1.1 Operator UI and Production Readiness
+
+Sprint 1.1 adds a real internal operator application in `apps/web` and closes the control API behind production-oriented operator authentication.
+
+Operator UI routes:
+
+- `/` dashboard with aggregated operational counters.
+- `/products` and `/products/[variantId]` for product, supplier, 1C, pricing, facts, content, images, listing, publication, and audit context.
+- `/review` for review queue operations.
+- `/publication` and `/publication/jobs/[jobId]` for dry-run publication jobs and prepared internal payload inspection.
+- `/suppliers`, `/sources`, `/inventory`, `/pricing`, `/alerts`, `/audit`, `/settings`.
+
+Authentication:
+
+- DB-backed `OperatorUser` and `OperatorSession`.
+- Argon2id password hashes.
+- HttpOnly session cookie.
+- CSRF cookie/header for browser mutations.
+- Logout revocation and session expiration.
+- Roles: `VIEWER`, `OPERATOR`, `ADMIN`.
+
+Create the first admin without storing a default password:
+
+```powershell
+docker compose -f docker-compose.prod.yml exec -T api python -m app.cli create-operator admin --role ADMIN
+```
+
+Production readiness:
+
+- `.env.example` contains placeholders only.
+- `docker-compose.prod.yml` runs PostgreSQL, Redis, API, worker, scheduler, web, and nginx.
+- PostgreSQL and Redis are internal-network only in production compose.
+- `infra/nginx/avito-automation.conf.template` routes `/` to web, `/api/` to API, and `/health` to API health.
+- `scripts/backup.ps1` creates a PostgreSQL backup manifest with 7-day default retention.
+- `scripts/deploy-prod.ps1` performs backup, build, start, migration, and health verification before printing `DEPLOY: PASS`.
+- `docs/production-runbook.md` documents deploy, backup, restore, worker/scheduler restart, migration, and incident checks.
+- `docs/security.md` documents secrets, sessions, operator passwords, Telegram sessions, DB/Redis exposure, backups, and frontend safety.
+
+Live Avito publication remains disabled:
+
+```text
+DISABLED_CONTRACT_INCOMPLETE
+```
+
+Operators can prepare, dry-run, reconcile, inspect jobs, and review payloads. There is no real Avito OAuth, no mutation, no guessed Autoload schema, no logged-in scraping, and no fake external listing state.
