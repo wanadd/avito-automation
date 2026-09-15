@@ -32,6 +32,7 @@ from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer, SupplierOfferSnapshot
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.models.telegram_collection import TelegramCollectionRun
+from app.models.telegram_price import TelegramPriceBatch, TelegramPriceBotState, TelegramPriceMessage, TelegramPriceSource
 
 __all__ = [
     "AuditLog",
@@ -56,4 +57,8 @@ __all__ = [
     "SupplierSnapshot",
     "SupplierSnapshotItem",
     "TelegramCollectionRun",
+    "TelegramPriceBatch",
+    "TelegramPriceBotState",
+    "TelegramPriceMessage",
+    "TelegramPriceSource",
 ]

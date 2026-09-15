@@ -44,6 +44,7 @@ from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
 from app.models.supplier_snapshot import SupplierSnapshot, SupplierSnapshotItem
 from app.models.telegram_collection import TelegramCollectionRun
+from app.models.telegram_price import TelegramPriceBatch, TelegramPriceMessage, TelegramPriceSource
 from app.schemas.conflict import DataConflictRead
 from app.schemas.content import (
     BulkContentResult,
@@ -109,6 +110,13 @@ from app.schemas.telegram_collection import (
     TelegramCollectRequest,
     TelegramCollectionRunRead,
     TelegramSourceTestResult,
+)
+from app.schemas.telegram_prices import (
+    TelegramPriceBatchRead,
+    TelegramPriceMessageRead,
+    TelegramPriceSourceMapRequest,
+    TelegramPriceSourceRead,
+    TelegramPriceStatusRead,
 )
 from app.services.offers import upsert_supplier_offer
 from app.services.matcher import match_parsed_item, match_raw_record
@@ -189,6 +197,11 @@ from app.services.onboarding import (
     preview_one_c_manual_import,
     preview_telegram_manual_import,
     resolve_conflict,
+)
+from app.services.telegram_prices import (
+    map_telegram_price_source,
+    reprocess_telegram_price_batch,
+    telegram_prices_status,
 )
 
 router = APIRouter(prefix="/api/v1")
@@ -753,6 +766,95 @@ async def get_telegram_collection_run(
     if run is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TelegramCollectionRun not found")
     return run
+
+
+@router.get("/telegram-prices/status", response_model=TelegramPriceStatusRead)
+async def get_telegram_prices_status(
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+) -> dict:
+    return await telegram_prices_status(session)
+
+
+@router.get("/telegram-prices/sources", response_model=list[TelegramPriceSourceRead])
+async def list_telegram_price_sources(
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+) -> list[TelegramPriceSource]:
+    return list(
+        await session.scalars(
+            select(TelegramPriceSource).order_by(TelegramPriceSource.last_received_at.desc().nullslast()).limit(min(limit, 500))
+        )
+    )
+
+
+@router.post("/telegram-prices/sources/{price_source_id}/map", response_model=TelegramPriceSourceRead)
+async def map_telegram_price_source_endpoint(
+    price_source_id: uuid.UUID,
+    payload: TelegramPriceSourceMapRequest,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+) -> TelegramPriceSource:
+    try:
+        return await map_telegram_price_source(session, price_source_id, payload.supplier_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+
+
+@router.get("/telegram-prices/ingestions", response_model=list[TelegramPriceBatchRead])
+async def list_telegram_price_ingestions(
+    status_filter: str | None = None,
+    source_id: uuid.UUID | None = None,
+    limit: int = 100,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+) -> list[TelegramPriceBatch]:
+    statement = select(TelegramPriceBatch).order_by(TelegramPriceBatch.received_at.desc()).limit(min(limit, 500))
+    if status_filter is not None:
+        statement = statement.where(TelegramPriceBatch.status == status_filter)
+    if source_id is not None:
+        statement = statement.where(TelegramPriceBatch.source_id == source_id)
+    return list(await session.scalars(statement))
+
+
+@router.get("/telegram-prices/ingestions/{batch_id}", response_model=TelegramPriceBatchRead)
+async def get_telegram_price_ingestion(
+    batch_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+) -> TelegramPriceBatch:
+    batch = await session.get(TelegramPriceBatch, batch_id)
+    if batch is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="TelegramPriceBatch not found")
+    return batch
+
+
+@router.get("/telegram-prices/ingestions/{batch_id}/messages", response_model=list[TelegramPriceMessageRead])
+async def list_telegram_price_messages(
+    batch_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
+) -> list[TelegramPriceMessage]:
+    return list(
+        await session.scalars(
+            select(TelegramPriceMessage)
+            .where(TelegramPriceMessage.batch_id == batch_id)
+            .order_by(TelegramPriceMessage.message_date, TelegramPriceMessage.message_id)
+        )
+    )
+
+
+@router.post("/telegram-prices/ingestions/{batch_id}/reprocess", response_model=TelegramPriceBatchRead)
+async def reprocess_telegram_price_ingestion(
+    batch_id: uuid.UUID,
+    session: AsyncSession = Depends(get_db_session),
+    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+) -> TelegramPriceBatch:
+    try:
+        return await reprocess_telegram_price_batch(session, batch_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
 
 @router.post("/supplier-snapshots", response_model=SupplierSnapshotRead, status_code=status.HTTP_201_CREATED)

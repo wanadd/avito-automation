@@ -15,6 +15,11 @@ x-api-env: &api-env
   TELEGRAM_SESSION_PATH: /data/telegram/session
   TELEGRAM_COLLECTOR_ENABLED: ${TELEGRAM_COLLECTOR_ENABLED:-false}
   TELEGRAM_OPERATOR_IDS: ${TELEGRAM_OPERATOR_IDS:-}
+  TELEGRAM_PRICES_BOT_ENABLED: ${TELEGRAM_PRICES_BOT_ENABLED:-false}
+  TELEGRAM_API_BASE_URL: ${TELEGRAM_API_BASE_URL:-https://tg-relay.planam.ru}
+  TELEGRAM_PRICES_ALLOWED_USER_IDS: ${TELEGRAM_PRICES_ALLOWED_USER_IDS:-}
+  TELEGRAM_PRICES_POLL_TIMEOUT_SECONDS: ${TELEGRAM_PRICES_POLL_TIMEOUT_SECONDS:-30}
+  TELEGRAM_PRICE_BATCH_WINDOW_SECONDS: ${TELEGRAM_PRICE_BATCH_WINDOW_SECONDS:-30}
   AUTO_PREPARE_PUBLICATION: ${AUTO_PREPARE_PUBLICATION:-false}
   PUBLICATION_MAX_ATTEMPTS: ${PUBLICATION_MAX_ATTEMPTS:-1}
   PUBLICATION_RETRY_BASE_SECONDS: ${PUBLICATION_RETRY_BASE_SECONDS:-60}
@@ -119,6 +124,26 @@ services:
     restart: unless-stopped
     command: ["python", "-m", "app.jobs.scheduler"]
     environment: *api-env
+    volumes:
+      - telegram_data:/data/telegram
+      - backup_data:/data/backups
+      - private_data:/data/private
+    depends_on: *depends
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - default
+
+  telegram-prices:
+    build: *api-build
+    restart: unless-stopped
+    command: ["python", "-m", "app.integrations.telegram.prices_cli"]
+    environment: *api-env
+    env_file:
+      - path: .env.telegram-prices
+        required: false
     volumes:
       - telegram_data:/data/telegram
       - backup_data:/data/backups

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isValidElement } from "react";
 import { dt, money, text } from "@/lib/format";
 import { StatusBadge } from "@/components/status-badge";
 
@@ -39,6 +40,9 @@ export function DataTable({ columns, rows, empty }: { columns: Column[]; rows: R
 
 function renderCell(column: Column, row: Record<string, unknown>) {
   const value = row[column.key];
+  if (isValidElement(value)) {
+    return value;
+  }
   if (column.kind === "status") {
     return <StatusBadge value={value} />;
   }

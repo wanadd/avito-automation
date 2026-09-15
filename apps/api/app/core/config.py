@@ -19,6 +19,14 @@ class Settings(BaseSettings):
     telegram_backfill_limit: int = 50
     telegram_flood_wait_fail_seconds: int = 30
     telegram_default_collection_interval_seconds: int = 600
+    telegram_prices_bot_enabled: bool = False
+    telegram_prices_bot_token: str = ""
+    telegram_api_base_url: str = "https://api.telegram.org"
+    telegram_prices_allowed_user_ids: str = ""
+    telegram_prices_poll_timeout_seconds: int = 30
+    telegram_prices_retry_base_seconds: int = 5
+    telegram_price_batch_window_seconds: int = 30
+    telegram_price_poll_limit: int = 50
     collection_scheduler_jitter_seconds: int = 30
     collection_job_max_attempts: int = 3
     job_stale_running_seconds: int = 900
@@ -50,6 +58,15 @@ class Settings(BaseSettings):
     @property
     def telegram_operator_id_set(self) -> set[str]:
         return {item.strip() for item in self.telegram_operator_ids.split(",") if item.strip()}
+
+    @property
+    def telegram_prices_allowed_user_id_set(self) -> set[int]:
+        ids: set[int] = set()
+        for item in self.telegram_prices_allowed_user_ids.split(","):
+            item = item.strip()
+            if item:
+                ids.add(int(item))
+        return ids
 
     @property
     def allowed_host_list(self) -> list[str]:

@@ -14,6 +14,7 @@ const links = [
   ["/onboarding", "Onboarding"],
   ["/review", "Review"],
   ["/publication", "Publication"],
+  ["/telegram-prices", "Telegram Prices"],
   ["/suppliers", "Suppliers"],
   ["/sources", "Sources"],
   ["/inventory", "Inventory"],
