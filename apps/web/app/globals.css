@@ -221,6 +221,16 @@ th {
   gap: 8px;
 }
 
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkRow input {
+  width: auto;
+}
+
 .button {
   border: 0;
   border-radius: 6px;

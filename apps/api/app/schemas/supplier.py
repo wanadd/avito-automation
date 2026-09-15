@@ -11,9 +11,13 @@ class SupplierCreate(BaseModel):
     is_active: bool = True
 
 
+class OperatorSupplierCreate(BaseModel):
+    name: str
+    is_active: bool = True
+
+
 class SupplierRead(Timestamped):
     id: uuid.UUID
     code: str
     name: str
     is_active: bool
-

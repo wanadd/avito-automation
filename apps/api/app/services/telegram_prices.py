@@ -13,6 +13,7 @@ from app.core.config import get_settings
 from app.integrations.telegram.bot_api import TelegramBotApiClient, redact_telegram_token
 from app.integrations.telegram.collector import sanitize_error
 from app.integrations.telegram.types import TelegramCollectorError, TelegramNetworkError, TelegramRateLimitError
+from app.models.audit_log import AuditLog
 from app.models.enums import ProcessingStatus, SourceType, SupplierSnapshotType
 from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
 from app.models.source import Source
@@ -453,7 +454,13 @@ async def persist_batch_raw_revision(
     return raw_record, revision, "new"
 
 
-async def map_telegram_price_source(session: AsyncSession, price_source_id: uuid.UUID, supplier_id: uuid.UUID) -> TelegramPriceSource:
+async def map_telegram_price_source(
+    session: AsyncSession,
+    price_source_id: uuid.UUID,
+    supplier_id: uuid.UUID,
+    *,
+    actor_id: uuid.UUID | None = None,
+) -> TelegramPriceSource:
     price_source = await session.get(TelegramPriceSource, price_source_id)
     supplier = await session.get(Supplier, supplier_id)
     if price_source is None:
@@ -465,6 +472,8 @@ async def map_telegram_price_source(session: AsyncSession, price_source_id: uuid
         source = await session.get(Source, price_source.source_id)
     if source is None:
         source = await session.scalar(select(Source).where(Source.external_chat_id == price_source.telegram_channel_id))
+    if source is not None and source.supplier_id != supplier.id:
+        raise ValueError("TELEGRAM_SOURCE_ALREADY_MAPPED")
     if source is None:
         source = Source(
             supplier_id=supplier.id,
@@ -485,7 +494,20 @@ async def map_telegram_price_source(session: AsyncSession, price_source_id: uuid
         source.username = price_source.username
         source.title = price_source.title
         source.name = source.name or price_source.title or f"Telegram channel {price_source.telegram_channel_id}"
+    previous_source_id = price_source.source_id
     price_source.source_id = source.id
+    if previous_source_id != source.id:
+        session.add(
+            AuditLog(
+                entity_type="TelegramPriceSource",
+                entity_id=price_source.id,
+                action="TELEGRAM_PRICE_SOURCE_MAPPED",
+                old_value={"source_id": str(previous_source_id) if previous_source_id else None},
+                new_value={"source_id": str(source.id), "supplier_id": str(supplier.id)},
+                actor_type="WEB_OPERATOR",
+                actor_id=str(actor_id) if actor_id is not None else None,
+            )
+        )
     await session.commit()
     await session.refresh(price_source)
     return price_source

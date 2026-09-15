@@ -56,7 +56,14 @@ export default async function TelegramPricesPage() {
   const sourceRows = sources.map((source) => ({
     ...source,
     mapped: source.source_id ? "MAPPED" : "PENDING",
-    map_action: source.source_id ? "Mapped" : <TelegramSourceMapForm sourceId={source.id} suppliers={supplierItems} />
+    map_action: source.source_id ? "Mapped" : (
+      <TelegramSourceMapForm
+        sourceId={source.id}
+        suppliers={supplierItems}
+        suggestedName={source.title}
+        pendingBatchIds={batches.filter((batch) => batch.telegram_price_source_id === source.id && batch.status === "PENDING_MAPPING").map((batch) => batch.id)}
+      />
+    )
   }));
   const batchRows = batches.map((batch) => ({
     ...batch,

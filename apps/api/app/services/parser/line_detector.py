@@ -27,9 +27,8 @@ def classify_line(line: str, section: str | None) -> str:
         return "ignored"
     _, price_minor, invalid_price = parse_price(line)
     has_digit = any(char.isdigit() for char in line)
-    if price_minor is not None and has_digit and section is not None:
+    if price_minor is not None and has_digit:
         return "product"
     if invalid_price or (section is not None and has_digit):
         return "review"
     return "ignored"
-

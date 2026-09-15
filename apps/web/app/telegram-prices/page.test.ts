@@ -15,9 +15,25 @@ describe("Telegram prices operator UI", () => {
 
   it("maps sources and reprocesses batches through same-origin authenticated API calls", () => {
     expect(formSource).toContain("`${browserApiBase()}/api/v1/telegram-prices/sources/${sourceId}/map`");
+    expect(formSource).toContain("`${browserApiBase()}/api/v1/operator/suppliers`");
     expect(formSource).toContain('credentials: "include"');
     expect(formSource).toContain('"X-CSRF-Token": csrfFromDocument()');
     expect(pageSource).toContain("/api/v1/telegram-prices/ingestions/${batch.id}/reprocess");
+  });
+
+  it("supports zero suppliers, inline create, explicit mapping, and visible failures", () => {
+    expect(formSource).toContain("No suppliers yet");
+    expect(formSource).toContain("suggestedName");
+    expect(formSource).toContain("Supplier created. Confirm mapping when ready.");
+    expect(formSource).toContain("Map");
+    expect(formSource).toContain("Mapping failed");
+    expect(formSource).toContain("Reprocess failed");
+    expect(formSource).toContain("mapped ? pendingBatchIds.map");
+  });
+
+  it("does not silently create or map suppliers", () => {
+    expect(formSource).toContain('type="button" onClick={createSupplier}');
+    expect(formSource).toContain('type="submit" disabled={busy || !supplierId}>Map</button>');
   });
 
   it("adds Telegram prices to operator navigation", () => {

@@ -1,4 +1,5 @@
 from decimal import Decimal
+from pathlib import Path
 
 from app.models.enums import ParseStatus
 from app.services.parser.colors import extract_color
@@ -102,6 +103,29 @@ def test_non_product_lines_ignored():
 
 def test_ambiguous_product_like_line_review():
     assert classify_line("17 pro max 256 blue", "Apple") == "review"
+
+
+def test_real_style_telegram_price_lines_parse_without_known_section():
+    result = parse_price_text("🇷🇺Redmi 17 8/256 black - 19500\n🎮 Nintendo Switch lite coral - 15800")
+    product_lines = [item for item in result.items if item.price_minor is not None]
+    assert len(product_lines) == 2
+    assert product_lines[0].raw_line == "🇷🇺Redmi 17 8/256 black - 19500"
+    assert product_lines[0].price_minor == 1950000
+    assert product_lines[0].storage_gb == 256
+    assert product_lines[0].color_normalized == "Black"
+    assert product_lines[0].region_code == "RU"
+
+
+def test_sanitized_real_style_telegram_fixture_preserves_product_rows_and_ignores_noise():
+    text = Path("tests/fixtures/telegram_supplier_real_style_price.txt").read_text(encoding="utf-8")
+    result = parse_price_text(text)
+    product_lines = [item for item in result.items if item.price_minor is not None]
+    ignored_lines = [item.raw_line for item in result.items if item.parse_status == ParseStatus.IGNORED]
+    assert len(product_lines) == 12
+    assert any(item.raw_line == "🇰🇼S25 ultra S938B 12/256 grey - 66200" and item.price_minor == 6620000 for item in product_lines)
+    assert any(item.raw_line == "⌚️Watch 8 L325 LTE 40mm graphite - 16500" for item in product_lines)
+    assert "+7 999 000 00 00" in ignored_lines
+    assert "-----" in ignored_lines
 
 
 def test_confidence_deterministic():

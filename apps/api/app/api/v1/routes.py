@@ -98,7 +98,7 @@ from app.schemas.parsed_supplier_item import ParsedSupplierItemRead, ParseSummar
 from app.schemas.raw_source_record import RawSourceRecordCreate, RawSourceRecordRead
 from app.schemas.source import SourceCreate, SourceRead
 from app.schemas.source_collection_job import OperationsStatusRead, SourceCollectionJobRead, SourceStatusRead
-from app.schemas.supplier import SupplierCreate, SupplierRead
+from app.schemas.supplier import OperatorSupplierCreate, SupplierCreate, SupplierRead
 from app.schemas.supplier_offer import SupplierOfferCreate, SupplierOfferRead
 from app.schemas.supplier_snapshot import (
     ProcessSnapshotSummary,
@@ -162,6 +162,7 @@ from app.services.publication import (
     retry_publication_job,
     review_queue,
 )
+from app.services.suppliers import create_operator_supplier
 from app.services.operator_auth import (
     AuthenticatedOperator,
     authenticate_operator,
@@ -794,11 +795,13 @@ async def map_telegram_price_source_endpoint(
     price_source_id: uuid.UUID,
     payload: TelegramPriceSourceMapRequest,
     session: AsyncSession = Depends(get_db_session),
-    _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+    auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
 ) -> TelegramPriceSource:
     try:
-        return await map_telegram_price_source(session, price_source_id, payload.supplier_id)
+        return await map_telegram_price_source(session, price_source_id, payload.supplier_id, actor_id=auth.user.id)
     except ValueError as exc:
+        if str(exc) == "TELEGRAM_SOURCE_ALREADY_MAPPED":
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
 
@@ -1208,6 +1211,23 @@ async def operator_suppliers(
     _auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR, OperatorRole.VIEWER)),
 ):
     return await supplier_list(session, limit=min(limit, 100), offset=offset)
+
+
+@router.post("/operator/suppliers", response_model=SupplierRead, status_code=status.HTTP_201_CREATED)
+async def operator_create_supplier(
+    payload: OperatorSupplierCreate,
+    session: AsyncSession = Depends(get_db_session),
+    auth: AuthenticatedOperator = Depends(require_role(OperatorRole.ADMIN, OperatorRole.OPERATOR)),
+) -> Supplier:
+    try:
+        return await create_operator_supplier(session, name=payload.name, is_active=payload.is_active, actor_id=auth.user.id)
+    except ValueError as exc:
+        detail = str(exc)
+        if detail in {"SUPPLIER_NAME_REQUIRED", "SUPPLIER_NAME_TOO_LONG"}:
+            raise HTTPException(status_code=422, detail=detail) from exc
+        if detail == "SUPPLIER_NAME_EXISTS":
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=detail) from exc
+        raise
 
 
 @router.get("/operator/sources", response_model=Page)

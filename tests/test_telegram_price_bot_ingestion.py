@@ -8,6 +8,7 @@ from app.core.config import get_settings
 from app.db.session import AsyncSessionLocal
 from app.integrations.telegram.bot_api import TelegramBotApiClient, redact_telegram_token
 from app.integrations.telegram.types import TelegramNetworkError
+from app.models.audit_log import AuditLog
 from app.models.enums import SourceType, SupplierSnapshotType
 from app.models.product import ProductVariant
 from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
@@ -189,6 +190,53 @@ async def test_mapping_and_reprocess_creates_supplier_offer_through_existing_pip
     assert processed.accepted_rows == 1
     assert await count(RawSourceRecord) == 1
     assert await count(SupplierOffer) == 1
+
+
+async def test_pending_mapping_batch_has_no_snapshot_or_offer_before_mapping():
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(
+            session,
+            FakeBotClient(
+                [
+                    telegram_update(21, channel_id=-100991, seconds=0),
+                    telegram_update(22, channel_id=-100991, text="Samsung\n🇰🇼S25 ultra S939B 12/512 silverblue - 65000", seconds=10),
+                ]
+            ),
+        )
+        batch = await session.scalar(select(TelegramPriceBatch))
+    assert batch.status == BATCH_STATUS_PENDING_MAPPING
+    assert batch.message_count == 2
+    assert await count(SupplierSnapshot) == 0
+    assert await count(SupplierOffer) == 0
+
+
+async def test_repeated_same_mapping_reuses_source_and_audits_once():
+    supplier_id, _ = await seed_supplier_source(channel_id=-100990)
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient([telegram_update(23, channel_id=-100991)]))
+        price_source = await session.scalar(select(TelegramPriceSource).where(TelegramPriceSource.telegram_channel_id == -100991))
+        first = await map_telegram_price_source(session, price_source.id, supplier_id)
+        second = await map_telegram_price_source(session, price_source.id, supplier_id)
+        source_count = await session.scalar(select(func.count()).select_from(Source).where(Source.external_chat_id == -100991))
+        audit_count = await session.scalar(
+            select(func.count()).select_from(AuditLog).where(AuditLog.action == "TELEGRAM_PRICE_SOURCE_MAPPED")
+        )
+    assert first.source_id == second.source_id
+    assert source_count == 1
+    assert audit_count == 1
+
+
+async def test_remap_to_different_supplier_is_rejected():
+    first_supplier_id, _ = await seed_supplier_source(channel_id=-100980)
+    second_supplier_id, _ = await seed_supplier_source(channel_id=-100981)
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient([telegram_update(24, channel_id=-100982)]))
+        price_source = await session.scalar(select(TelegramPriceSource).where(TelegramPriceSource.telegram_channel_id == -100982))
+        await map_telegram_price_source(session, price_source.id, first_supplier_id)
+        with pytest.raises(ValueError, match="TELEGRAM_SOURCE_ALREADY_MAPPED"):
+            await map_telegram_price_source(session, price_source.id, second_supplier_id)
+        source_count = await session.scalar(select(func.count()).select_from(Source).where(Source.external_chat_id == -100982))
+    assert source_count == 1
 
 
 async def test_known_source_auto_processes_and_bot_reply_failure_does_not_rollback():
