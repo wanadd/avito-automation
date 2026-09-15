@@ -26,11 +26,13 @@ from app.services.supplier_snapshots import create_snapshot, process_snapshot
 
 logger = logging.getLogger("app.telegram_prices")
 
+BATCH_STATUS_RECEIVED = "RECEIVED"
 BATCH_STATUS_COMPLETED = "COMPLETED"
 BATCH_STATUS_FAILED = "FAILED"
 BATCH_STATUS_PENDING_MAPPING = "PENDING_MAPPING"
 BATCH_STATUS_REPROCESSING = "REPROCESSING"
 BATCH_STATUS_UNSUPPORTED = "UNSUPPORTED_FORMAT"
+BATCH_RECEIVING_STATUSES = {BATCH_STATUS_RECEIVED, BATCH_STATUS_PENDING_MAPPING}
 MESSAGE_STATUS_DUPLICATE = "DUPLICATE"
 MESSAGE_STATUS_INGESTED = "INGESTED"
 MESSAGE_STATUS_UNAUTHORIZED = "UNAUTHORIZED"
@@ -140,7 +142,7 @@ async def poll_telegram_prices_bot(session: AsyncSession, client: TelegramBotApi
     for update in updates:
         max_update_id = max(max_update_id or int(update["update_id"]), int(update["update_id"]))
         result = await persist_update(session, update)
-        if result.get("batch_id"):
+        if result.get("batch_id") and result.get("should_process"):
             touched_batch_ids.add(result["batch_id"])
         if result.get("reply"):
             replies.append(result["reply"])
@@ -181,7 +183,12 @@ async def persist_update(session: AsyncSession, update: dict[str, Any]) -> dict[
     update_id = int(update["update_id"])
     existing = await session.scalar(select(TelegramPriceMessage).where(TelegramPriceMessage.update_id == update_id))
     if existing is not None:
-        return {"status": MESSAGE_STATUS_DUPLICATE, "batch_id": existing.batch_id, "reply": "Этот прайс уже получен ранее."}
+        return {
+            "status": MESSAGE_STATUS_DUPLICATE,
+            "batch_id": existing.batch_id,
+            "should_process": False,
+            "reply": "Этот прайс уже получен ранее.",
+        }
 
     message = message_from_update(update)
     if message is None:
@@ -250,10 +257,10 @@ async def persist_update(session: AsyncSession, update: dict[str, Any]) -> dict[
     batch.first_message_at = min(filter(None, [batch.first_message_at, saved.message_date]), default=saved.message_date)
     batch.last_message_at = max(filter(None, [batch.last_message_at, saved.message_date]), default=saved.message_date)
     batch.source_id = price_source.source_id
-    batch.status = "RECEIVED" if price_source.source_id else BATCH_STATUS_PENDING_MAPPING
+    batch.status = BATCH_STATUS_RECEIVED if price_source.source_id else BATCH_STATUS_PENDING_MAPPING
     price_source.last_received_at = utc_now()
     await session.commit()
-    return {"status": saved.status, "batch_id": batch.id}
+    return {"status": saved.status, "batch_id": batch.id, "should_process": price_source.source_id is not None}
 
 
 async def upsert_telegram_price_source(session: AsyncSession, channel: dict[str, Any], received_at: datetime) -> TelegramPriceSource:
@@ -308,7 +315,7 @@ async def find_or_create_batch(
             TelegramPriceBatch.telegram_price_source_id == price_source.id,
             TelegramPriceBatch.submitted_by_user_id == user_id,
             TelegramPriceBatch.last_message_at >= cutoff,
-            TelegramPriceBatch.status != BATCH_STATUS_FAILED,
+            TelegramPriceBatch.status.in_(BATCH_RECEIVING_STATUSES),
         )
         .order_by(TelegramPriceBatch.last_message_at.desc())
         .limit(1)
@@ -320,7 +327,7 @@ async def find_or_create_batch(
         source_id=price_source.source_id,
         submitted_by_user_id=user_id,
         destination_chat_id=destination_chat_id,
-        status="RECEIVED" if price_source.source_id else BATCH_STATUS_PENDING_MAPPING,
+        status=BATCH_STATUS_RECEIVED if price_source.source_id else BATCH_STATUS_PENDING_MAPPING,
         first_message_at=message_at,
         last_message_at=message_at,
     )

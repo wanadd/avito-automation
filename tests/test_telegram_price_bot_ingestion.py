@@ -10,12 +10,14 @@ from app.integrations.telegram.bot_api import TelegramBotApiClient, redact_teleg
 from app.integrations.telegram.types import TelegramNetworkError
 from app.models.enums import SourceType, SupplierSnapshotType
 from app.models.product import ProductVariant
-from app.models.raw_source_record import RawSourceRecord
+from app.models.raw_source_record import RawSourceRecord, RawSourceRecordRevision
 from app.models.source import Source
 from app.models.supplier import Supplier
 from app.models.supplier_offer import SupplierOffer
+from app.models.supplier_snapshot import SupplierSnapshot
 from app.models.telegram_price import TelegramPriceBatch, TelegramPriceBotState, TelegramPriceMessage, TelegramPriceSource
 from app.services.telegram_prices import (
+    BATCH_STATUS_COMPLETED,
     BATCH_STATUS_PENDING_MAPPING,
     MESSAGE_STATUS_UNAUTHORIZED,
     MESSAGE_STATUS_UNSUPPORTED,
@@ -202,12 +204,48 @@ async def test_duplicate_update_is_idempotent_and_advances_cursor():
     await seed_supplier_source(channel_id=-100777)
     update = telegram_update(40)
     async with AsyncSessionLocal() as session:
-        await poll_telegram_prices_bot(session, FakeBotClient([update]))
-        await poll_telegram_prices_bot(session, FakeBotClient([update]))
+        first = await poll_telegram_prices_bot(session, FakeBotClient([update]))
+        before_revisions = await session.scalar(select(func.count()).select_from(RawSourceRecordRevision))
+        before_snapshots = await session.scalar(select(func.count()).select_from(SupplierSnapshot))
+        before_offers = await session.scalar(select(func.count()).select_from(SupplierOffer))
+        second = await poll_telegram_prices_bot(session, FakeBotClient([update]))
         state = await session.scalar(select(TelegramPriceBotState))
+        after_revisions = await session.scalar(select(func.count()).select_from(RawSourceRecordRevision))
+        after_snapshots = await session.scalar(select(func.count()).select_from(SupplierSnapshot))
+        after_offers = await session.scalar(select(func.count()).select_from(SupplierOffer))
+    assert first["processed_batches"] == 1
+    assert second["processed_batches"] == 0
     assert state.last_update_id == 40
     assert await count(TelegramPriceMessage) == 1
-    assert await count(SupplierOffer) == 1
+    assert before_revisions == after_revisions == 1
+    assert before_snapshots == after_snapshots == 1
+    assert before_offers == after_offers == 1
+
+
+async def test_crash_after_message_commit_before_cursor_advance_does_not_reprocess_completed_batch():
+    await seed_supplier_source(channel_id=-100777)
+    update = telegram_update(41)
+    async with AsyncSessionLocal() as session:
+        first = await poll_telegram_prices_bot(session, FakeBotClient([update]))
+        state = await session.scalar(select(TelegramPriceBotState))
+        state.last_update_id = None
+        await session.commit()
+        before = {
+            RawSourceRecordRevision: await session.scalar(select(func.count()).select_from(RawSourceRecordRevision)),
+            SupplierSnapshot: await session.scalar(select(func.count()).select_from(SupplierSnapshot)),
+            SupplierOffer: await session.scalar(select(func.count()).select_from(SupplierOffer)),
+        }
+        replay = await poll_telegram_prices_bot(session, FakeBotClient([update]))
+        after = {
+            RawSourceRecordRevision: await session.scalar(select(func.count()).select_from(RawSourceRecordRevision)),
+            SupplierSnapshot: await session.scalar(select(func.count()).select_from(SupplierSnapshot)),
+            SupplierOffer: await session.scalar(select(func.count()).select_from(SupplierOffer)),
+        }
+        state = await session.scalar(select(TelegramPriceBotState))
+    assert first["processed_batches"] == 1
+    assert replay["processed_batches"] == 0
+    assert state.last_update_id == 41
+    assert before == after
 
 
 async def test_two_consecutive_messages_batch_together_in_order():
@@ -226,6 +264,41 @@ async def test_two_consecutive_messages_batch_together_in_order():
     assert await count(SupplierOffer) == 2
 
 
+async def test_second_message_joins_active_unknown_source_batch():
+    updates = [
+        telegram_update(52, channel_id=-100888, seconds=0),
+        telegram_update(53, channel_id=-100888, text="Samsung\n🇰🇼S25 ultra S939B 12/512 silverblue - 65000", seconds=10),
+    ]
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient(updates))
+        batch = await session.scalar(select(TelegramPriceBatch))
+    assert await count(TelegramPriceBatch) == 1
+    assert batch.message_count == 2
+    assert batch.status == BATCH_STATUS_PENDING_MAPPING
+
+
+async def test_new_message_after_completed_batch_creates_new_batch_inside_window():
+    await seed_supplier_source(channel_id=-100777)
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient([telegram_update(54, seconds=0)]))
+        completed = await session.scalar(select(TelegramPriceBatch))
+        assert completed.status == BATCH_STATUS_COMPLETED
+        await poll_telegram_prices_bot(
+            session,
+            FakeBotClient(
+                [
+                    telegram_update(
+                        55,
+                        text="Samsung\n🇰🇼S25 ultra S939B 12/512 silverblue - 65000",
+                        seconds=10,
+                    )
+                ]
+            ),
+        )
+    assert await count(TelegramPriceBatch) == 2
+    assert await count(SupplierSnapshot) == 2
+
+
 async def test_different_sender_source_or_window_gets_different_batches():
     async with AsyncSessionLocal() as session:
         await poll_telegram_prices_bot(
@@ -239,6 +312,22 @@ async def test_different_sender_source_or_window_gets_different_batches():
             ),
         )
     assert await count(TelegramPriceBatch) == 3
+
+
+async def test_different_allowed_sender_gets_separate_batch(monkeypatch):
+    monkeypatch.setenv("TELEGRAM_PRICES_ALLOWED_USER_IDS", "42,43")
+    get_settings.cache_clear()
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(
+            session,
+            FakeBotClient(
+                [
+                    telegram_update(63, channel_id=-1003, user_id=42, seconds=0),
+                    telegram_update(64, channel_id=-1003, user_id=43, seconds=10),
+                ]
+            ),
+        )
+    assert await count(TelegramPriceBatch) == 2
 
 
 async def test_unsupported_document_metadata_preserved_without_offer():
