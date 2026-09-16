@@ -101,8 +101,45 @@ def test_non_product_lines_ignored():
     assert classify_line("https://example.test/catalog", "Apple") == "ignored"
 
 
+def test_real_supplier_structural_lines_are_ignored():
+    structural_lines = [
+        "",
+        "15 сентября 2026",
+        "💰🚨🚨🚨Так же группа с Б/У https://example.test/used",
+        "⚡️Электростанции",
+        "Apple 🍏",
+        "Xiaomi 🤖",
+        "Планшеты",
+        "Samsung 🇰🇷",
+        "➖➖➖➖➖➖",
+        "------------------------------------------------",
+    ]
+    for line in structural_lines:
+        assert classify_line(line, "Apple") == "ignored"
+
+
+def test_real_supplier_product_lines_are_eligible():
+    product_lines = [
+        "🔋Pecron F3000FLP (3.6кВт) - 125000",
+        "🇭🇰17 pro max 256 blue - 113000",
+        "⌚️Aw 11 46 jet black - 32500",
+        "🇷🇺Redmi 17 8/256 black - 19500",
+        "🇪🇺Note 15 pro 8/256 black - 22700",
+        "🇷🇺Note 17 pro 5g 8/256 black - 29500",
+        "🇷🇺Mi 17T 12/256 violet - 40500",
+        "🇪🇺X8 pro 12/512 black - 35500",
+        "🇦🇪A17 4/128 blue - 14200",
+    ]
+    for line in product_lines:
+        assert classify_line(line, None) == "product"
+
+
 def test_ambiguous_product_like_line_review():
     assert classify_line("17 pro max 256 blue", "Apple") == "review"
+
+
+def test_malformed_product_like_line_is_review_not_ignored():
+    assert classify_line("🇭🇰17 pro max 256 blue - call", "Apple") == "review"
 
 
 def test_real_style_telegram_price_lines_parse_without_known_section():
@@ -121,11 +158,18 @@ def test_sanitized_real_style_telegram_fixture_preserves_product_rows_and_ignore
     result = parse_price_text(text)
     product_lines = [item for item in result.items if item.price_minor is not None]
     ignored_lines = [item.raw_line for item in result.items if item.parse_status == ParseStatus.IGNORED]
-    assert len(product_lines) == 12
+    assert len(product_lines) == 14
+    assert result.total_lines == len(text.splitlines())
+    assert "15 сентября 2026" in ignored_lines
+    assert "Apple 🍏" in ignored_lines
+    assert "Xiaomi 🤖" in ignored_lines
+    assert "Планшеты" in ignored_lines
+    assert "Samsung 🇰🇷" in ignored_lines
     assert any(item.raw_line == "🇰🇼S25 ultra S938B 12/256 grey - 66200" and item.price_minor == 6620000 for item in product_lines)
     assert any(item.raw_line == "⌚️Watch 8 L325 LTE 40mm graphite - 16500" for item in product_lines)
     assert "+7 999 000 00 00" in ignored_lines
     assert "-----" in ignored_lines
+    assert "------------------------------------------------" in ignored_lines
 
 
 def test_confidence_deterministic():

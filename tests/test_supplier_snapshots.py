@@ -1,6 +1,7 @@
 import asyncio
 import uuid
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 import pytest
 from sqlalchemy import func, select
@@ -239,6 +240,52 @@ async def test_low_quality_full_snapshot_is_rejected_without_missing_transition(
     assert summary["status"] == "REJECTED"
     assert offer.availability == Availability.IN_STOCK
     assert offer.consecutive_missing_count == 0
+
+
+async def test_structured_supplier_document_excludes_headers_from_quality_denominator(client):
+    supplier, source = await create_context(client)
+    text = Path("tests/fixtures/telegram_supplier_real_style_price.txt").read_text(encoding="utf-8")
+    raw = await create_raw(client, source["id"], text)
+    snapshot = await create_snapshot(client, supplier["id"], source["id"], raw["id"])
+    summary = await process_via_api(client, snapshot["id"])
+    assert summary["total_lines"] == len(text.splitlines())
+    assert summary["candidate_lines"] == 14
+    assert summary["parser_successful_items"] >= 8
+    assert summary["quality_gate_passed"] is True
+    assert summary["status"] == "COMPLETED"
+
+
+async def test_malformed_product_like_document_still_fails_quality_gate(client):
+    supplier, source = await create_context(client)
+    text = "\n".join(
+        [
+            "Samsung 🇰🇷",
+            "S25 ultra S938B 12/256 silverblue - call",
+            "S25 ultra S939B 12/512 black - ask",
+            "17 pro max 256 blue - later",
+            LINES["a"],
+        ]
+    )
+    raw = await create_raw(client, source["id"], text)
+    snapshot = await create_snapshot(client, supplier["id"], source["id"], raw["id"])
+    summary = await process_via_api(client, snapshot["id"])
+    assert summary["status"] == "REJECTED"
+    assert summary["quality_gate_passed"] is False
+    assert summary["candidate_lines"] == 4
+    assert summary["parser_successful_items"] == 1
+
+
+async def test_rejected_snapshot_preserves_diagnostic_counters(client):
+    supplier, source = await create_context(client)
+    text = raw_text(["a"]) + "\n🇮🇳S26 S942B 12/256 violet - 63500\n🇮🇳S26 S942B 12/256 violet - 64500"
+    raw = await create_raw(client, source["id"], text)
+    snapshot = await create_snapshot(client, supplier["id"], source["id"], raw["id"])
+    summary = await process_via_api(client, snapshot["id"])
+    assert summary["status"] == "REJECTED"
+    assert summary["parsed_items"] == 3
+    assert summary["conflicts_count"] == 2
+    assert summary["review_count"] == 0
+    assert summary["parser_error_count"] == 0
 
 
 async def test_out_of_order_older_snapshot_does_not_increment_missing(client):

@@ -4,6 +4,7 @@ import { join } from "node:path";
 
 const pageSource = readFileSync(join(process.cwd(), "app", "telegram-prices", "page.tsx"), "utf-8");
 const formSource = readFileSync(join(process.cwd(), "components", "telegram-source-map-form.tsx"), "utf-8");
+const actionButtonSource = readFileSync(join(process.cwd(), "components", "action-button.tsx"), "utf-8");
 const layoutSource = readFileSync(join(process.cwd(), "app", "layout.tsx"), "utf-8");
 
 describe("Telegram prices operator UI", () => {
@@ -29,6 +30,20 @@ describe("Telegram prices operator UI", () => {
     expect(formSource).toContain("Mapping failed");
     expect(formSource).toContain("Reprocess failed");
     expect(formSource).toContain("mapped ? pendingBatchIds.map");
+  });
+
+  it("refreshes backend state after successful supplier create, map, and reprocess", () => {
+    expect(formSource).toContain("useRouter");
+    expect(formSource.match(/router\.refresh\(\)/g)?.length).toBeGreaterThanOrEqual(3);
+    expect(formSource).toContain("Reprocess completed. Updating counters...");
+    expect(formSource).not.toContain("Refresh to see counters");
+  });
+
+  it("table reprocess action refreshes counters and prevents duplicate clicks", () => {
+    expect(actionButtonSource).toContain("useRouter");
+    expect(actionButtonSource).toContain("router.refresh()");
+    expect(actionButtonSource).toContain("if (busy)");
+    expect(actionButtonSource).toContain("disabled={busy}");
   });
 
   it("does not silently create or map suppliers", () => {

@@ -55,11 +55,19 @@ class ProcessSnapshotSummary(BaseModel):
     status: SupplierSnapshotStatus
     total_lines: int
     parsed: int
+    parsed_items: int
+    candidate_lines: int
+    parser_successful_items: int
+    parser_review_items: int
+    parser_conflict_items: int
     exact_match: int
     auto_created: int
     review: int
+    review_count: int
     conflict: int
+    conflicts_count: int
     rejected: int
+    parser_error_count: int
     offers_created: int
     offers_updated: int
     offers_seen: int

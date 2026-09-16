@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { browserApiBase, csrfFromDocument } from "@/lib/client-api";
 
 type Supplier = {
@@ -21,6 +22,7 @@ export function TelegramSourceMapForm({
   suggestedName?: string | null;
   pendingBatchIds?: string[];
 }) {
+  const router = useRouter();
   const [localSuppliers, setLocalSuppliers] = useState(suppliers);
   const [supplierId, setSupplierId] = useState(suppliers[0]?.id ?? "");
   const [showCreate, setShowCreate] = useState(suppliers.length === 0);
@@ -56,6 +58,7 @@ export function TelegramSourceMapForm({
       setSupplierId(created.id);
       setShowCreate(false);
       setMessage("Supplier created. Confirm mapping when ready.");
+      router.refresh();
     } catch {
       setMessage("Network error while creating supplier.");
     } finally {
@@ -83,6 +86,7 @@ export function TelegramSourceMapForm({
       if (response.ok) {
         setMapped(true);
         setMessage("Mapped. Reprocess saved pending batch when ready.");
+        router.refresh();
       } else {
         setMessage(`Mapping failed: ${response.status}`);
       }
@@ -109,7 +113,12 @@ export function TelegramSourceMapForm({
         },
         body: JSON.stringify({})
       });
-      setMessage(response.ok ? "Reprocess queued/completed. Refresh to see counters." : `Reprocess failed: ${response.status}`);
+      if (response.ok) {
+        setMessage("Reprocess completed. Updating counters...");
+        router.refresh();
+      } else {
+        setMessage(`Reprocess failed: ${response.status}`);
+      }
     } catch {
       setMessage("Network error while reprocessing batch.");
     } finally {

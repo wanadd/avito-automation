@@ -192,6 +192,53 @@ async def test_mapping_and_reprocess_creates_supplier_offer_through_existing_pip
     assert await count(SupplierOffer) == 1
 
 
+async def test_rejected_reprocess_batch_propagates_snapshot_diagnostics():
+    await seed_supplier_source(channel_id=-100777)
+    text = "\n".join(
+        [
+            "Samsung 🇰🇷",
+            "S25 ultra S938B 12/256 silverblue - call",
+            "S25 ultra S939B 12/512 black - ask",
+            "17 pro max 256 blue - later",
+            "🇰🇼S25 ultra S938B 12/256 silverblue - 65300",
+        ]
+    )
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient([telegram_update(25, text=text)]))
+        batch = await session.scalar(select(TelegramPriceBatch))
+        snapshot = await session.get(SupplierSnapshot, batch.supplier_snapshot_id)
+    assert batch.status == "REJECTED"
+    assert batch.parsed_rows == 4
+    assert batch.accepted_rows == 1
+    assert batch.review_rows >= 3
+    assert batch.error == "LOW_VALID_ITEM_RATIO"
+    assert snapshot.status.value == "REJECTED"
+    assert snapshot.parsed_items == 4
+
+
+async def test_explicit_reprocess_same_revision_is_idempotent():
+    await seed_supplier_source(channel_id=-100777)
+    async with AsyncSessionLocal() as session:
+        await poll_telegram_prices_bot(session, FakeBotClient([telegram_update(26)]))
+        batch = await session.scalar(select(TelegramPriceBatch))
+        before = {
+            RawSourceRecordRevision: await session.scalar(select(func.count()).select_from(RawSourceRecordRevision)),
+            SupplierSnapshot: await session.scalar(select(func.count()).select_from(SupplierSnapshot)),
+            SupplierOffer: await session.scalar(select(func.count()).select_from(SupplierOffer)),
+        }
+        first = await reprocess_telegram_price_batch(session, batch.id)
+        second = await reprocess_telegram_price_batch(session, batch.id)
+        after = {
+            RawSourceRecordRevision: await session.scalar(select(func.count()).select_from(RawSourceRecordRevision)),
+            SupplierSnapshot: await session.scalar(select(func.count()).select_from(SupplierSnapshot)),
+            SupplierOffer: await session.scalar(select(func.count()).select_from(SupplierOffer)),
+        }
+    assert first.id == second.id == batch.id
+    assert first.duplicate is True
+    assert second.duplicate is True
+    assert before == after
+
+
 async def test_pending_mapping_batch_has_no_snapshot_or_offer_before_mapping():
     async with AsyncSessionLocal() as session:
         await poll_telegram_prices_bot(

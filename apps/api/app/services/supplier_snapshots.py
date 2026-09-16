@@ -161,15 +161,21 @@ async def _process_snapshot_locked(session: AsyncSession, snapshot_id: uuid.UUID
             )
         await session.flush()
 
+        parser_quality = parser_quality_counts(parsed_rows)
         snapshot.total_lines = parse_result.total_lines
-        snapshot.parsed_items = len([row for row in parsed_rows if row.parse_status != ParseStatus.IGNORED])
+        snapshot.parsed_items = parser_quality["candidate_lines"]
         snapshot.matched_items = exact_match + auto_created
         snapshot.offers_seen = len(seen_offer_ids)
         snapshot.conflicts_count = conflict
         snapshot.review_count = review
         snapshot.parser_error_count = rejected
 
-        gate_passed, reason = quality_gate(snapshot, raw_text_non_empty=parse_result.total_lines > 0)
+        gate_passed, reason = quality_gate(
+            snapshot,
+            raw_text_non_empty=parse_result.total_lines > 0,
+            candidate_lines=parser_quality["candidate_lines"],
+            parser_successful_items=parser_quality["successful_items"],
+        )
         snapshot.quality_gate_reason = reason
         availability_counts = {
             "moved_to_in_stock": 0,
@@ -194,6 +200,7 @@ async def _process_snapshot_locked(session: AsyncSession, snapshot_id: uuid.UUID
             availability_counts=availability_counts,
             offers_created=offers_created,
             offers_updated=offers_updated,
+            parser_quality=parser_quality,
         )
     except Exception:
         await session.rollback()
@@ -205,15 +212,47 @@ async def _process_snapshot_locked(session: AsyncSession, snapshot_id: uuid.UUID
         raise
 
 
-def quality_gate(snapshot: SupplierSnapshot, *, raw_text_non_empty: bool) -> tuple[bool, str | None]:
+def parser_quality_counts(rows: list[ParsedSupplierItem]) -> dict[str, int]:
+    candidate_lines = 0
+    successful_items = 0
+    parser_review_items = 0
+    parser_conflict_items = 0
+    for row in rows:
+        if row.parse_status == ParseStatus.IGNORED:
+            continue
+        candidate_lines += 1
+        if row.parse_status == ParseStatus.CONFLICT:
+            parser_conflict_items += 1
+        if row.parse_status == ParseStatus.REVIEW:
+            parser_review_items += 1
+        has_valid_price = row.price_minor is not None
+        blocking_flags = {"INVALID_PRICE", "MISSING_PRICE", "PRICE_CONFLICT"}
+        if has_valid_price and not blocking_flags.intersection(row.parse_flags):
+            successful_items += 1
+    return {
+        "candidate_lines": candidate_lines,
+        "successful_items": successful_items,
+        "parser_review_items": parser_review_items,
+        "parser_conflict_items": parser_conflict_items,
+    }
+
+
+def quality_gate(
+    snapshot: SupplierSnapshot,
+    *,
+    raw_text_non_empty: bool,
+    candidate_lines: int | None = None,
+    parser_successful_items: int | None = None,
+) -> tuple[bool, str | None]:
     if not raw_text_non_empty:
         return False, "EMPTY_RAW_TEXT"
-    if snapshot.offers_seen < 1:
+    candidate_count = snapshot.parsed_items if candidate_lines is None else candidate_lines
+    successful_count = snapshot.matched_items if parser_successful_items is None else parser_successful_items
+    if successful_count < 1 or snapshot.offers_seen < 1:
         return False, "NO_VALID_ITEMS"
-    candidate_lines = snapshot.parsed_items
-    if candidate_lines <= 0:
+    if candidate_count <= 0:
         return False, "NO_VALID_ITEMS"
-    ratio = snapshot.offers_seen / candidate_lines
+    ratio = successful_count / candidate_count
     if ratio < get_settings().snapshot_min_valid_item_ratio:
         return False, "LOW_VALID_ITEM_RATIO"
     return True, None
@@ -341,6 +380,7 @@ async def summarize_snapshot(
     availability_counts: dict[str, int] | None = None,
     offers_created: int = 0,
     offers_updated: int = 0,
+    parser_quality: dict[str, int] | None = None,
 ) -> dict:
     availability_counts = availability_counts or {
         "moved_to_in_stock": 0,
@@ -349,16 +389,31 @@ async def summarize_snapshot(
         "restored": 0,
     }
     items = list(await session.scalars(select(SupplierSnapshotItem).where(SupplierSnapshotItem.snapshot_id == snapshot.id)))
+    if parser_quality is None:
+        parsed_rows = list(
+            await session.scalars(
+                select(ParsedSupplierItem).where(ParsedSupplierItem.id.in_([item.parsed_supplier_item_id for item in items]))
+            )
+        ) if items else []
+        parser_quality = parser_quality_counts(parsed_rows)
     return {
         "snapshot_id": snapshot.id,
         "status": snapshot.status,
         "total_lines": snapshot.total_lines,
         "parsed": snapshot.parsed_items,
+        "parsed_items": snapshot.parsed_items,
+        "candidate_lines": parser_quality["candidate_lines"],
+        "parser_successful_items": parser_quality["successful_items"],
+        "parser_review_items": parser_quality["parser_review_items"],
+        "parser_conflict_items": parser_quality["parser_conflict_items"],
         "exact_match": sum(item.match_status == MatchStatus.EXACT_MATCH for item in items),
         "auto_created": sum(item.match_status == MatchStatus.AUTO_CREATED for item in items),
         "review": sum(item.item_status == SupplierSnapshotItemStatus.REVIEW for item in items),
+        "review_count": snapshot.review_count,
         "conflict": sum(item.item_status == SupplierSnapshotItemStatus.CONFLICT for item in items),
+        "conflicts_count": snapshot.conflicts_count,
         "rejected": sum(item.item_status == SupplierSnapshotItemStatus.REJECTED for item in items),
+        "parser_error_count": snapshot.parser_error_count,
         "offers_created": offers_created,
         "offers_updated": offers_updated,
         "offers_seen": snapshot.offers_seen,
